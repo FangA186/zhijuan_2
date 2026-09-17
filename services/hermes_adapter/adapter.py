@@ -11,7 +11,13 @@ import os
 from pathlib import Path
 import time
 from typing import Any, Callable, Literal, Mapping
-import httpx
+import urllib.error
+import urllib.request
+
+try:
+    import httpx
+except ImportError:
+    httpx = None
 
 from .skills_loader import load_skill, HermesSkill
 from .schema_validator import validate_candidate, SchemaValidationError
@@ -128,12 +134,23 @@ class HermesDeepSeekAdapter:
         if json_mode:
             body["response_format"] = {"type": "json_object"}
 
-        with httpx.Client(timeout=self.timeout) as client:
-            resp = client.post(url, headers=headers, json=body)
-            if resp.status_code != 200:
-                raise RuntimeError(f"DeepSeek API error ({resp.status_code}): {resp.text}")
-
-            res_json = resp.json()
+        if httpx is not None:
+            with httpx.Client(timeout=self.timeout) as client:
+                resp = client.post(url, headers=headers, json=body)
+                if resp.status_code != 200:
+                    raise RuntimeError(f"DeepSeek API error ({resp.status_code}): {resp.text}")
+                res_json = resp.json()
+        else:
+            req_data = json.dumps(body).encode("utf-8")
+            req = urllib.request.Request(url, data=req_data, headers=headers, method="POST")
+            try:
+                with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                    res_json = json.loads(resp.read().decode("utf-8"))
+            except urllib.error.HTTPError as e:
+                err_text = e.read().decode("utf-8")
+                raise RuntimeError(f"DeepSeek API error ({e.code}): {err_text}")
+            except Exception as e:
+                raise RuntimeError(f"DeepSeek request failed: {e}")
 
         request_id = res_json.get("id", f"req_{int(time.time()*1000)}")
         usage = res_json.get("usage", {})
