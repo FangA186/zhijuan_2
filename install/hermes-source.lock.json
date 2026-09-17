@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/NousResearch/hermes-agent.git",
+  "commit": "f5d192611032025d2757b07ad838921872126182",
+  "branch": "main",
+  "target_directory": "vendor/hermes-agent",
+  "locked_at": "2026-09-17T08:33:15Z",
+  "license": {
+    "type": "MIT",
+    "sha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6",
+    "copyright": "Copyright (c) 2025 Nous Research"
+  },
+  "hashes": {
+    "pyproject_toml_sha256": "eb0b8daac75c0c0e655282a1a836cb4c8a0bdc266e435a4d77e3295544ccf488",
+    "uv_lock_sha256": "811a21647251a3fd024a3e2f49c90ac0600c678e500cc08ed51db38c452a6c65"
+  },
+  "verification": {
+    "git_clean": true,
+    "detached_head": true,
+    "reviewed_by": "agent/ops"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "scope": "written_execution_materials_only",
+  "task_cards": 32,
+  "api_operations": 25,
+  "case_definitions": 47,
+  "application_executed": false,
+  "hermes_installed": false,
+  "live_model_called": false
+}
+NOT RUN: application build/startup, upstream installation, model calls, phase gates, G-MIN, G-FULL.
+

@@ -1,0 +1,135 @@
+schema_version: 1
+task_id: M1-07
+session_id: web-ui-001
+created_at: '2026-09-17T07:46:42+00:00'
+git:
+  state: GIT
+  head: 7cc58b93c95906ca142ee6e598468830bb9b45ca
+  branch: main
+  base: null
+  changed_paths:
+  - apps/web/.gitignore
+  - apps/web/index.html
+  - apps/web/package-lock.json
+  - apps/web/package.json
+  - apps/web/postcss.config.js
+  - apps/web/src/App.tsx
+  - apps/web/src/components/ExportModal.tsx
+  - apps/web/src/components/Header.tsx
+  - apps/web/src/components/ScoreBadge.tsx
+  - apps/web/src/components/SlotEditorModal.tsx
+  - apps/web/src/components/StageNav.tsx
+  - apps/web/src/components/StatusBadge.tsx
+  - apps/web/src/index.css
+  - apps/web/src/lib/api.ts
+  - apps/web/src/lib/math.tsx
+  - apps/web/src/lib/mockData.ts
+  - apps/web/src/lib/projection.ts
+  - apps/web/src/lib/scoring.ts
+  - apps/web/src/main.tsx
+  - apps/web/src/pages/ExamEditor.tsx
+  - apps/web/src/pages/ExamSetup.tsx
+  - apps/web/src/pages/History.tsx
+  - apps/web/src/pages/JobProgress.tsx
+  - apps/web/src/pages/Review.tsx
+  - apps/web/src/types/candidate.ts
+  - apps/web/src/types/job.ts
+  - apps/web/src/types/spec.ts
+  - apps/web/src/types/validation.ts
+  - apps/web/tailwind.config.js
+  - apps/web/tsconfig.json
+  - apps/web/vite.config.ts
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+summary: 完成前端 React 19 + TypeScript + Vite + Tailwind + KaTeX 页面搭建与交互式 Mock 状态机
+next_action: 推进后端 API 或按 M0-01 冻结范围
+completed:
+- 搭建 apps/web 工程基线 (React 19, TypeScript 5.7, Vite 6, Tailwind CSS 3.4)
+- 实现 ExamSetup 页面：三学段学科联动、范围确认、分值配平校验器、AI蓝图槽位规划
+- 实现 JobProgress/Generation 页面：槽位状态矩阵、实时事件流展示、Token与预估费用动态监控
+- 实现 ExamEditor 三栏命题工作台：KaTeX 公式渲染、真实学生作答视角数据过滤、独立盲解对比报告与 SymPy 依据查看、单题重构
+- 实现 Review 审核门禁页面：FAIL 严重错误拦截、REVIEW 人工裁决理由签名、双快照指纹
+- 实现 History 与 ExportModal：公开投影学生卷 PDF、全解版 PDF、JSON 数据包与 Word 导出预览
+- 实现内置契约级 Mock 状态机与 local storage 持久化，支持离线全流程运行
+pending:
+- 后端 FastAPI 业务 API 对接与真实 SSE 事件流接入
+- 接入真实 Hermes Adapter 与模型调用
+decisions:
+- 前端暂采用契约级 Mock 数据引擎作为过渡层，保持与 contracts/openapi.yaml 完全同构
+- 学生视角严格采用 makePublicProjection 在数据层剔除私有答案与评分标准，而非 CSS 隐藏
+- 分值全系统统一采用 score_x100 整数换算显示
+failed_approaches: []
+evidence_refs: []
+scope_patterns:
+- apps/web/.gitignore
+- apps/web/index.html
+- apps/web/package-lock.json
+- apps/web/package.json
+- apps/web/postcss.config.js
+- apps/web/src/App.tsx
+- apps/web/src/components/ExportModal.tsx
+- apps/web/src/components/Header.tsx
+- apps/web/src/components/ScoreBadge.tsx
+- apps/web/src/components/SlotEditorModal.tsx
+- apps/web/src/components/StageNav.tsx
+- apps/web/src/components/StatusBadge.tsx
+- apps/web/src/index.css
+- apps/web/src/lib/api.ts
+- apps/web/src/lib/events.ts
+- apps/web/src/lib/math.tsx
+- apps/web/src/lib/mockData.ts
+- apps/web/src/lib/projection.ts
+- apps/web/src/lib/scoring.ts
+- apps/web/src/main.tsx
+- apps/web/src/pages/ExamEditor.tsx
+- apps/web/src/pages/ExamSetup.tsx
+- apps/web/src/pages/Generation.tsx
+- apps/web/src/pages/History.tsx
+- apps/web/src/pages/JobProgress.tsx
+- apps/web/src/pages/Review.tsx
+- apps/web/src/types/candidate.ts
+- apps/web/src/types/job.ts
+- apps/web/src/types/spec.ts
+- apps/web/src/types/validation.ts
+- apps/web/tailwind.config.js
+- apps/web/tsconfig.json
+- apps/web/vite.config.ts
+- contracts/openapi.yaml
+- docs/01_产品需求说明.md
+files:
+  '[missing-pattern] apps/web/src/lib/events.ts': MISSING
+  '[missing-pattern] apps/web/src/pages/Generation.tsx': MISSING
+  apps/web/.gitignore: ba9e3845c917fa998263120a5ffd1174e96873ce50ec5b4146eaca7a86819975
+  apps/web/index.html: 7cfe9828260695718390ce0d872ca71d8dc431a4f190bbba397b9aaae7957cd6
+  apps/web/package-lock.json: f20cac7d7b86a20b7d85c2dbc5e3c0b20f9de2ca9a91107bd15bc8d432b0433c
+  apps/web/package.json: 80662923a28713a745d6cdfb4d3051af5f698bff5606d41a9617d5fd11e3b14e
+  apps/web/postcss.config.js: 190c877db466995bf1482f4a16abd06e04a89ede3119341e2a86ff96e1737b27
+  apps/web/src/App.tsx: 8e1572b0191b5a95c974e5a2f02cdcf993c28ab76d7767e50e369081ec940523
+  apps/web/src/components/ExportModal.tsx: 68f9b69fcb7a83cefbccc1aaedd5d6c27c2be9b73eaa18a44d15c1b773c6c4b8
+  apps/web/src/components/Header.tsx: 8ccf465f9649ddb34effa54c4c36c19d7bc0744c306ee7312cb54220d9344270
+  apps/web/src/components/ScoreBadge.tsx: 134352c54b865c797bac174e33ba4a7d46d0cc65e1aa6ae1b3cd350986eede64
+  apps/web/src/components/SlotEditorModal.tsx: 75e3c2fbbdda050c7d06827123d86d94ae89959c0ea96c6035cf17eb558b9995
+  apps/web/src/components/StageNav.tsx: 58335b72cf9821c34f2c0c2bf65f792ca3d9df82c33a9030f73319b28bdd3edc
+  apps/web/src/components/StatusBadge.tsx: cc12e04912a018354490fc19d19f3406b1a53779b01ae6b03a3181b95a0d8de9
+  apps/web/src/index.css: 2982f944356c7c2db35343171cd2decd4278bf096bd0364e12d62a135280967a
+  apps/web/src/lib/api.ts: ad36bdc5ffaba5fa352f037d22e07a10ae762ae0dcbe1c4abde4fba67bd92daf
+  apps/web/src/lib/math.tsx: 2596ce4918aaacfc6b16f2bbbffa47ba9652be6eba13c6c1fdf1c422b0fc2b89
+  apps/web/src/lib/mockData.ts: 430c5e2d0b3f740e8f90f5279a0a8f540e59bde6a0d07dec491d29c95e96753f
+  apps/web/src/lib/projection.ts: 896c39acdbaef87bc3b60732d96206e5ce1b62faecc94683746e1447c685598e
+  apps/web/src/lib/scoring.ts: 7db0304dc90c45957187b251e59fec401e8994b08faa526a7f4bb77017d450b7
+  apps/web/src/main.tsx: 14a10dee4aaa2130d9f57c136db7f16f95f524d60d77146b17776e91c2ab626c
+  apps/web/src/pages/ExamEditor.tsx: 909b4218939b68c8418103436a0e54c3a27f54c324de0b2c78c09f641eefa412
+  apps/web/src/pages/ExamSetup.tsx: 8c50cb211475bf47f4369c3bc43ef93009a66eff0cb55bbafcc7de2aa0651dd4
+  apps/web/src/pages/History.tsx: 1a504982fafd3bff8bfde4bfa4c3a4b5e0aa0f383f47af96e9be0f800b3aaff2
+  apps/web/src/pages/JobProgress.tsx: 0e119ae0f91353596fda6ea55d6427085514338cf0e3f0aaf99255ecfed67fb5
+  apps/web/src/pages/Review.tsx: 4d560cc82bb6974a396648a1069c668a3a96a959dbd638c7ae46b517bb07d30b
+  apps/web/src/types/candidate.ts: 05b1a43a05b140272771dd436d19856f370cc171a8bf88ab1721e54c6a262c43
+  apps/web/src/types/job.ts: eff3e8bb5a82a0d27715b1e7cdef63fd668afd3a9a6ca0cc2066e2fea60c41b9
+  apps/web/src/types/spec.ts: ba96406a4b76a4b48a460326769794abbda0a4062f195cd033bff8617c506d9a
+  apps/web/src/types/validation.ts: e5798c15c4fb9dad12a75e789a9df8ae3cfdfe034d5f77135837d6bf4a3e17f8
+  apps/web/tailwind.config.js: ed44da81f5c1241ec02abc444cab6d021f69ae009279326cf687ee72ace1b391
+  apps/web/tsconfig.json: d9729f1f3681a1c92b37c341d31c8d4c62f86e66021d71ab2713ad2934ff8b96
+  apps/web/vite.config.ts: dc0dc9b16d829968b1e43898319340741b16498c1d9b0c2095dd952ad81d4dda
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  docs/01_产品需求说明.md: ee050684f0b427bcef20a8a3ab2ca9d5e040212529b46af3e98624343c2934fc
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

@@ -64,8 +64,8 @@ def relative_name(value: str, *, pattern: bool = False) -> str:
     return p.as_posix()
 
 
-def safe_path(root: Path, rel: str, *, must_exist: bool = False) -> Path:
-    rel = relative_name(rel)
+def safe_path(root: Path, rel: str, *, must_exist: bool = False, pattern: bool = False) -> Path:
+    rel = relative_name(rel, pattern=pattern)
     root = root.resolve()
     p = root / rel
     cur = root
@@ -190,7 +190,7 @@ def file_snapshot(root: Path, patterns: list[str], limit: int = 15000) -> dict[s
                 rp = f.relative_to(root).as_posix()
                 if unsafe_name(rp):
                     continue
-                safe_path(root, rp)
+                safe_path(root, rp, pattern=True)
                 if not f.is_file():
                     continue
                 if len(found) >= limit:

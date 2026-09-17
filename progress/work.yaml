@@ -1,4 +1,24 @@
 schema_version: 1
-stage_hint: M0
-recommended_next_task: M0-01
-tasks: {}
+stage_hint: M1
+recommended_next_task: M1-04
+tasks:
+  M0-04:
+    status: DONE
+    completed_by: agent
+    completed_at: '2026-09-17T08:00:00+00:00'
+    evidence_refs:
+      - install/hermes-source.lock.json
+      - docs/runtime-baseline.md
+      - acceptance-runs/devtools/run-hermes-004/report.json
+  M1-03:
+    status: DONE
+    completed_by: agent
+    completed_at: '2026-09-17T09:20:00+00:00'
+    evidence_refs:
+      - acceptance-runs/devtools/run-hermes-004/report.json
+  M1-07:
+    status: DONE
+    completed_by: agent
+    completed_at: '2026-09-17T08:30:00+00:00'
+    evidence_refs:
+      - acceptance-runs/devtools/run-hermes-004/report.json

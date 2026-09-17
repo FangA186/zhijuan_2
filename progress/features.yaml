@@ -367,6 +367,6 @@ features:
   required_suites:
   - memory-tests
   - memory-check
-  last_evidence: acceptance-runs/devtools/v1_4-final/report.json
+  last_evidence: acceptance-runs/devtools/run-hermes-004/report.json
   limitations:
   - 仅支持基于登记路径和依赖的辅助影响分析，不是完整语义依赖分析；未激活远程 CI/分支保护。

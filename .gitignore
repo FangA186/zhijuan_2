@@ -13,4 +13,6 @@ node_modules/
 progress/generated/
 acceptance-runs/ci/
 acceptance-runs/devtools/local-*/
+smartedu_data/
 # Reviewed, redacted release evidence may be committed explicitly.
+vendor/hermes-agent/

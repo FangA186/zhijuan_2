@@ -20,11 +20,16 @@ class MemoryTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory(prefix='zhijuan-memory-test-')
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)/'repo'
-        shutil.copytree(m.ROOT, self.root, ignore=shutil.ignore_patterns('.git','__pycache__','acceptance-runs','generated','*.log'))
+        shutil.copytree(m.ROOT, self.root, ignore=shutil.ignore_patterns('.git','__pycache__','acceptance-runs','generated','*.log','node_modules','.venv','vendor','smartedu_data','dist'))
         self.ledger = m.read_data(self.root, 'progress/features.yaml')
         for f in self.ledger['features']:
             f['last_evidence'] = None
         self.save('progress/features.yaml', self.ledger)
+        for p in (self.root / 'progress/handoffs').glob('*.yaml'):
+            p.unlink()
+        w = m.read_data(self.root, 'progress/work.yaml')
+        w['tasks'] = {}
+        self.save('progress/work.yaml', w)
         self.dev = self.ledger['features'][-1]
 
     def save(self, rel, data):

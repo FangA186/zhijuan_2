@@ -1,0 +1,556 @@
+import { ExamSpec, BlueprintSlot } from '../types/spec';
+import { GeneratedCandidate } from '../types/candidate';
+import { ValidationRecord } from '../types/validation';
+
+/**
+ * 预设试卷规格 1: 初中九年级数学 (一元二次方程与相似三角形)
+ */
+export const mockJuniorMathSpec: ExamSpec = {
+  title: "2026年秋季学期九年级数学月度诊断评估卷",
+  curriculum_system: "教育部义务教育课程标准",
+  region: "通用标准",
+  stage: "junior",
+  stage_year: 9,
+  grade_label: "九年级",
+  subject_code: "MATH_JUNIOR",
+  subject_label: "初中数学",
+  textbook: "人教版九年级上册",
+  module: "一元二次方程与几何图形相似",
+  taught_scope: {
+    topics: ["一元二次方程根的判别式", "韦达定理根与系数的关系", "相似三角形判定定理", "相似三角形面积比"],
+    excluded_topics: ["二次函数综合大题", "圆的切线证明", "三元一次方程组"],
+    permitted_methods: ["因式分解法", "求根公式法", "比例线段推导"],
+    scope_confirmed: true,
+  },
+  purpose: "diagnosis",
+  usage_context: "school_daily_exam",
+  delivery_mode: "paper",
+  total_score_x100: 10000, // 100分
+  duration_minutes: 90,
+  sections: [
+    {
+      id: "sec_1",
+      title: "一、单项选择题 (本大题共4小题，每小题4分，共16分)",
+      question_type: "single_choice",
+      count: 4,
+      score_each_x100: 400,
+      topics: ["一元二次方程判别式", "相似三角形判定", "根与系数关系"],
+    },
+    {
+      id: "sec_2",
+      title: "二、填空题 (本大题共3小题，每小题4分，共12分)",
+      question_type: "fill_blank",
+      count: 3,
+      score_each_x100: 400,
+      topics: ["比例中项", "韦达定理", "方程的实数根"],
+    },
+    {
+      id: "sec_3",
+      title: "三、解答与证明题 (本大题共4小题，共72分)",
+      question_type: "solution",
+      count: 4,
+      score_each_x100: 1800,
+      topics: ["方程综合求解", "相似三角形证明与面积计算"],
+    },
+  ],
+  difficulty_distribution: {
+    basic: 60,
+    medium: 30,
+    advanced: 10,
+  },
+  output_preferences: {
+    paper_size: "A4",
+    font_size_pt: 11,
+    include_answer_space: true,
+  },
+};
+
+/**
+ * 初中数学蓝图槽位 (Blueprint Slots)
+ */
+export const mockMathSlots: BlueprintSlot[] = [
+  {
+    slot_id: "slot_01",
+    order: 1,
+    section_id: "sec_1",
+    kind: "single_choice",
+    target_topic: "一元二次方程判别式",
+    cognitive_target: "理解与辨析",
+    estimated_difficulty: "basic",
+    score_x100: 400,
+    answer_space_lines: 2,
+    status: "READY",
+  },
+  {
+    slot_id: "slot_02",
+    order: 2,
+    section_id: "sec_1",
+    kind: "single_choice",
+    target_topic: "相似三角形判定定理",
+    cognitive_target: "几何推理",
+    estimated_difficulty: "medium",
+    score_x100: 400,
+    answer_space_lines: 2,
+    status: "READY",
+  },
+  {
+    slot_id: "slot_03",
+    order: 3,
+    section_id: "sec_1",
+    kind: "single_choice",
+    target_topic: "韦达定理与根的符号",
+    cognitive_target: "代数运算",
+    estimated_difficulty: "medium",
+    score_x100: 400,
+    answer_space_lines: 2,
+    status: "REVIEW_REQUIRED",
+  },
+  {
+    slot_id: "slot_04",
+    order: 4,
+    section_id: "sec_1",
+    kind: "single_choice",
+    target_topic: "相似多边形性质",
+    cognitive_target: "应用计算",
+    estimated_difficulty: "advanced",
+    score_x100: 400,
+    answer_space_lines: 2,
+    status: "READY",
+  },
+  {
+    slot_id: "slot_05",
+    order: 5,
+    section_id: "sec_2",
+    kind: "fill_blank",
+    target_topic: "比例中项计算",
+    cognitive_target: "基础计算",
+    estimated_difficulty: "basic",
+    score_x100: 400,
+    answer_space_lines: 2,
+    status: "READY",
+  },
+  {
+    slot_id: "slot_06",
+    order: 6,
+    section_id: "sec_2",
+    kind: "fill_blank",
+    target_topic: "韦达定理代数式化简",
+    cognitive_target: "运算求解",
+    estimated_difficulty: "medium",
+    score_x100: 400,
+    answer_space_lines: 2,
+    status: "READY",
+  },
+  {
+    slot_id: "slot_07",
+    order: 7,
+    section_id: "sec_2",
+    kind: "fill_blank",
+    target_topic: "一元二次方程有实根条件",
+    cognitive_target: "分类讨论",
+    estimated_difficulty: "medium",
+    score_x100: 400,
+    answer_space_lines: 2,
+    status: "READY",
+  },
+  {
+    slot_id: "slot_08",
+    order: 8,
+    section_id: "sec_3",
+    kind: "solution",
+    target_topic: "方程综合求解与参数范围",
+    cognitive_target: "综合推演",
+    estimated_difficulty: "medium",
+    score_x100: 1800,
+    answer_space_lines: 8,
+    status: "READY",
+  },
+  {
+    slot_id: "slot_09",
+    order: 9,
+    section_id: "sec_3",
+    kind: "solution",
+    target_topic: "相似三角形证明与面积比",
+    cognitive_target: "逻辑证明与几何综合",
+    estimated_difficulty: "advanced",
+    score_x100: 1800,
+    answer_space_lines: 10,
+    status: "READY",
+  },
+  {
+    slot_id: "slot_10",
+    order: 10,
+    section_id: "sec_3",
+    kind: "solution",
+    target_topic: "一元二次方程实际应用题",
+    cognitive_target: "数学建模与实际问题转化",
+    estimated_difficulty: "medium",
+    score_x100: 1800,
+    answer_space_lines: 8,
+    status: "READY",
+  },
+  {
+    slot_id: "slot_11",
+    order: 11,
+    section_id: "sec_3",
+    kind: "solution",
+    target_topic: "动态几何与相似极值讨论",
+    cognitive_target: "探究与反思",
+    estimated_difficulty: "advanced",
+    score_x100: 1800,
+    answer_space_lines: 12,
+    status: "REVIEW_REQUIRED",
+  },
+];
+
+/**
+ * 候选题目数据 GeneratedCandidates
+ */
+export const mockMathCandidates: GeneratedCandidate[] = [
+  {
+    public: {
+      local_id: "slot_01",
+      kind: "single_choice",
+      prompt: [
+        { type: "text", text: "若关于 $x$ 的一元二次方程 $x^2 - 4x + k = 0$ 有两个不相等的实数根，则实数 $k$ 的取值范围是（　　）" },
+      ],
+      options: [
+        { id: "opt_A", label: "A", content: [{ type: "text", text: "$k < 4$" }] },
+        { id: "opt_B", label: "B", content: [{ type: "text", text: "$k \\le 4$" }] },
+        { id: "opt_C", label: "C", content: [{ type: "text", text: "$k > 4$" }] },
+        { id: "opt_D", label: "D", content: [{ type: "text", text: "$k \\ge 4$" }] },
+      ],
+      score_x100: 400,
+      material_ids: [],
+      children: [],
+      answer_space_lines: 2,
+    },
+    private: {
+      answers: [
+        {
+          target_local_id: "slot_01",
+          answer_text: "A",
+          selected_option_ids: ["opt_A"],
+          explanation: [
+            { type: "text", text: "根据题意，方程有两个不相等的实数根，则根的判别式 $\\Delta > 0$。" },
+            { type: "math", latex: "\\Delta = (-4)^2 - 4 \\times 1 \\times k = 16 - 4k > 0" },
+            { type: "text", text: "解得 $4k < 16$，即 $k < 4$。故选 A。" },
+          ],
+          scoring_rubric: [
+            { step: 1, score_x100: 200, criterion: "正确写出判别式 $\\Delta = 16 - 4k > 0$" },
+            { step: 2, score_x100: 200, criterion: "正确求解不等式得到 $k < 4$ 并选出选项 A" },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    public: {
+      local_id: "slot_02",
+      kind: "single_choice",
+      prompt: [
+        { type: "text", text: "如图，在 $\\triangle ABC$ 中，$D$、$E$ 分别在 $AB$、$AC$ 边上，若 $DE \\parallel BC$，且 $\\frac{AD}{DB} = \\frac{2}{3}$，则 $\\frac{S_{\\triangle ADE}}{S_{\\triangle ABC}}$ 的值为（　　）" },
+      ],
+      options: [
+        { id: "opt_A", label: "A", content: [{ type: "text", text: "$\\frac{2}{5}$" }] },
+        { id: "opt_B", label: "B", content: [{ type: "text", text: "$\\frac{4}{9}$" }] },
+        { id: "opt_C", label: "C", content: [{ type: "text", text: "$\\frac{4}{25}$" }] },
+        { id: "opt_D", label: "D", content: [{ type: "text", text: "$\\frac{2}{3}$" }] },
+      ],
+      score_x100: 400,
+      material_ids: [],
+      children: [],
+      answer_space_lines: 2,
+    },
+    private: {
+      answers: [
+        {
+          target_local_id: "slot_02",
+          answer_text: "C",
+          selected_option_ids: ["opt_C"],
+          explanation: [
+            { type: "text", text: "∵ $\\frac{AD}{DB} = \\frac{2}{3}$，∴ $\\frac{AD}{AB} = \\frac{AD}{AD + DB} = \\frac{2}{2 + 3} = \\frac{2}{5}$。" },
+            { type: "text", text: "∵ $DE \\parallel BC$，∴ $\\triangle ADE \\sim \\triangle ABC$。" },
+            { type: "text", text: "相似三角形的面积比等于相似比的平方：" },
+            { type: "math", latex: "\\frac{S_{\\triangle ADE}}{S_{\\triangle ABC}} = \\left(\\frac{AD}{AB}\\right)^2 = \\left(\\frac{2}{5}\\right)^2 = \\frac{4}{25}" },
+            { type: "text", text: "故选 C。" },
+          ],
+          scoring_rubric: [
+            { step: 1, score_x100: 200, criterion: "求得相似比 $\\frac{AD}{AB} = \\frac{2}{5}$" },
+            { step: 2, score_x100: 200, criterion: "应用面积比等于相似比平方得出 $\\frac{4}{25}$ 并选 C" },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    public: {
+      local_id: "slot_03",
+      kind: "single_choice",
+      prompt: [
+        { type: "text", text: "已知 $x_1, x_2$ 是一元二次方程 $x^2 - 3x - 1 = 0$ 的两个实数根，则代数式 $x_1^2 + x_2^2$ 的值为（　　）" },
+      ],
+      options: [
+        { id: "opt_A", label: "A", content: [{ type: "text", text: "$7$" }] },
+        { id: "opt_B", label: "B", content: [{ type: "text", text: "$11$" }] },
+        { id: "opt_C", label: "C", content: [{ type: "text", text: "$-7$" }] },
+        { id: "opt_D", label: "D", content: [{ type: "text", text: "$10$" }] },
+      ],
+      score_x100: 400,
+      material_ids: [],
+      children: [],
+      answer_space_lines: 2,
+    },
+    private: {
+      answers: [
+        {
+          target_local_id: "slot_03",
+          answer_text: "B",
+          selected_option_ids: ["opt_B"],
+          explanation: [
+            { type: "text", text: "由韦达定理（根与系数关系）可得：" },
+            { type: "math", latex: "x_1 + x_2 = 3,\\quad x_1 x_2 = -1" },
+            { type: "text", text: "根据完全平方公式变形：" },
+            { type: "math", latex: "x_1^2 + x_2^2 = (x_1 + x_2)^2 - 2x_1 x_2 = 3^2 - 2 \\times (-1) = 9 + 2 = 11" },
+            { type: "text", text: "故选 B。" },
+          ],
+          scoring_rubric: [
+            { step: 1, score_x100: 200, criterion: "正确应用韦达定理写出 $x_1+x_2=3, x_1 x_2=-1$" },
+            { step: 2, score_x100: 200, criterion: "代数式恒等变形求得结果 11 并选 B" },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    public: {
+      local_id: "slot_08",
+      kind: "solution",
+      prompt: [
+        { type: "text", text: "已知关于 $x$ 的一元二次方程 $x^2 - (2m+1)x + m^2 + m = 0$。\n(1) 求证：无论 $m$ 取何实数，该方程总有两个不相等的实数根；\n(2) 若该方程的两个实数根满足 $x_1^2 + x_2^2 = 13$，求实数 $m$ 的值。" },
+      ],
+      options: [],
+      score_x100: 1800,
+      material_ids: [],
+      children: [],
+      answer_space_lines: 8,
+    },
+    private: {
+      answers: [
+        {
+          target_local_id: "slot_08",
+          answer_text: "(1) 证明略；(2) m = 2 或 m = -3",
+          explanation: [
+            { type: "text", text: "【解析】\n(1) 证明：计算判别式 $\\Delta$：" },
+            { type: "math", latex: "\\Delta = [-(2m+1)]^2 - 4 \\times 1 \\times (m^2 + m) = 4m^2 + 4m + 1 - 4m^2 - 4m = 1" },
+            { type: "text", text: "∵ $\\Delta = 1 > 0$ 恒成立，∴ 无论 $m$ 取何实数，该方程总有两个不相等的实数根。\n\n(2) 解：由根与系数的关系可得：" },
+            { type: "math", latex: "x_1 + x_2 = 2m+1,\\quad x_1 x_2 = m^2 + m" },
+            { type: "text", text: "∵ $x_1^2 + x_2^2 = (x_1 + x_2)^2 - 2x_1 x_2 = 13$，代入得：" },
+            { type: "math", latex: "(2m+1)^2 - 2(m^2 + m) = 13 \\implies 4m^2 + 4m + 1 - 2m^2 - 2m = 13 \\implies 2m^2 + 2m - 12 = 0" },
+            { type: "text", text: "化简得 $m^2 + m - 6 = 0$，解得 $(m+3)(m-2) = 0$，即 $m = 2$ 或 $m = -3$。" },
+          ],
+          scoring_rubric: [
+            { step: 1, score_x100: 400, criterion: "第(1)问正确展开并化简判别式 $\\Delta = 1$" },
+            { step: 2, score_x100: 400, criterion: "明确指出 $\\Delta > 0$ 恒成立完成证明" },
+            { step: 3, score_x100: 400, criterion: "第(2)问列出韦达定理关系式" },
+            { step: 4, score_x100: 600, criterion: "建立关于 $m$ 的方程并正确求解得 $m=2$ 或 $m=-3$" },
+          ],
+        },
+      ],
+    },
+  },
+];
+
+/**
+ * 校验记录 ValidationRecords
+ */
+export const mockValidationRecords: Record<string, ValidationRecord> = {
+  slot_01: {
+    local_id: "slot_01",
+    overall_status: "PASS",
+    rule_checks: [
+      {
+        rule_id: "RULE_SCORE_SUM",
+        category: "structure",
+        name: "分值结构平衡性",
+        status: "PASS",
+        detail: "评分点之和等于题面分值 400 (4分)",
+      },
+      {
+        rule_id: "RULE_SYMPY_MATH",
+        category: "math_consistency",
+        name: "SymPy 代数表达式严格检验",
+        status: "PASS",
+        detail: "求解 Δ=16-4k>0 结果为 k<4，与参考答案 opt_A 严格等价",
+        evidence: "solve(16 - 4*k > 0, k) -> (-oo, 4)",
+      },
+      {
+        rule_id: "RULE_SCOPE_BOUNDARY",
+        category: "scope_adherence",
+        name: "课程大纲与知识点边界",
+        status: "PASS",
+        detail: "命中已教范围：一元二次方程根的判别式，未检测到超纲内容",
+      },
+      {
+        rule_id: "RULE_ANTI_LEAK",
+        category: "anti_leakage",
+        name: "盲解隔离与防泄露",
+        status: "PASS",
+        detail: "盲解请求上下文中无 private.answers 属性",
+      },
+    ],
+    blind_solve: {
+      solver_role: "blind-solver",
+      model_id: "deepseek-chat",
+      is_same_model: true,
+      derived_answer: "A",
+      selected_option_ids: ["opt_A"],
+      steps: [
+        { step_number: 1, description: "识别题目要求一元二次方程有两不相等实数根，确立条件 Δ > 0" },
+        { step_number: 2, description: "代入 a=1, b=-4, c=k 得 Δ = 16 - 4k" },
+        { step_number: 3, description: "解不等式 16 - 4k > 0 得到 k < 4" },
+        { step_number: 4, description: "与选项比对，选项 A 吻合" },
+      ],
+      match_reference: true,
+      notes: "盲解答案与命题作者参考答案完全一致。已标注 SAME_MODEL。",
+      duration_ms: 1850,
+    },
+    verified_at: "2026-09-17T14:40:00Z",
+    content_hash: "sha256:7f92a104b2c159841f...",
+    repair_count: 0,
+  },
+  slot_02: {
+    local_id: "slot_02",
+    overall_status: "PASS",
+    rule_checks: [
+      {
+        rule_id: "RULE_SCORE_SUM",
+        category: "structure",
+        name: "分值结构平衡性",
+        status: "PASS",
+        detail: "各评分步之和等于题面分值 400",
+      },
+      {
+        rule_id: "RULE_SYMPY_MATH",
+        category: "math_consistency",
+        name: "几何相似比计算检验",
+        status: "PASS",
+        detail: "由 AD/DB=2/3 推得 AD/AB=2/5，(2/5)^2 = 4/25 吻合选项 C",
+      },
+      {
+        rule_id: "RULE_SCOPE_BOUNDARY",
+        category: "scope_adherence",
+        name: "教学考查范围校验",
+        status: "PASS",
+        detail: "符合人教版九年级相似三角形面积定理要求",
+      },
+    ],
+    blind_solve: {
+      solver_role: "blind-solver",
+      model_id: "deepseek-chat",
+      is_same_model: true,
+      derived_answer: "C",
+      selected_option_ids: ["opt_C"],
+      steps: [
+        { step_number: 1, description: "由平行线分线段成比例推导 ADE ~ ABC" },
+        { step_number: 2, description: "相似比为 AD/AB = 2/(2+3) = 2/5" },
+        { step_number: 3, description: "面积比为相似比的平方 (2/5)^2 = 4/25" },
+      ],
+      match_reference: true,
+      notes: "比对无偏差，选项 C 正确。",
+      duration_ms: 1920,
+    },
+    verified_at: "2026-09-17T14:40:02Z",
+    content_hash: "sha256:8b44c201a93821...",
+    repair_count: 0,
+  },
+  slot_03: {
+    local_id: "slot_03",
+    overall_status: "REVIEW",
+    rule_checks: [
+      {
+        rule_id: "RULE_SCORE_SUM",
+        category: "structure",
+        name: "分值结构平衡性",
+        status: "PASS",
+        detail: "总分 400，步骤分合计 400",
+      },
+      {
+        rule_id: "RULE_SYMPY_MATH",
+        category: "math_consistency",
+        name: "SymPy 代数化简检验",
+        status: "PASS",
+        detail: "计算 x1^2 + x2^2 = 11，吻合选项 B",
+      },
+      {
+        rule_id: "RULE_SCOPE_BOUNDARY",
+        category: "scope_adherence",
+        name: "教学考查范围提示",
+        status: "REVIEW",
+        detail: "部分教材省份将韦达定理列为选学/补充内容，需审核教师确认本校是否已教",
+        evidence: "检测到关键词：韦达定理/根与系数关系",
+      },
+    ],
+    blind_solve: {
+      solver_role: "blind-solver",
+      model_id: "deepseek-chat",
+      is_same_model: true,
+      derived_answer: "B",
+      selected_option_ids: ["opt_B"],
+      steps: [
+        { step_number: 1, description: "根据韦达定理: x1+x2=3, x1*x2=-1" },
+        { step_number: 2, description: "x1^2+x2^2=(x1+x2)^2-2*x1*x2=9-(-2)=11" },
+      ],
+      match_reference: true,
+      notes: "计算一致，标记 REVIEW 提醒确认课程范围。",
+      duration_ms: 1730,
+    },
+    verified_at: "2026-09-17T14:40:04Z",
+    content_hash: "sha256:1a77490fe42...",
+    repair_count: 0,
+  },
+  slot_08: {
+    local_id: "slot_08",
+    overall_status: "PASS",
+    rule_checks: [
+      {
+        rule_id: "RULE_SCORE_SUM",
+        category: "structure",
+        name: "大题给分步完整性",
+        status: "PASS",
+        detail: "各步分值分别为 400, 400, 400, 600，合计 1800 (18分)",
+      },
+      {
+        rule_id: "RULE_SYMPY_MATH",
+        category: "math_consistency",
+        name: "判别式与二次方程求解核对",
+        status: "PASS",
+        detail: "判别式恒为 1，第(2)问 m 的根为 2 和 -3，双向验证通过",
+      },
+      {
+        rule_id: "RULE_SCOPE_BOUNDARY",
+        category: "scope_adherence",
+        name: "题型与能力要求契合度",
+        status: "PASS",
+        detail: "属于综合推演题，逻辑链条完备，未超纲",
+      },
+    ],
+    blind_solve: {
+      solver_role: "blind-solver",
+      model_id: "deepseek-chat",
+      is_same_model: true,
+      derived_answer: "(1) Δ=1>0 证明成立; (2) m=2 或 m=-3",
+      steps: [
+        { step_number: 1, description: "展开 Δ = (2m+1)^2 - 4(m^2+m) = 1 > 0" },
+        { step_number: 2, description: "列方程 (2m+1)^2 - 2(m^2+m) = 13" },
+        { step_number: 3, description: "化简得 2m^2 + 2m - 12 = 0 => m=2 或 m=-3" },
+      ],
+      match_reference: true,
+      notes: "解答题盲解推理过程严密，步骤给分点与参考标准一致。",
+      duration_ms: 2450,
+    },
+    verified_at: "2026-09-17T14:40:08Z",
+    content_hash: "sha256:49c0182fba89...",
+    repair_count: 0,
+  },
+};

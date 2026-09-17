@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "record_structure_only",
+  "features": 15,
+  "actual_task_records": 0,
+  "warnings": [
+    "FEAT-DEV-MEMORY: STALE: 相关文件、登记范围或依赖已变化，需要重测"
+  ],
+  "application_verified": false,
+  "remote_ci_activated": false
+}
+

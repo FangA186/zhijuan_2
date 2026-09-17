@@ -1,0 +1,56 @@
+{"report_kind": "unittest-counts-v1", "created_at": "2026-09-17T14:10:54.595088+00:00", "pattern": "test_project_memory.py", "tests_run": 48, "failures": 0, "errors": 0, "skipped": 0, "expected_failures": 0, "unexpected_successes": 0, "status": "PASS"}
+
+test_actual_progress_does_not_require_editing_baseline (test_project_memory.MemoryTests.test_actual_progress_does_not_require_editing_baseline) ... ok
+test_changed_code_stales_evidence (test_project_memory.MemoryTests.test_changed_code_stales_evidence) ... ok
+test_changing_scope_declaration_stales_evidence (test_project_memory.MemoryTests.test_changing_scope_declaration_stales_evidence) ... ok
+test_ci_has_always_summary_and_no_secret_trigger (test_project_memory.MemoryTests.test_ci_has_always_summary_and_no_secret_trigger) ... ok
+test_cli_generated_output_guard (test_project_memory.MemoryTests.test_cli_generated_output_guard) ... ERROR: Context output must stay under progress/generated/
+ok
+test_context_is_bounded_and_does_not_dump_full_docs (test_project_memory.MemoryTests.test_context_is_bounded_and_does_not_dump_full_docs) ... ok
+test_context_reports_handoff_file_drift (test_project_memory.MemoryTests.test_context_reports_handoff_file_drift) ... ok
+test_dependency_cycle_rejected (test_project_memory.MemoryTests.test_dependency_cycle_rejected) ... ok
+test_dependency_scope_stales_evidence (test_project_memory.MemoryTests.test_dependency_scope_stales_evidence) ... ok
+test_derived_status_reproducible (test_project_memory.MemoryTests.test_derived_status_reproducible) ... ok
+test_done_without_evidence_rejected (test_project_memory.MemoryTests.test_done_without_evidence_rejected) ... ok
+test_duplicate_extra_task_rejected (test_project_memory.MemoryTests.test_duplicate_extra_task_rejected) ... ok
+test_duplicate_feature_rejected (test_project_memory.MemoryTests.test_duplicate_feature_rejected) ... ok
+test_empty_implementation_rejected (test_project_memory.MemoryTests.test_empty_implementation_rejected) ... ok
+test_example_env_allowed (test_project_memory.MemoryTests.test_example_env_allowed) ... ok
+test_extra_task_supported_without_baseline_change (test_project_memory.MemoryTests.test_extra_task_supported_without_baseline_change) ... ok
+test_fake_implementation_paths_rejected (test_project_memory.MemoryTests.test_fake_implementation_paths_rejected) ... ok
+test_git_rename_reports_old_and_new (test_project_memory.MemoryTests.test_git_rename_reports_old_and_new) ... ok
+test_git_staged_unstaged_untracked_and_committed (test_project_memory.MemoryTests.test_git_staged_unstaged_untracked_and_committed) ... ok
+test_global_contract_change_expands_scope (test_project_memory.MemoryTests.test_global_contract_change_expands_scope) ... ok
+test_handoff_does_not_mark_task_done (test_project_memory.MemoryTests.test_handoff_does_not_mark_task_done) ... ok
+test_handoffs_are_per_task_session_and_never_overwritten (test_project_memory.MemoryTests.test_handoffs_are_per_task_session_and_never_overwritten) ... ok
+test_invalid_task_rejected (test_project_memory.MemoryTests.test_invalid_task_rejected) ... ok
+test_matching_scope_is_offline_only (test_project_memory.MemoryTests.test_matching_scope_is_offline_only) ... ok
+test_missing_base_fails_closed (test_project_memory.MemoryTests.test_missing_base_fails_closed) ... ok
+test_missing_evidence_not_pass (test_project_memory.MemoryTests.test_missing_evidence_not_pass) ... ok
+test_missing_required_suite_rejected (test_project_memory.MemoryTests.test_missing_required_suite_rejected) ... ok
+test_nested_repository_not_assumed (test_project_memory.MemoryTests.test_nested_repository_not_assumed) ... ok
+test_new_watched_file_stales_evidence (test_project_memory.MemoryTests.test_new_watched_file_stales_evidence) ... ok
+test_no_git_explicit (test_project_memory.MemoryTests.test_no_git_explicit) ... ok
+test_planned_suite_does_not_become_green (test_project_memory.MemoryTests.test_planned_suite_does_not_become_green) ... ok
+test_product_not_marked_implemented (test_project_memory.MemoryTests.test_product_not_marked_implemented) ... ok
+test_public_projection_change_reaches_exports (test_project_memory.MemoryTests.test_public_projection_change_reaches_exports) ... ok
+test_quality_status_semantics (test_project_memory.MemoryTests.test_quality_status_semantics) ... ok
+test_record_consistency (test_project_memory.MemoryTests.test_record_consistency) ... ok
+test_redaction (test_project_memory.MemoryTests.test_redaction) ... ok
+test_report_changed_during_run_is_stale (test_project_memory.MemoryTests.test_report_changed_during_run_is_stale) ... ok
+test_report_failed_not_pass (test_project_memory.MemoryTests.test_report_failed_not_pass) ... ok
+test_revision_change_reaches_exports (test_project_memory.MemoryTests.test_revision_change_reaches_exports) ... ok
+test_sensitive_paths_rejected (test_project_memory.MemoryTests.test_sensitive_paths_rejected) ... ok
+test_skips_and_zero_tests_fail (test_project_memory.MemoryTests.test_skips_and_zero_tests_fail) ... ok
+test_strict_evidence_needs_evidence (test_project_memory.MemoryTests.test_strict_evidence_needs_evidence) ... ok
+test_symlink_rejected (test_project_memory.MemoryTests.test_symlink_rejected) ... ok
+test_tampered_log_invalidates_evidence (test_project_memory.MemoryTests.test_tampered_log_invalidates_evidence) ... ok
+test_unknown_dependency_rejected (test_project_memory.MemoryTests.test_unknown_dependency_rejected) ... ok
+test_unknown_path_not_treated_as_safe (test_project_memory.MemoryTests.test_unknown_path_not_treated_as_safe) ... ok
+test_unknown_suite_rejected (test_project_memory.MemoryTests.test_unknown_suite_rejected) ... ok
+test_unrelated_handoff_does_not_stale_code_evidence (test_project_memory.MemoryTests.test_unrelated_handoff_does_not_stale_code_evidence) ... ok
+
+----------------------------------------------------------------------
+Ran 48 tests in 6.550s
+
+OK

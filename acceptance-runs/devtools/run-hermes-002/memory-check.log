@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "scope": "record_structure_only",
+  "features": 15,
+  "actual_task_records": 0,
+  "warnings": [],
+  "application_verified": false,
+  "remote_ci_activated": false
+}
+

@@ -1,0 +1,13 @@
+{
+  "result": "PASS",
+  "scope": "offline_acceptance_material_consistency_only",
+  "case_definitions": 47,
+  "minimum_cases": 19,
+  "full_cases": 28,
+  "input_fixtures": 3,
+  "live_model_executed": false,
+  "g_min": "NOT_RUN",
+  "g_full": "NOT_RUN"
+}
+NOT RUN: application startup, live Hermes/DeepSeek, generated-exam quality, G-MIN, G-FULL.
+
