@@ -1,0 +1,79 @@
+schema_version: '1.0'
+notice: 这是知卷业务策略示例，不是 Hermes 原生 config.yaml；数值为待压测建议。
+question_bank:
+  enabled: false
+  history_retrieval: false
+generation:
+  max_repairs_per_question: 2
+  max_iterations_per_role: 12
+  max_model_calls_per_question: 12
+  max_parallel_exam_jobs_per_tenant: 2
+  max_parallel_groups_per_exam: 3
+  cross_job_memory: false
+  allow_web_search: false
+  deadline_seconds: 1200
+runtime:
+  isolate_home_per_run: true
+  skills_read_only: true
+  allow_arbitrary_terminal: false
+  allow_arbitrary_code: false
+  allowed_tool_names:
+  - get_generation_brief
+  - validate_structure
+  - verify_math_ast
+  - render_diagram_spec
+  - submit_candidate
+  - submit_audit_summary
+review_profiles:
+  practice:
+    minimum_content_reviewers: 1
+    require_author_reviewer_separation: false
+    minimum_render_reviewers: 1
+  cn_school_daily_exam:
+    minimum_content_reviewers: 3
+    require_author_reviewer_separation: true
+    minimum_render_reviewers: 1
+    block_primary_years_for_paper_exam:
+    - 1
+    - 2
+    policy_applicability_review_required: true
+publication:
+  fail_is_waivable: false
+  review_resolution_requires_permission: true
+  require_current_hash: true
+  require_render_approval: true
+models:
+  planner:
+    provider: deepseek
+    model_id: REPLACE_WITH_VERIFIED_DEEPSEEK_MODEL_ID
+  author:
+    provider: deepseek
+    model_id: REPLACE_WITH_VERIFIED_DEEPSEEK_MODEL_ID
+  solver:
+    provider: deepseek
+    model_id: REPLACE_WITH_VERIFIED_DEEPSEEK_MODEL_ID
+  reviewer:
+    provider: deepseek
+    model_id: REPLACE_WITH_VERIFIED_DEEPSEEK_MODEL_ID
+  exam_reviewer:
+    provider: deepseek
+    model_id: REPLACE_WITH_VERIFIED_DEEPSEEK_MODEL_ID
+secrets: 使用 secret reference，禁止在该文件保存真实密钥。
+document_version: '1.3'
+ai_runtime:
+  agent_framework: hermes
+  model_provider: deepseek
+  connection_mode: direct_official_api
+  additional_agent_frameworks: []
+  automatic_provider_fallback: false
+  auxiliary_provider_policy: same_provider_or_disabled
+  verification_label: SAME_MODEL
+execution_ownership:
+  agent_loop: hermes
+  request_retry: hermes_request_layer
+  repair_actions: hermes
+  repair_budget: business_backend
+  state: business_backend
+  tool_permissions: tool_gateway
+  delivery_recovery: celery
+  adapter: thin_python_boundary

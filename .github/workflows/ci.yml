@@ -1,0 +1,46 @@
+name: 知卷离线检查
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout reviewed revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c
+        with:
+          python-version: '3.12'
+      - name: Install offline-check dependencies
+        run: python -m pip install -r requirements-ci.lock
+      - name: Run all implemented offline checks (NOT product E2E)
+        run: python tools/run_quality_checks.py --suite all-offline --feature FEAT-DEV-MEMORY --out acceptance-runs/ci/current
+      - name: Upload actual report even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: offline-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: acceptance-runs/ci/current/
+          if-no-files-found: error
+          retention-days: 14
+  required-checks:
+    if: ${{ always() }}
+    needs: [offline]
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Require actual offline success, not skipped or cancelled
+        env:
+          OFFLINE_RESULT: ${{ needs.offline.result }}
+        run: |
+          test "$OFFLINE_RESULT" = "success"
+          echo "Offline checks only; product E2E, live quality and phase signoff are separate."

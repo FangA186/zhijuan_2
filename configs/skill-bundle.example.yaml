@@ -1,0 +1,12 @@
+bundle_version: zhijuan-example-0.2
+status: TEMPLATE_NOT_PRODUCTION_APPROVED
+skills:
+- exam-planner
+- question-author
+- blind-solver
+- question-reviewer
+- exam-reviewer
+hermes_commit: REPLACE_WITH_AUDITED_COMMIT
+image_digest: REPLACE_WITH_TESTED_IMAGE_DIGEST
+approved_by: null
+test_report_ref: null

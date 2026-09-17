@@ -1,0 +1,320 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExamSpec",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "curriculum_system": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "region": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "primary",
+        "junior",
+        "senior"
+      ]
+    },
+    "stage_year": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 12
+    },
+    "grade_label": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30
+    },
+    "subject_code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "subject_label": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "textbook": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 300
+    },
+    "module": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 300
+    },
+    "taught_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "minItems": 1,
+          "maxItems": 100
+        },
+        "excluded_topics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "minItems": 0,
+          "maxItems": 100
+        },
+        "permitted_methods": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "minItems": 0,
+          "maxItems": 100
+        },
+        "scope_confirmed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "topics",
+        "excluded_topics",
+        "permitted_methods",
+        "scope_confirmed"
+      ]
+    },
+    "purpose": {
+      "type": "string",
+      "enum": [
+        "practice",
+        "diagnosis",
+        "review",
+        "formal"
+      ]
+    },
+    "usage_context": {
+      "type": "string",
+      "enum": [
+        "personal_learning",
+        "school_daily_exam",
+        "other"
+      ]
+    },
+    "delivery_mode": {
+      "type": "string",
+      "enum": [
+        "paper",
+        "digital"
+      ]
+    },
+    "total_score_x100": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100000
+    },
+    "duration_minutes": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 600
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "question_type": {
+            "type": "string",
+            "enum": [
+              "single_choice",
+              "multiple_choice",
+              "true_false",
+              "fill_blank",
+              "solution",
+              "short_answer",
+              "essay",
+              "material_group"
+            ]
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "score_each_x100": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "minItems": 1,
+            "maxItems": 30
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "question_type",
+          "count",
+          "score_each_x100",
+          "topics"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 30
+    },
+    "difficulty_distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "basic": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "medium": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "advanced": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "basic",
+        "medium",
+        "advanced"
+      ]
+    },
+    "output_preferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "paper_size": {
+          "type": "string",
+          "enum": [
+            "A4",
+            "A3"
+          ]
+        },
+        "font_size_pt": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 24
+        },
+        "include_answer_space": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "paper_size",
+        "font_size_pt",
+        "include_answer_space"
+      ]
+    },
+    "provided_materials": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "text",
+          "source_note",
+          "rights_confirmed"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 30000
+          },
+          "source_note": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "rights_confirmed": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "title",
+    "curriculum_system",
+    "region",
+    "stage",
+    "stage_year",
+    "grade_label",
+    "subject_code",
+    "subject_label",
+    "textbook",
+    "module",
+    "taught_scope",
+    "purpose",
+    "usage_context",
+    "delivery_mode",
+    "total_score_x100",
+    "duration_minutes",
+    "sections",
+    "difficulty_distribution",
+    "output_preferences"
+  ]
+}

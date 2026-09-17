@@ -1,0 +1,16 @@
+{
+  "check_id": "40000000-0000-4000-8000-000000000001",
+  "target_type": "question",
+  "target_id": "question-revision-demo",
+  "content_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "check_code": "math.solution_consistency",
+  "checker_id": "math-validator",
+  "checker_version": "example-0.1",
+  "evidence_type": "deterministic",
+  "status": "PASS",
+  "severity": "info",
+  "manual_allowed": false,
+  "evidence_summary": "示例记录：x=4 代入成立。此文件并非真实服务签发的证据。",
+  "trace_id": "example-trace",
+  "created_at": "2026-09-15T00:00:00Z"
+}

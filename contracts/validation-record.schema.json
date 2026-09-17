@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ValidationRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "check_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "target_type": {
+      "type": "string",
+      "enum": [
+        "question",
+        "exam",
+        "render"
+      ]
+    },
+    "target_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "check_code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 150
+    },
+    "checker_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "checker_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": [
+        "deterministic",
+        "model",
+        "human"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "REVIEW"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "minor",
+        "major",
+        "critical"
+      ]
+    },
+    "manual_allowed": {
+      "type": "boolean"
+    },
+    "evidence_summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8000
+    },
+    "trace_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "check_id",
+    "target_type",
+    "target_id",
+    "content_hash",
+    "check_code",
+    "checker_id",
+    "checker_version",
+    "evidence_type",
+    "status",
+    "severity",
+    "manual_allowed",
+    "evidence_summary",
+    "trace_id",
+    "created_at"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "record_structure_only",
+  "features": 15,
+  "actual_task_records": 0,
+  "warnings": [
+    "FEAT-DEV-MEMORY: NOT_RUN: 没有登记运行报告"
+  ],
+  "application_verified": false,
+  "remote_ci_activated": false
+}
+

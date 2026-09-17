@@ -1,0 +1,5 @@
+model:
+  provider: deepseek
+  default: REPLACE_WITH_VERIFIED_DEEPSEEK_MODEL_ID
+skills:
+  write_approval: true

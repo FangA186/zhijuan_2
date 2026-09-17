@@ -1,0 +1,39 @@
+schema_version: 1
+context_max_chars: 12000
+max_scope_files: 15000
+always_read:
+- AGENTS.md
+- progress/current.md
+- docs/project-map.md
+global_watch_paths:
+- contracts/**
+- configs/**
+- requirements-test.txt
+- requirements-ci.lock
+- pyproject.toml
+- uv.lock
+- apps/web/package.json
+- apps/web/package-lock.json
+- .github/workflows/**
+allowed_context_roots:
+- docs
+- execution
+- contracts
+- configs
+- skills
+- quality
+- progress
+- reference_code
+- tools
+- tests
+manual_review_paths:
+- .github/**
+- quality/**
+- contracts/**
+- database/**
+- migrations/**
+- AGENTS.md
+- progress/policy.yaml
+notes:
+- 影响映射按显式路径与功能依赖求闭包；不保证识别全部动态依赖。
+- 上下文包不展开源码、日志、题目或敏感配置正文。

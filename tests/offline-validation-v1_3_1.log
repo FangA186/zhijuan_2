@@ -1,0 +1,110 @@
+$ /opt/pyvenv/bin/python -m unittest discover -s tests -v
+test_capability_template_has_no_ready_claims (test_acceptance_assets.AcceptanceAssetsTests.test_capability_template_has_no_ready_claims) ... ok
+test_evidence_template_is_not_a_run (test_acceptance_assets.AcceptanceAssetsTests.test_evidence_template_is_not_a_run) ... ok
+test_execution_results_are_blank (test_acceptance_assets.AcceptanceAssetsTests.test_execution_results_are_blank) ... ok
+test_fixture_scope_requires_teacher_confirmation (test_acceptance_assets.AcceptanceAssetsTests.test_fixture_scope_requires_teacher_confirmation) ... ok
+test_fixtures_are_twenty_points_and_five_items (test_acceptance_assets.AcceptanceAssetsTests.test_fixtures_are_twenty_points_and_five_items) ... ok
+test_full_gate_case_count (test_acceptance_assets.AcceptanceAssetsTests.test_full_gate_case_count) ... ok
+test_hermes_deepseek_no_question_bank_scope (test_acceptance_assets.AcceptanceAssetsTests.test_hermes_deepseek_no_question_bank_scope) ... ok
+test_inventory_and_cross_references (test_acceptance_assets.AcceptanceAssetsTests.test_inventory_and_cross_references) ... ok
+test_minimum_gate_case_count (test_acceptance_assets.AcceptanceAssetsTests.test_minimum_gate_case_count) ... ok
+test_minimum_positive_and_sensitive_cases_repeat_all_stages (test_acceptance_assets.AcceptanceAssetsTests.test_minimum_positive_and_sensitive_cases_repeat_all_stages) ... ok
+test_no_application_or_hermes_delivery_claim (test_acceptance_assets.AcceptanceAssetsTests.test_no_application_or_hermes_delivery_claim) ... ok
+test_phases_have_explicit_dependencies (test_acceptance_assets.AcceptanceAssetsTests.test_phases_have_explicit_dependencies) ... ok
+test_all_examples (test_contracts.ContractTests.test_all_examples) ... ok
+test_all_stage_spec_examples (test_contracts.ContractTests.test_all_stage_spec_examples) ... ok
+test_blind_input_rejects_private_answer (test_contracts.ContractTests.test_blind_input_rejects_private_answer) ... ok
+test_example_scores_and_answer_refs_semantically_consistent (test_contracts.ContractTests.test_example_scores_and_answer_refs_semantically_consistent) ... ok
+test_material_group_requires_children_and_zero_parent_score (test_contracts.ContractTests.test_material_group_requires_children_and_zero_parent_score) ... ok
+test_nested_question_rejects_private (test_contracts.ContractTests.test_nested_question_rejects_private) ... ok
+test_schemas_well_formed (test_contracts.ContractTests.test_schemas_well_formed) ... ok
+test_student_question_rejects_private_answer (test_contracts.ContractTests.test_student_question_rejects_private_answer) ... ok
+test_unknown_grade_stage_rejected (test_contracts.ContractTests.test_unknown_grade_stage_rejected) ... ok
+test_added_read_operations_and_revoke_exist (test_execution_plan.ExecutionPlanTests.test_added_read_operations_and_revoke_exist) ... ok
+test_case_single_summary_rejected (test_execution_plan.ExecutionPlanTests.test_case_single_summary_rejected) ... ok
+test_case_without_cleanup_rejected (test_execution_plan.ExecutionPlanTests.test_case_without_cleanup_rejected) ... ok
+test_complete_plan_consistency (test_execution_plan.ExecutionPlanTests.test_complete_plan_consistency) ... ok
+test_dependency_cycle_rejected (test_execution_plan.ExecutionPlanTests.test_dependency_cycle_rejected) ... ok
+test_dependency_on_later_phase_rejected (test_execution_plan.ExecutionPlanTests.test_dependency_on_later_phase_rejected) ... ok
+test_duplicate_task_rejected (test_execution_plan.ExecutionPlanTests.test_duplicate_task_rejected) ... ok
+test_fake_runtime_evidence_rejected (test_execution_plan.ExecutionPlanTests.test_fake_runtime_evidence_rejected) ... ok
+test_fake_runtime_pass_rejected (test_execution_plan.ExecutionPlanTests.test_fake_runtime_pass_rejected) ... ok
+test_missing_dependency_rejected (test_execution_plan.ExecutionPlanTests.test_missing_dependency_rejected) ... ok
+test_unexecuted_materials_leave_all_gates_unclaimed (test_execution_plan.ExecutionPlanTests.test_unexecuted_materials_leave_all_gates_unclaimed) ... ok
+test_unknown_task_mapping_rejected (test_execution_plan.ExecutionPlanTests.test_unknown_task_mapping_rejected) ... ok
+test_author_cannot_approve_when_separation_required (test_publish_gate.PublishGateTests.test_author_cannot_approve_when_separation_required) ... ok
+test_duplicate_canonical_check (test_publish_gate.PublishGateTests.test_duplicate_canonical_check) ... ok
+test_duplicate_people_not_counted_twice (test_publish_gate.PublishGateTests.test_duplicate_people_not_counted_twice) ... ok
+test_fail_cannot_be_waived (test_publish_gate.PublishGateTests.test_fail_cannot_be_waived) ... ok
+test_forged_check (test_publish_gate.PublishGateTests.test_forged_check) ... ok
+test_incomplete_exam (test_publish_gate.PublishGateTests.test_incomplete_exam) ... ok
+test_missing_check (test_publish_gate.PublishGateTests.test_missing_check) ... ok
+test_non_manual_review_cannot_be_overridden (test_publish_gate.PublishGateTests.test_non_manual_review_cannot_be_overridden) ... ok
+test_pass (test_publish_gate.PublishGateTests.test_pass) ... ok
+test_policy_blocks (test_publish_gate.PublishGateTests.test_policy_blocks) ... ok
+test_render_not_approved (test_publish_gate.PublishGateTests.test_render_not_approved) ... ok
+test_review_can_be_resolved_by_authorized_reviewer (test_publish_gate.PublishGateTests.test_review_can_be_resolved_by_authorized_reviewer) ... ok
+test_review_requires_resolution (test_publish_gate.PublishGateTests.test_review_requires_resolution) ... ok
+test_stale_check (test_publish_gate.PublishGateTests.test_stale_check) ... ok
+test_stale_resolution (test_publish_gate.PublishGateTests.test_stale_resolution) ... ok
+test_three_distinct_reviewers (test_publish_gate.PublishGateTests.test_three_distinct_reviewers) ... ok
+test_api_metadata_runtime_and_paths (test_runtime_policy.RuntimePolicyTests.test_api_metadata_runtime_and_paths) ... ok
+test_automatic_fallback_rejected (test_runtime_policy.RuntimePolicyTests.test_automatic_fallback_rejected) ... ok
+test_auxiliary_other_route_rejected (test_runtime_policy.RuntimePolicyTests.test_auxiliary_other_route_rejected) ... ok
+test_config_type_rejected (test_runtime_policy.RuntimePolicyTests.test_config_type_rejected) ... ok
+test_empty_model_rejected (test_runtime_policy.RuntimePolicyTests.test_empty_model_rejected) ... ok
+test_hermes_native_fragment (test_runtime_policy.RuntimePolicyTests.test_hermes_native_fragment) ... ok
+test_inconsistent_model_ids_rejected (test_runtime_policy.RuntimePolicyTests.test_inconsistent_model_ids_rejected) ... ok
+test_missing_role_rejected (test_runtime_policy.RuntimePolicyTests.test_missing_role_rejected) ... ok
+test_nested_agent_framework_rejected (test_runtime_policy.RuntimePolicyTests.test_nested_agent_framework_rejected) ... ok
+test_other_framework_rejected (test_runtime_policy.RuntimePolicyTests.test_other_framework_rejected) ... ok
+test_other_provider_rejected (test_runtime_policy.RuntimePolicyTests.test_other_provider_rejected) ... ok
+test_resolved_same_model_policy (test_runtime_policy.RuntimePolicyTests.test_resolved_same_model_policy) ... ok
+test_retry_owner_cannot_be_queue (test_runtime_policy.RuntimePolicyTests.test_retry_owner_cannot_be_queue) ... ok
+test_secret_template_has_no_key (test_runtime_policy.RuntimePolicyTests.test_secret_template_has_no_key) ... ok
+test_shipped_placeholder_cannot_deploy (test_runtime_policy.RuntimePolicyTests.test_shipped_placeholder_cannot_deploy) ... ok
+test_wrong_same_model_label_rejected (test_runtime_policy.RuntimePolicyTests.test_wrong_same_model_label_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 65 tests in 1.608s
+
+OK
+
+exit_code=0
+
+$ /opt/pyvenv/bin/python verify_bundle.py
+PASS: 5 JSON Schemas, local references, 25 core operations, YAML parsing.
+NOT RUN: full OpenAPI spec validator, PostgreSQL migration, live Hermes, model quality or production security tests.
+
+exit_code=0
+
+$ /opt/pyvenv/bin/python verify_acceptance_assets.py
+{
+  "result": "PASS",
+  "scope": "offline_acceptance_material_consistency_only",
+  "case_definitions": 47,
+  "minimum_cases": 19,
+  "full_cases": 28,
+  "input_fixtures": 3,
+  "live_model_executed": false,
+  "g_min": "NOT_RUN",
+  "g_full": "NOT_RUN"
+}
+NOT RUN: application startup, live Hermes/DeepSeek, generated-exam quality, G-MIN, G-FULL.
+
+exit_code=0
+
+$ /opt/pyvenv/bin/python tools/verify_execution_plan.py
+{
+  "result": "PASS",
+  "scope": "written_execution_materials_only",
+  "task_cards": 32,
+  "api_operations": 25,
+  "case_definitions": 47,
+  "application_executed": false,
+  "hermes_installed": false,
+  "live_model_called": false
+}
+NOT RUN: application build/startup, upstream installation, model calls, phase gates, G-MIN, G-FULL.
+
+exit_code=0

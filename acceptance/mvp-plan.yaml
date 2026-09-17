@@ -1,0 +1,126 @@
+document_version: '1.3'
+artifact_kind: acceptance_plan_not_application
+status: NOT_RUN
+scope:
+  school_stages:
+  - primary
+  - junior
+  - senior
+  provider: deepseek
+  agent_framework: hermes
+  question_bank: false
+  langchain: false
+  langgraph: false
+  history_retrieval: false
+phases:
+- id: M0
+  name: 范围与工程准备
+  depends_on: []
+  gate: G-PREP
+  current_status: NOT_RUN
+  deliverables:
+  - 首发能力与用途批准
+  - 真实模型和Hermes版本确认
+  - 工程仓库与接口基线
+  - 预先签署质量/性能/预算参数
+  exit_criteria:
+  - 能力清单和验收参数签署
+  - 工程准备与责任到人
+  claim_allowed: 开发准备就绪，非可运行MVP
+- id: M1
+  name: 可运行工程骨架
+  depends_on:
+  - M0
+  gate: G-BOOT
+  current_status: NOT_RUN
+  deliverables:
+  - 实际前后端和Worker
+  - 真实Hermes Adapter
+  - 固定Hermes来源和可复现安装
+  - 服务端DeepSeek调用与错误处理
+  - 数据库迁移
+  exit_criteria:
+  - 干净环境启动
+  - 三学段各至少一题live生成
+  - 真实运行版本与调用证据
+  - 无密钥不伪造成功
+  claim_allowed: 真实接入骨架，非正式试卷发布
+- id: M2
+  name: 最小可用闭环
+  depends_on:
+  - M1
+  gate: G-MIN
+  current_status: NOT_RUN
+  deliverables:
+  - 蓝图到编辑和保存
+  - 真实隔离盲解
+  - 基础检查与有限修订
+  - 草稿学生/教师PDF和JSON
+  exit_criteria:
+  - minimum-cases.yaml全部适用项执行通过
+  - 三学段各一套5题20分小卷
+  - 最低失败场景有证据
+  claim_allowed: 授权教师受限验证，正式发布禁用
+- id: M3
+  name: 完整MVP与受控试用
+  depends_on:
+  - M2
+  gate: G-FULL
+  current_status: NOT_RUN
+  deliverables:
+  - 五个Skills与首发检查/人工复核
+  - 队列故障恢复与权限
+  - 审核和版本化正式发布
+  - PDF/DOCX和受限证据
+  - 三学段质量与运维报告
+  exit_criteria:
+  - G-MIN通过
+  - full-cases.yaml所有适用必测项通过
+  - 首发承诺全覆盖
+  - 质量/性能门槛签署且达到
+  - 无未关闭P0/P1
+  - 完整交接签字
+  claim_allowed: 约定范围内受控试用，非全学科自动正确保证
+minimum_baseline:
+  papers_per_stage: 1
+  questions_per_paper: 5
+  total_score_per_paper: 20
+  positive_checkpoints: 12
+  negative_checkpoints: 7
+  repeat_all_positive_per_stage: true
+  repeat_negative_per_stage:
+  - MIN-N05
+  - MIN-N07
+  mathematics_smoke_only_not_final_scope: true
+full_baseline:
+  papers_per_stage: 2
+  must_cover_families:
+  - math
+  - reading_or_material
+  candidates_per_stage_min: 100
+  candidates_per_committed_combination_min: 20
+  coverage_requires_all_committed_combinations: true
+  quality_targets_proposed_not_results:
+    first_pass_usable_rate_min: 0.8
+    complete_delivery_rate_min: 0.9
+    severe_error_escape_rate_max: null
+    must_sign_before_run: true
+result_status_enum:
+- NOT_RUN
+- RUNNING
+- PASS
+- FAIL
+- BLOCKED
+- NOT_APPLICABLE
+non_waivable:
+- all_three_school_stages
+- live_hermes_deepseek
+- blind_isolation
+- authorization
+- current_evidence_publish_gate
+- student_answer_privacy
+notes:
+- 文件版本不是产品阶段
+- 本轮未执行M0-M3运行验收
+- 不将测试材料当生产题库
+- 完整产品范围以事先批准清单为准，不能事后删失败能力

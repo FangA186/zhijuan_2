@@ -1,0 +1,62 @@
+{
+  "task_ref": "opaque-stage-token-reference",
+  "public_question": {
+    "local_id": "s1-q1",
+    "kind": "single_choice",
+    "prompt": [
+      {
+        "type": "text",
+        "text": "方程 2x + 3 = 11 的解是（ ）。"
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-1",
+        "content": [
+          {
+            "type": "text",
+            "text": "x = 3"
+          }
+        ]
+      },
+      {
+        "id": "opt-2",
+        "content": [
+          {
+            "type": "text",
+            "text": "x = 4"
+          }
+        ]
+      },
+      {
+        "id": "opt-3",
+        "content": [
+          {
+            "type": "text",
+            "text": "x = 5"
+          }
+        ]
+      },
+      {
+        "id": "opt-4",
+        "content": [
+          {
+            "type": "text",
+            "text": "x = 7"
+          }
+        ]
+      }
+    ],
+    "score_x100": 300,
+    "material_ids": [],
+    "children": [],
+    "answer_space_lines": 0
+  },
+  "scope_topics": [
+    "一元一次方程的求解"
+  ],
+  "permitted_methods": [
+    "移项与合并同类项"
+  ],
+  "materials": []
+}

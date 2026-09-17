@@ -1,0 +1,11 @@
+schema_version: 1
+task_id: M0-01
+session_id: replace-with-unique-session
+summary: 模板，不是已执行交接
+next_action: 明确下一项动作
+completed: []
+pending: []
+decisions: []
+failed_approaches: []
+evidence_refs: []
+note: 实际快照由 project_memory.py handoff 生成；本模板不放入 active handoffs 目录。

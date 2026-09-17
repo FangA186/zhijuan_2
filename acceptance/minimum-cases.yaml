@@ -1,0 +1,925 @@
+document_version: '1.3'
+artifact_kind: test_specification_not_execution_report
+gate: G-MIN
+default_status: NOT_RUN
+note: 用例是验收规程，未实现应用E2E自动化，未进行live执行。
+cases:
+- id: MIN-01
+  title: 启动与配置
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: &id001
+  - primary
+  - junior
+  - senior
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 在新环境记录 OS、应用 commit、Hermes commit、镜像/依赖版本；按工程 README 启动完整服务，不只数据库和队列。
+  - 以实际 health/readiness 查询依赖，配置服务端测试密钥；确认模型探测需要明确授权而非健康轮询自动计费。
+  - 打开网页登录受限身份，检查三个学段的配置入口；向后端发一次不计费的规格请求。
+  - 保存启动命令、退出码、健康结果和接收者操作记录；任何缺失依赖标 BLOCKED，不运行伪造结果。
+  expected_results:
+  - 实际健康检查、运行版本及脱敏启动记录；不是只启动数据库和队列
+  evidence_required:
+  - 脱敏启动日志
+  - 真实版本/health记录
+  - 接收者启动记录
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - backend
+  - agent
+  - qa
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M0-04
+  - M1-01
+  - M1-09
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-02
+  title: 三学段输入
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 分别加载 acceptance/fixtures 中三学段规格，由教师核对并确认 taught_scope。
+  - 在网页录入 2 道单选×3 分、2 道填空×2 分、1 道解答×10 分。
+  - 提交后读取 GET /v1/exams/{id}/spec，核对 5 题、score_x100 合计 2000 和确认的范围。
+  - 再次打开项目，确认课程限制未变；保存三个 spec、exam_id、revision 和后端返回。
+  expected_results:
+  - 保存三份 spec；20 分、5 个叶子题；不能自动扩大范围
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - product
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M0-03
+  - M1-05
+  - M2-01
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-03
+  title: 计划确认
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 发起 plan-jobs 并保存 job_id，等待任务真实结束。
+  - 读取 plans/current，核对每个 slot 的知识点、题型、分值与 plan_hash。
+  - 先在未确认时请求 generation，必须被拒绝；再由教师确认指定 plan_id/hash。
+  - 确认后创建 generation 任务；修改规格再试用旧计划确认，必须冲突或失效。
+  expected_results:
+  - blueprint 版本与确认记录；未确认不产生正式生成任务
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - product
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M0-03
+  - M1-05
+  - M2-01
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-04
+  title: 真实命题
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 现场修改一个未预置的知识要求并确认新蓝图；提交真实 generation。
+  - 跟踪 job_id→step_id→hermes_run_id，记录实际 provider/model 和 Skill 哈希。
+  - 等待实际模型输出，验证 candidate schema 并从业务数据库回读；不能仅看网页文字。
+  - 记录供应商请求 ID 或注明无 ID 时的替代证据、用量与输出摘要；源码检查没有直接模型旁路。
+  expected_results:
+  - 可关联的任务、Hermes 运行和供应商调用记录；输出来源为 live，非固定模板或直接绕过 Hermes 调模型
+  evidence_required:
+  - spec/blueprint指纹
+  - Hermes运行记录
+  - 供应商request_id或请求响应摘要与用量
+  - job_id/trace_id
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - product
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M0-05
+  - M1-03
+  - M1-06
+  - M1-09
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-05
+  title: 进度与刷新
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 启动一套生成后记录 job_id 和已持久化事件序号。
+  - 等待至少一个真实阶段事件后刷新浏览器，并短暂断开网络。
+  - 重连以原 job_id 查询/重订阅；观察已生成/检查/失败数与后台记录一致。
+  - 核对 generation POST 次数、模型调用及结果条数没有因刷新增加；进度不是计时动画。
+  expected_results:
+  - 同一 job_id 恢复进度，不重复生成；后台事件与页面一致
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - product
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M1-04
+  - M1-07
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-06
+  title: 基础检查与盲解
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 对当前题面生成白名单 blind-input，保存其 hash 与作者私有输入清单的差异。
+  - 在分离 runtime 执行 solver，尝试访问作者秘密文件并核查明确拒绝。
+  - 执行结构、评分、引用和已支持数学工具，记录真实 check_id/version/status。
+  - 比较独立答案并标 SAME_MODEL；不支持/冲突保留 REVIEW 或 FAIL，不能全部绿灯。
+  expected_results:
+  - 两个隔离任务输入摘要、实际工具记录、PASS／FAIL／REVIEW；同模型标记 SAME_MODEL
+  evidence_required:
+  - 不含参考答案的盲解输入摘要
+  - 独立工作区与工具授权
+  - 真实检查器结果
+  - SAME_MODEL标签
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - agent
+  - subject_reviewer
+  - qa
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M0-05
+  - M2-02
+  - M2-03
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-07
+  title: 问题修订
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 在测试专用通道对一题注入可定位的错误，并标 injected=true。
+  - 触发 reviewer→author 修订；观察后端 repair_attempt 与版本增加。
+  - 复查盲解和工具证据均对应修订后的内容；再故意持续错误直到达到两轮上限。
+  - 确认超限进入待审、没有继续调用；清除注入后再跑一条 live 任务，不把注入统计成模型自然错误。
+  expected_results:
+  - 每轮有原因、版本和新检查；超限进入待审，不无限重试
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - product
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  fault_injection_note: 故障注入只验证处理路径，不能作为真实模型错误率或真实成功调用证据
+  implementation_tasks:
+  - M2-04
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-08
+  title: 手工编辑
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 打开当前题，记录 revision/content_hash 与已有检查。
+  - 修改题干数字或评分点，携带 If-Match 保存。
+  - 核对数据库新版本、旧检查失效和页面需重检提示；提交旧审批应被拒绝。
+  - 重新盲解/检查并保存新结果；在另一窗口提交旧 revision，确认冲突且不覆盖。
+  expected_results:
+  - revision 增加、旧检查失效；重新检查当前题面
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - product
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M2-05
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-09
+  title: 单题重生成
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 记录全卷各 slot 的内容指纹，选择其中一题重生成。
+  - 保留目标/题型/分值提交 regeneration-jobs，观察只新增该 slot 任务。
+  - 在模型返回前手工改同题，检查旧期望版本结果被标 stale 而非覆盖。
+  - 重新发起合法重生成，核对其余所有 slot 指纹不变且新题重检完成。
+  expected_results:
+  - 只替换当前题；其他题不变化；迟到结果不能覆盖教师更新
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - product
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M2-05
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-10
+  title: 保存与复核
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 保存试卷与检查，关闭浏览器再登录打开。
+  - 从业务 API 核对 spec、plan、候选、答案、评分和未决问题，不能由 Agent 重答。
+  - 授权教师确认当前草稿 hash；修改后再使用旧确认，必须失效。
+  - 无授权身份尝试 teacher 视图与确认操作，核对拒绝且无私有字段。
+  expected_results:
+  - 数据持久化；教师确认绑定当前版本；失败题不能直接算已完成
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - product
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M1-02
+  - M2-06
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-11
+  title: 草稿交付
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 由当前确认版本构建草稿 snapshot，分别请求 student PDF、teacher PDF 与 JSON。
+  - 等待渲染和预检完成，保存实际下载字节与 SHA-256，核对来自同一 snapshot。
+  - 逐页检查 5 题/20 分、公式、题号、答题区、分页和草稿标识；教师版核对答案与评分。
+  - 检查学生 API、HTML 与 PDF 不含私有答案字段/秘密标记；打开 JSON 按对应投影 Schema 验证。
+  expected_results:
+  - 真实可打开的文件；版本一致；草稿标识清楚；学生文件不含私有答案
+  evidence_required:
+  - 学生草稿PDF
+  - 教师草稿PDF
+  - JSON快照
+  - 三个文件的版本与SHA256
+  - 人工排版检查
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - frontend
+  - renderer
+  - qa
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M2-07
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-12
+  title: 证据归档
+  phase: M2
+  gate: G-MIN
+  kind: functional_or_handoff
+  priority: P1
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 按三学段收集 MIN-01—11 及最低负向用例的实际输入、版本、trace 和文件。
+  - 将每例执行人/时间/结果/证据填入独立 acceptance-runs，不覆写模板假装已跑。
+  - 核对每条证据存在、哈希一致且无 Key；模拟或注入记录与 live 证据分开。
+  - 由接收者与负责教师签署 G-MIN；必测项未跑/阻塞/失败不计通过。
+  expected_results:
+  - 三学段各一条完整成功链路；必需检查点不缺失；状态由执行人签署
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - product
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  implementation_tasks:
+  - M0-06
+  - M1-08
+  - M1-09
+  - M2-09
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-N01
+  title: 缺少或无效密钥
+  phase: M2
+  gate: G-MIN
+  kind: negative_or_resilience
+  priority: P0
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: once_per_shared_environment_and_each_applicable_capability
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 在测试环境移除模型 Key，提交一次合法生成规格。
+  - 确认请求前拒绝且没有模型调用；页面明确配置缺失，不返回题目。
+  - 换成无效测试 Key 触发真实或明确注入的鉴权错误，验证不可重试且日志脱敏。
+  - 恢复受权 Key，清除测试状态再跑 live；记录两种错误与恢复，注入不计模型实测。
+  expected_results:
+  - 缺少凭据在调用前拒绝；无效凭据显示明确鉴权失败；不返回假题、不泄露密钥
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - backend
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  fault_injection_note: 故障注入只验证处理路径，不能作为真实模型错误率或真实成功调用证据
+  implementation_tasks:
+  - M0-02
+  - M1-01
+  - M1-07
+  - M2-08
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-N02
+  title: 规格矛盾
+  phase: M2
+  gate: G-MIN
+  kind: negative_or_resilience
+  priority: P0
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: once_per_shared_environment_and_each_applicable_capability
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 准备总分 20 但题型合计 18 的 spec，保存输入。
+  - 绕过浏览器直接请求业务 API。
+  - 断言 422/规格冲突，details 显示差额且未创建可执行命题任务。
+  - 检查模型调用账本无新增；修正为 20 后再次提交可以进入规划。
+  expected_results:
+  - 在模型调用前拒绝；页面显示差额
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - backend
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  fault_injection_note: 故障注入只验证处理路径，不能作为真实模型错误率或真实成功调用证据
+  implementation_tasks:
+  - M1-05
+  - M2-08
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-N03
+  title: 无效生成结果
+  phase: M2
+  gate: G-MIN
+  kind: negative_or_resilience
+  priority: P0
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: once_per_shared_environment_and_each_applicable_capability
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 测试专用代理分别返回非法 JSON、缺题干和不存在的答案 option_id。
+  - 触发候选处理，记录校验路径与错误码。
+  - 观察仅允许有预算的一次格式修复或失败，非法候选不进入 current_questions。
+  - 清除注入，重新检查 live 路径；保留注入标签与修复次数。
+  expected_results:
+  - 有限格式修复或失败；非法结果不进入可用试卷
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - backend
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  fault_injection_note: 故障注入只验证处理路径，不能作为真实模型错误率或真实成功调用证据
+  implementation_tasks:
+  - M1-03
+  - M1-06
+  - M2-04
+  - M2-08
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-N04
+  title: 检查未完成
+  phase: M2
+  gate: G-MIN
+  kind: negative_or_resilience
+  priority: P0
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: once_per_shared_environment_and_each_applicable_capability
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 对合法题将某检查器设为超时或明确 UNSUPPORTED。
+  - 发起 validation-jobs，记录工具实际结果和服务错误。
+  - 断言检查不是 PASS，报告显示 REVIEW/运行故障及未覆盖范围；正式放行被阻断。
+  - 恢复工具并重检，必须产生新证据记录，不回填原记录为成功。
+  expected_results:
+  - 显示 REVIEW／故障，不写 PASS；保留待核项
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - backend
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  fault_injection_note: 故障注入只验证处理路径，不能作为真实模型错误率或真实成功调用证据
+  implementation_tasks:
+  - M2-03
+  - M2-04
+  - M2-08
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-N05
+  title: 旧证据
+  phase: M2
+  gate: G-MIN
+  kind: negative_or_resilience
+  priority: P0
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 先完成一题的检查和草稿确认，保存旧 hash/check_id/decision_id。
+  - 修改题面、答案或共享材料，记录新 revision。
+  - 提交旧确认/审批/导出发布组合，要求版本或证据过期被拒绝；M2 无正式发布入口。
+  - 三个学段分别复测；重新检查并确认后才允许当前版本草稿交付。
+  expected_results:
+  - 版本过期；拒绝确认／正式发布；允许有明确标识的受限草稿
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - backend
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  fault_injection_note: 故障注入只验证处理路径，不能作为真实模型错误率或真实成功调用证据
+  implementation_tasks:
+  - M1-02
+  - M2-05
+  - M2-06
+  - M2-08
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-N06
+  title: 取消与迟到
+  phase: M2
+  gate: G-MIN
+  kind: negative_or_resilience
+  priority: P0
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: once_per_shared_environment_and_each_applicable_capability
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 启动有可控延迟的命题任务，记 hermes_run_id 与期望 revision。
+  - 调用业务 cancel，确认取消先持久化且不安排后续模型请求。
+  - 释放延迟结果模拟到达，核对结果归档为 stale/cancelled，不写当前题。
+  - 检查实际 runtime 最终停止或被外部回收，用量已知/unknown 如实记录；恢复独立新任务。
+  expected_results:
+  - 不再安排新调用；迟到内容不写入当前卷；已发生用量保留待核或实际值
+  evidence_required:
+  - 实际输入与版本摘要
+  - 操作事件/错误记录
+  - 预期与实际对照及必要截图/文件
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - backend
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  fault_injection_note: 故障注入只验证处理路径，不能作为真实模型错误率或真实成功调用证据
+  implementation_tasks:
+  - M1-03
+  - M1-04
+  - M2-08
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。
+- id: MIN-N07
+  title: 答案泄露
+  phase: M2
+  gate: G-MIN
+  kind: negative_or_resilience
+  priority: P0
+  required: true
+  status: NOT_RUN
+  execution_mode: manual_or_future_automation
+  automation_implemented: false
+  school_stages: *id001
+  repeat_rule: each_stage
+  preconditions:
+  - 在非生产验收环境执行，范围/预算/用途已批准
+  - 使用实际应用版本、固定Hermes和服务端DeepSeek配置
+  - 结果尚未执行；测试注入须独立标记
+  steps:
+  - 在私有答案、解析和评分字段加入只在测试使用的唯一标记。
+  - 请求 student API，检查 JSON、页面源与网络资源，不仅看可见 DOM。
+  - 导出学生 PDF/JSON 并检查隐藏内容与附件，三学段都执行。
+  - 尝试未授权 teacher 下载和直接资源 URL，必须拒绝；保留字段断言与人工预览，不用正确数字全文禁用。
+  expected_results:
+  - 不包含私有答案、解析或评分字段；不能只靠 CSS 隐藏
+  evidence_required:
+  - 学生API字段检查
+  - HTML/DOM私有字段检查
+  - PDF文本与视觉检查
+  - 资源访问记录
+  - 实际执行命令或 HTTP 输入与状态码（脱敏）
+  - 数据库/文件/权限断言结果；不是仅有成功截图
+  - 实际版本、执行人、时间与证据 hash
+  owners:
+  - qa
+  - backend
+  reference_section: '25'
+  failure_rule: 任一必需预期不符则FAIL；环境未就绪则BLOCKED；无运行证据保持NOT_RUN
+  not_applicable_policy: 不可豁免；三学段及核心链路必须执行
+  actual_result: null
+  executed_at: null
+  executor: null
+  evidence_refs: []
+  fault_injection_note: 故障注入只验证处理路径，不能作为真实模型错误率或真实成功调用证据
+  implementation_tasks:
+  - M1-05
+  - M2-02
+  - M2-06
+  - M2-07
+  - M2-08
+  cleanup:
+  - 清除本用例注入与临时权限，不改写历史证据；恢复隔离测试环境。
+  - 重新执行一条正常健康/生成路径验证恢复；任何新缺陷登记并关联任务。

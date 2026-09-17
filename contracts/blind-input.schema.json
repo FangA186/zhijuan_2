@@ -1,0 +1,370 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BlindSolveInput",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "task_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "public_question": {
+      "$ref": "#/$defs/Question"
+    },
+    "scope_topics": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300
+      },
+      "minItems": 1,
+      "maxItems": 100
+    },
+    "permitted_methods": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/Block"
+            },
+            "minItems": 1,
+            "maxItems": 100
+          },
+          "content_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "id",
+          "blocks",
+          "content_hash"
+        ]
+      },
+      "minItems": 0,
+      "maxItems": 30
+    }
+  },
+  "required": [
+    "task_ref",
+    "public_question",
+    "scope_topics",
+    "permitted_methods",
+    "materials"
+  ],
+  "$defs": {
+    "Block": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "text"
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 30000
+            }
+          },
+          "required": [
+            "type",
+            "text"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "math"
+            },
+            "latex": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 3000
+            }
+          },
+          "required": [
+            "type",
+            "latex"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "asset"
+            },
+            "asset_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "alt": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            }
+          },
+          "required": [
+            "type",
+            "asset_id",
+            "alt"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "table"
+            },
+            "headers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "minItems": 1,
+              "maxItems": 20
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 1000
+                },
+                "minItems": 1,
+                "maxItems": 20
+              },
+              "minItems": 1,
+              "maxItems": 100
+            }
+          },
+          "required": [
+            "type",
+            "headers",
+            "rows"
+          ]
+        }
+      ]
+    },
+    "Question": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "local_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "single_choice",
+            "multiple_choice",
+            "true_false",
+            "fill_blank",
+            "solution",
+            "short_answer",
+            "essay",
+            "material_group"
+          ]
+        },
+        "prompt": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Block"
+          },
+          "minItems": 1,
+          "maxItems": 100
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              },
+              "content": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/Block"
+                },
+                "minItems": 1,
+                "maxItems": 100
+              }
+            },
+            "required": [
+              "id",
+              "content"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 12
+        },
+        "score_x100": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "material_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "minItems": 0,
+          "maxItems": 20
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Question"
+          },
+          "minItems": 0,
+          "maxItems": 50
+        },
+        "answer_space_lines": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "local_id",
+        "kind",
+        "prompt",
+        "options",
+        "score_x100",
+        "material_ids",
+        "children",
+        "answer_space_lines"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "material_group"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "score_x100": {
+                "const": 0
+              },
+              "children": {
+                "minItems": 1
+              },
+              "options": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "score_x100": {
+                "minimum": 1
+              },
+              "children": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "single_choice",
+                  "multiple_choice"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "options": {
+                "minItems": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "true_false"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "options": {
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "fill_blank",
+                  "solution",
+                  "short_answer",
+                  "essay"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "options": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

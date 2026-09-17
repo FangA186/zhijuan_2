@@ -1,0 +1,7 @@
+# 不是已生效 CODEOWNERS。填写真实账户/团队并经授权保存为 .github/CODEOWNERS。
+# /.github/         @实际安全或平台维护团队
+# /quality/         @实际测试负责人
+# /contracts/       @实际接口维护团队
+# /services/api/auth/ @实际安全维护团队
+# /progress/        @实际研发负责人
+# 需同时启用 Require review from Code Owners；本示例不会自动启用任何保护。

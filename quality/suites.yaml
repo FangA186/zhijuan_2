@@ -1,0 +1,105 @@
+schema_version: 1
+suites:
+- id: baseline-unit
+  status: IMPLEMENTED
+  mode: OFFLINE
+  argv:
+  - '{python}'
+  - tools/run_unittests.py
+  - --report
+  - '{run_dir}/baseline-unit.json'
+  timeout_seconds: 120
+  unit_report: baseline-unit.json
+  purpose: 离线参考规则与开发记录校验，不是产品验收
+- id: bundle-contract
+  status: IMPLEMENTED
+  mode: OFFLINE
+  argv:
+  - '{python}'
+  - verify_bundle.py
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 离线参考规则与开发记录校验，不是产品验收
+- id: acceptance-assets
+  status: IMPLEMENTED
+  mode: OFFLINE
+  argv:
+  - '{python}'
+  - verify_acceptance_assets.py
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 离线参考规则与开发记录校验，不是产品验收
+- id: execution-plan
+  status: IMPLEMENTED
+  mode: OFFLINE
+  argv:
+  - '{python}'
+  - tools/verify_execution_plan.py
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 离线参考规则与开发记录校验，不是产品验收
+- id: memory-tests
+  status: IMPLEMENTED
+  mode: OFFLINE
+  argv:
+  - '{python}'
+  - tools/run_unittests.py
+  - --pattern
+  - test_project_memory.py
+  - --report
+  - '{run_dir}/memory-tests.json'
+  timeout_seconds: 120
+  unit_report: memory-tests.json
+  purpose: 离线参考规则与开发记录校验，不是产品验收
+- id: memory-check
+  status: IMPLEMENTED
+  mode: OFFLINE
+  argv:
+  - '{python}'
+  - tools/project_memory.py
+  - check
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 离线参考规则与开发记录校验，不是产品验收
+- id: APP-CONTRACT
+  status: PLANNED
+  mode: APPLICATION
+  argv: []
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 真实业务接口契约
+- id: APP-INTEGRATION
+  status: PLANNED
+  mode: APPLICATION
+  argv: []
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 真实数据库、任务、状态与版本
+- id: APP-SECURITY
+  status: PLANNED
+  mode: APPLICATION
+  argv: []
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 实际访问隔离与答案防泄露
+- id: APP-E2E
+  status: PLANNED
+  mode: APPLICATION
+  argv: []
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 三学段网页操作闭环
+- id: APP-RENDER
+  status: PLANNED
+  mode: APPLICATION
+  argv: []
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 真实 PDF/DOCX 视觉与内容检查
+- id: LIVE-QUALITY
+  status: PLANNED
+  mode: LIVE
+  argv: []
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 授权的 Hermes/DeepSeek 与教学质量回归

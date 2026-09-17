@@ -1,0 +1,70 @@
+document_version: '1.3'
+status: DRAFT_NOT_APPROVED
+approved_before_run: false
+approved_by: null
+approved_at: null
+instruction: 以下只是三学段最小数学链路占位；M3必须按正文第03章补齐实际首发学科/题型及签署，不代表最终范围缩为数学。执行前教师确认每份fixture的scope_confirmed。
+quality_targets:
+  first_pass_usable_rate_min: 0.8
+  complete_delivery_rate_min: 0.9
+  severe_error_escape_rate_max: null
+  false_block_rate_max: null
+  review_rate_max: null
+  signed_by: null
+  signed_at: null
+performance_budget:
+  environment_ref: null
+  concurrency: null
+  task_budget: null
+  task_deadline_seconds: null
+  price_version: null
+  signed_by: null
+capabilities:
+- id: CAP-PRIMARY-MATH-SMOKE
+  stage: primary
+  subject: math
+  question_types:
+  - single_choice
+  - fill_blank
+  - solution
+  purpose: restricted_practice
+  scope: 需教师确认已教范围
+  generation: UNSUPPORTED
+  verification: UNSUPPORTED
+  rendering: UNSUPPORTED
+  acceptance_status: NOT_RUN
+  evidence_refs: []
+  manual_review_policy_ref: null
+  commitment_status: M2_BASELINE_NOT_M3_COMPLETE_SCOPE
+- id: CAP-JUNIOR-MATH-SMOKE
+  stage: junior
+  subject: math
+  question_types:
+  - single_choice
+  - fill_blank
+  - solution
+  purpose: restricted_practice
+  scope: 需教师确认已教范围
+  generation: UNSUPPORTED
+  verification: UNSUPPORTED
+  rendering: UNSUPPORTED
+  acceptance_status: NOT_RUN
+  evidence_refs: []
+  manual_review_policy_ref: null
+  commitment_status: M2_BASELINE_NOT_M3_COMPLETE_SCOPE
+- id: CAP-SENIOR-MATH-SMOKE
+  stage: senior
+  subject: math
+  question_types:
+  - single_choice
+  - fill_blank
+  - solution
+  purpose: restricted_practice
+  scope: 需教师确认已教范围
+  generation: UNSUPPORTED
+  verification: UNSUPPORTED
+  rendering: UNSUPPORTED
+  acceptance_status: NOT_RUN
+  evidence_refs: []
+  manual_review_policy_ref: null
+  commitment_status: M2_BASELINE_NOT_M3_COMPLETE_SCOPE

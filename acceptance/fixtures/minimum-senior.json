@@ -1,0 +1,76 @@
+{
+  "title": "高中数学最小验收小卷（测试输入，不含预置题）",
+  "curriculum_system": "中国大陆普通教育（教师确认）",
+  "region": "用户自报地区",
+  "stage": "senior",
+  "stage_year": 1,
+  "grade_label": "高一",
+  "subject_code": "math",
+  "subject_label": "数学",
+  "textbook": null,
+  "module": null,
+  "taught_scope": {
+    "topics": [
+      "集合运算",
+      "不等式基础"
+    ],
+    "excluded_topics": [
+      "微积分"
+    ],
+    "permitted_methods": [
+      "仅使用教师确认的集合与不等式方法"
+    ],
+    "scope_confirmed": false
+  },
+  "purpose": "review",
+  "usage_context": "personal_learning",
+  "delivery_mode": "paper",
+  "total_score_x100": 2000,
+  "duration_minutes": null,
+  "sections": [
+    {
+      "id": "choice",
+      "title": "单选题",
+      "question_type": "single_choice",
+      "count": 2,
+      "score_each_x100": 300,
+      "topics": [
+        "集合运算",
+        "不等式基础"
+      ]
+    },
+    {
+      "id": "fill",
+      "title": "填空题",
+      "question_type": "fill_blank",
+      "count": 2,
+      "score_each_x100": 200,
+      "topics": [
+        "集合运算",
+        "不等式基础"
+      ]
+    },
+    {
+      "id": "solve",
+      "title": "解答题",
+      "question_type": "solution",
+      "count": 1,
+      "score_each_x100": 1000,
+      "topics": [
+        "集合运算",
+        "不等式基础"
+      ]
+    }
+  ],
+  "difficulty_distribution": {
+    "basic": 90,
+    "medium": 10,
+    "advanced": 0
+  },
+  "output_preferences": {
+    "paper_size": "A4",
+    "font_size_pt": 12,
+    "include_answer_space": true
+  },
+  "provided_materials": []
+}

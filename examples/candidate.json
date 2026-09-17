@@ -1,0 +1,80 @@
+{
+  "public": {
+    "local_id": "s1-q1",
+    "kind": "single_choice",
+    "prompt": [
+      {
+        "type": "text",
+        "text": "方程 2x + 3 = 11 的解是（ ）。"
+      }
+    ],
+    "options": [
+      {
+        "id": "opt-1",
+        "content": [
+          {
+            "type": "text",
+            "text": "x = 3"
+          }
+        ]
+      },
+      {
+        "id": "opt-2",
+        "content": [
+          {
+            "type": "text",
+            "text": "x = 4"
+          }
+        ]
+      },
+      {
+        "id": "opt-3",
+        "content": [
+          {
+            "type": "text",
+            "text": "x = 5"
+          }
+        ]
+      },
+      {
+        "id": "opt-4",
+        "content": [
+          {
+            "type": "text",
+            "text": "x = 7"
+          }
+        ]
+      }
+    ],
+    "score_x100": 300,
+    "material_ids": [],
+    "children": [],
+    "answer_space_lines": 0
+  },
+  "private": {
+    "answers": [
+      {
+        "local_question_id": "s1-q1",
+        "answer_kind": "selection",
+        "correct_option_ids": [
+          "opt-2"
+        ],
+        "accepted_answers": [],
+        "solution": [
+          {
+            "type": "text",
+            "text": "移项得 2x = 8，因此 x = 4。代回原式：2×4+3=11。"
+          }
+        ],
+        "rubric": [
+          {
+            "id": "r1",
+            "description": "选择 opt-2 对应选项。",
+            "score_x100": 300,
+            "acceptable_variants": []
+          }
+        ]
+      }
+    ]
+  }
+}

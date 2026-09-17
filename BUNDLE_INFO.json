@@ -1,0 +1,19 @@
+{
+  "bundle_version": "1.4",
+  "product_documents_version": "1.3",
+  "base_zip_sha256": "35f61aa438c81ac8e5c4d79a24cfc03426e09603e0c997d4bdd19de559fa9460",
+  "original_files_preserved_byte_for_byte": 83,
+  "changed_original_entrypoints": [
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "MANIFEST.sha256",
+    "README.md",
+    "VALIDATION.md",
+    "acceptance/current-delivery-status.json"
+  ],
+  "application_implemented": false,
+  "hermes_source_included": false,
+  "remote_ci_activated": false,
+  "offline_unique_tests": 113,
+  "new_offline_tests": 48
+}

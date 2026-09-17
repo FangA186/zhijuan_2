@@ -1,0 +1,40 @@
+{
+  "document_version": "1.2",
+  "template_only": true,
+  "run_id": null,
+  "gate": null,
+  "overall_status": "NOT_RUN",
+  "environment": {
+    "app_commit": null,
+    "hermes_commit": null,
+    "hermes_source_method": null,
+    "image_digests": {},
+    "provider": "deepseek",
+    "model_id": null,
+    "skill_bundle_hash": null,
+    "checker_bundle_hash": null,
+    "render_bundle_hash": null,
+    "executed_at": null
+  },
+  "scope_approval_ref": null,
+  "threshold_approval_ref": null,
+  "case_results": [],
+  "artifacts": [],
+  "signoffs": [],
+  "evidence_policy": {
+    "public": "仅脱敏摘要、标识与指纹",
+    "restricted": "题面、答案和盲解证据受限保存",
+    "forbidden": [
+      "api_keys",
+      "access_tokens",
+      "private_chain_of_thought"
+    ],
+    "artifact_required_fields": [
+      "case_id",
+      "path_or_controlled_uri",
+      "sha256",
+      "classification",
+      "content_revision"
+    ]
+  }
+}

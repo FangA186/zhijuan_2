@@ -1,0 +1,15 @@
+{
+  "bundle_version": "1.3.1",
+  "date": "2026-09-16",
+  "archive_root": "zhijuan_spec_v1_3_1",
+  "archive_member_count": 89,
+  "manifest_covers_files_except_itself": 88,
+  "agents_standalone_equals_bundled": true,
+  "agents_sha256": "0e74bc138494a8ccb7a2427f29f66d8018b20943e946d1b7aaa56f946947c11f",
+  "original_v1_3_full_documents_unchanged": true,
+  "zip_crc_check": "PASS",
+  "manifest_sha256_check": "PASS",
+  "checks": "Recorded values are asserted against the final package by the packaging script before delivery.",
+  "runtime_acceptance": "NOT_RUN",
+  "docx_html_body_version": "1.3"
+}

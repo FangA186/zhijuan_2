@@ -1,0 +1,527 @@
+document_version: '1.3'
+task_count: 32
+case_count: 47
+links:
+- task_id: M0-01
+  phase: M0
+  case_ids:
+  - FULL-02
+  - FULL-08
+  - FULL-27
+  source_files:
+  - acceptance/capability-matrix.template.yaml
+  - configs/business-policy.example.yaml
+  planned_outputs:
+  - docs/launch-scope.yaml
+  - docs/decisions/001-scope.md
+- task_id: M0-02
+  phase: M0
+  case_ids:
+  - MIN-N01
+  - FULL-23
+  - FULL-24
+  source_files:
+  - configs/deepseek.env.example
+  - infra/README.md
+  planned_outputs:
+  - docs/owners.yaml
+  - .env.example
+  - .gitignore
+  - docs/environments.md
+- task_id: M0-03
+  phase: M0
+  case_ids:
+  - MIN-02
+  - MIN-03
+  - FULL-03
+  - FULL-28
+  source_files:
+  - contracts/openapi.yaml
+  - database/001_schema_draft.sql
+  - reference_code/adapter_contract.py
+  planned_outputs:
+  - pyproject.toml
+  - apps/web/package.json
+  - docs/contracts-map.yaml
+  - docs/decisions/002-architecture.md
+- task_id: M0-04
+  phase: M0
+  case_ids:
+  - MIN-01
+  - FULL-01
+  - FULL-04
+  source_files:
+  - docs/06_DeepSeek_Hermes接入指南.md
+  - configs/hermes-reviewed-fragment.yaml
+  planned_outputs:
+  - install/hermes-source.lock.json
+  - install/hermes-install.sh
+  - vendor/hermes-agent
+  - docs/runtime-baseline.md
+- task_id: M0-05
+  phase: M0
+  case_ids:
+  - MIN-04
+  - MIN-06
+  - FULL-05
+  - FULL-21
+  - FULL-22
+  source_files:
+  - execution/templates/hermes-capability-probe.yaml
+  - reference_code/adapter_contract.py
+  - configs/business-policy.example.yaml
+  planned_outputs:
+  - docs/hermes-capability-report.yaml
+  - docs/decisions/003-hermes-transport.md
+- task_id: M0-06
+  phase: M0
+  case_ids:
+  - MIN-12
+  - FULL-25
+  - FULL-27
+  - FULL-28
+  source_files:
+  - acceptance/mvp-plan.yaml
+  - acceptance/minimum-cases.yaml
+  - acceptance/full-cases.yaml
+  planned_outputs:
+  - acceptance-runs/parameters.yaml
+  - docs/signoffs/G-PREP.md
+- task_id: M1-01
+  phase: M1
+  case_ids:
+  - MIN-01
+  - MIN-N01
+  - FULL-01
+  - FULL-19
+  source_files:
+  - configs/business-policy.example.yaml
+  - configs/deepseek.env.example
+  planned_outputs:
+  - services/api/main.py
+  - services/api/settings.py
+  - services/api/health.py
+  - infra/compose.app.yaml
+- task_id: M1-02
+  phase: M1
+  case_ids:
+  - MIN-10
+  - MIN-N05
+  - FULL-09
+  - FULL-20
+  - FULL-26
+  source_files:
+  - database/001_schema_draft.sql
+  - database/002_v13_required_changes.md
+  planned_outputs:
+  - migrations/versions/0001_core.py
+  - services/api/repositories.py
+  - tests/integration/test_persistence.py
+- task_id: M1-03
+  phase: M1
+  case_ids:
+  - MIN-04
+  - MIN-N03
+  - MIN-N06
+  - FULL-04
+  - FULL-18
+  source_files:
+  - reference_code/adapter_contract.py
+  - execution/templates/hermes-capability-probe.yaml
+  planned_outputs:
+  - services/hermes_adapter/http_adapter.py
+  - services/hermes_adapter/runtime_factory.py
+  - services/hermes_adapter/status_map.py
+- task_id: M1-04
+  phase: M1
+  case_ids:
+  - MIN-05
+  - MIN-N06
+  - FULL-15
+  - FULL-16
+  - FULL-17
+  source_files:
+  - infra/compose.yaml
+  - configs/business-policy.example.yaml
+  planned_outputs:
+  - services/worker/celery_app.py
+  - services/worker/tasks.py
+  - services/worker/outbox.py
+  - services/worker/leases.py
+- task_id: M1-05
+  phase: M1
+  case_ids:
+  - MIN-02
+  - MIN-03
+  - MIN-N02
+  - MIN-N07
+  - FULL-03
+  source_files:
+  - contracts/openapi.yaml
+  - contracts/exam-spec.schema.json
+  - acceptance/fixtures/minimum-primary.json
+  planned_outputs:
+  - services/api/routes/exams.py
+  - services/api/routes/plans.py
+  - services/api/routes/jobs.py
+- task_id: M1-06
+  phase: M1
+  case_ids:
+  - MIN-04
+  - MIN-N03
+  - FULL-04
+  - FULL-07
+  source_files:
+  - skills/exam-planner/SKILL.md
+  - skills/question-author/SKILL.md
+  - contracts/candidate.schema.json
+  planned_outputs:
+  - skills/exam-planner/SKILL.md
+  - skills/question-author/SKILL.md
+  - services/hermes_adapter/skill_loader.py
+- task_id: M1-07
+  phase: M1
+  case_ids:
+  - MIN-05
+  - MIN-N01
+  - FULL-16
+  - FULL-23
+  - FULL-25
+  source_files:
+  - docs/01_产品需求说明.md
+  - contracts/openapi.yaml
+  planned_outputs:
+  - apps/web/src/pages/ExamSetup.tsx
+  - apps/web/src/pages/Generation.tsx
+  - apps/web/src/lib/api.ts
+  - apps/web/src/lib/events.ts
+- task_id: M1-08
+  phase: M1
+  case_ids:
+  - MIN-12
+  - FULL-04
+  - FULL-23
+  - FULL-24
+  source_files:
+  - acceptance/evidence-manifest.template.json
+  - reference_code/runtime_policy.py
+  planned_outputs:
+  - services/api/audit.py
+  - services/worker/usage.py
+  - docs/observability.md
+- task_id: M1-09
+  phase: M1
+  case_ids:
+  - MIN-01
+  - MIN-04
+  - MIN-12
+  - FULL-01
+  - FULL-28
+  source_files:
+  - execution/runbooks/boot-acceptance.md
+  - acceptance/fixtures/minimum-primary.json
+  - acceptance/fixtures/minimum-junior.json
+  - acceptance/fixtures/minimum-senior.json
+  planned_outputs:
+  - README.md
+  - acceptance-runs/G-BOOT/report.md
+  - acceptance-runs/G-BOOT/evidence.json
+- task_id: M2-01
+  phase: M2
+  case_ids:
+  - MIN-02
+  - MIN-03
+  - FULL-03
+  - FULL-10
+  source_files:
+  - skills/exam-planner/SKILL.md
+  - contracts/openapi.yaml
+  - acceptance/fixtures/minimum-primary.json
+  planned_outputs:
+  - services/api/domain/plans.py
+  - services/worker/plan_tasks.py
+  - apps/web/src/pages/PlanReview.tsx
+- task_id: M2-02
+  phase: M2
+  case_ids:
+  - MIN-06
+  - MIN-N07
+  - FULL-05
+  - FULL-20
+  source_files:
+  - contracts/blind-input.schema.json
+  - contracts/public-question.schema.json
+  - skills/blind-solver/SKILL.md
+  planned_outputs:
+  - services/api/domain/public_projection.py
+  - services/hermes_adapter/blind_runtime.py
+  - tests/security/test_blind_isolation.py
+- task_id: M2-03
+  phase: M2
+  case_ids:
+  - MIN-06
+  - MIN-N04
+  - FULL-06
+  - FULL-21
+  - FULL-22
+  source_files:
+  - contracts/validation-record.schema.json
+  - reference_code/publish_gate.py
+  - configs/business-policy.example.yaml
+  planned_outputs:
+  - services/validators/structure.py
+  - services/validators/scoring.py
+  - services/validators/math_ast.py
+  - services/validators/evidence.py
+- task_id: M2-04
+  phase: M2
+  case_ids:
+  - MIN-07
+  - MIN-N03
+  - MIN-N04
+  - FULL-07
+  - FULL-17
+  source_files:
+  - skills/question-author/SKILL.md
+  - skills/question-reviewer/SKILL.md
+  - configs/business-policy.example.yaml
+  planned_outputs:
+  - services/worker/repair_tasks.py
+  - services/api/domain/repair_policy.py
+- task_id: M2-05
+  phase: M2
+  case_ids:
+  - MIN-08
+  - MIN-09
+  - MIN-N05
+  - FULL-09
+  source_files:
+  - contracts/openapi.yaml
+  - contracts/candidate.schema.json
+  planned_outputs:
+  - apps/web/src/pages/ExamEditor.tsx
+  - services/api/domain/revisions.py
+  - services/worker/regenerate.py
+- task_id: M2-06
+  phase: M2
+  case_ids:
+  - MIN-10
+  - MIN-N05
+  - MIN-N07
+  - FULL-11
+  - FULL-14
+  source_files:
+  - contracts/openapi.yaml
+  - reference_code/publish_gate.py
+  planned_outputs:
+  - apps/web/src/pages/Review.tsx
+  - services/api/domain/draft_review.py
+  - services/api/routes/history.py
+- task_id: M2-07
+  phase: M2
+  case_ids:
+  - MIN-11
+  - MIN-N07
+  - FULL-12
+  - FULL-13
+  - FULL-19
+  source_files:
+  - docs/03_接口与开发契约.md
+  - contracts/openapi.yaml
+  planned_outputs:
+  - services/renderer/templates/exam.html
+  - services/renderer/pdf.py
+  - services/renderer/projection.py
+  - services/renderer/preflight.py
+- task_id: M2-08
+  phase: M2
+  case_ids:
+  - MIN-N01
+  - MIN-N02
+  - MIN-N03
+  - MIN-N04
+  - MIN-N05
+  - MIN-N06
+  - MIN-N07
+  - FULL-18
+  source_files:
+  - acceptance/minimum-cases.yaml
+  - execution/runbooks/fault-injection.md
+  planned_outputs:
+  - tests/e2e/minimum_negative.spec.ts
+  - tests/integration/test_cancel_late.py
+  - services/api/testing_hooks.py
+- task_id: M2-09
+  phase: M2
+  case_ids:
+  - MIN-01
+  - MIN-02
+  - MIN-03
+  - MIN-04
+  - MIN-05
+  - MIN-06
+  - MIN-07
+  - MIN-08
+  - MIN-09
+  - MIN-10
+  - MIN-11
+  - MIN-12
+  source_files:
+  - acceptance/minimum-cases.yaml
+  - acceptance/demo-runbook.md
+  - acceptance/acceptance-report.template.md
+  planned_outputs:
+  - acceptance-runs/G-MIN/report.md
+  - acceptance-runs/G-MIN/evidence.json
+  - docs/teacher-draft-guide.md
+- task_id: M3-01
+  phase: M3
+  case_ids:
+  - FULL-02
+  - FULL-03
+  - FULL-08
+  - FULL-10
+  - FULL-27
+  source_files:
+  - acceptance/capability-matrix.template.yaml
+  - skills/question-reviewer/SKILL.md
+  - skills/exam-reviewer/SKILL.md
+  planned_outputs:
+  - configs/curriculum-profiles.yaml
+  - services/validators/subject_registry.py
+  - docs/subject-review-rubrics.md
+- task_id: M3-02
+  phase: M3
+  case_ids:
+  - FULL-02
+  - FULL-05
+  - FULL-20
+  - FULL-21
+  - FULL-22
+  - FULL-23
+  source_files:
+  - database/001_schema_draft.sql
+  - contracts/openapi.yaml
+  - configs/business-policy.example.yaml
+  planned_outputs:
+  - services/api/auth/oidc.py
+  - services/api/auth/policy.py
+  - services/hermes_adapter/tool_gateway.py
+  - tests/security/
+- task_id: M3-03
+  phase: M3
+  case_ids:
+  - FULL-06
+  - FULL-11
+  - FULL-12
+  - FULL-14
+  - FULL-22
+  source_files:
+  - reference_code/publish_gate.py
+  - contracts/openapi.yaml
+  - database/002_v13_required_changes.md
+  planned_outputs:
+  - services/api/domain/publication.py
+  - services/api/domain/review.py
+  - services/api/routes/publications.py
+- task_id: M3-04
+  phase: M3
+  case_ids:
+  - FULL-12
+  - FULL-13
+  - FULL-25
+  source_files:
+  - docs/03_接口与开发契约.md
+  - acceptance/full-cases.yaml
+  planned_outputs:
+  - services/renderer/docx.py
+  - services/renderer/equations.py
+  - tests/rendering/
+  - docs/export-support.md
+- task_id: M3-05
+  phase: M3
+  case_ids:
+  - FULL-15
+  - FULL-16
+  - FULL-17
+  - FULL-18
+  - FULL-19
+  - FULL-24
+  source_files:
+  - configs/business-policy.example.yaml
+  - acceptance/full-cases.yaml
+  planned_outputs:
+  - services/worker/reconcile.py
+  - services/worker/budget.py
+  - tests/chaos/
+  - docs/recovery-runbook.md
+- task_id: M3-06
+  phase: M3
+  case_ids:
+  - FULL-08
+  - FULL-24
+  - FULL-27
+  source_files:
+  - acceptance/mvp-plan.yaml
+  - acceptance/capability-matrix.template.yaml
+  - execution/templates/quality-evaluation.yaml
+  planned_outputs:
+  - acceptance-runs/G-FULL/quality-report.md
+  - acceptance-runs/G-FULL/quality-records.jsonl
+- task_id: M3-07
+  phase: M3
+  case_ids:
+  - FULL-01
+  - FULL-19
+  - FULL-23
+  - FULL-25
+  - FULL-26
+  source_files:
+  - infra/README.md
+  - acceptance/full-cases.yaml
+  - execution/templates/release-signoff.md
+  planned_outputs:
+  - infra/compose.app.yaml
+  - docs/operator-guide.md
+  - docs/backup-restore.md
+  - docs/upgrade-rollback.md
+- task_id: M3-08
+  phase: M3
+  case_ids:
+  - FULL-01
+  - FULL-02
+  - FULL-03
+  - FULL-04
+  - FULL-05
+  - FULL-06
+  - FULL-07
+  - FULL-08
+  - FULL-09
+  - FULL-10
+  - FULL-11
+  - FULL-12
+  - FULL-13
+  - FULL-14
+  - FULL-15
+  - FULL-16
+  - FULL-17
+  - FULL-18
+  - FULL-19
+  - FULL-20
+  - FULL-21
+  - FULL-22
+  - FULL-23
+  - FULL-24
+  - FULL-25
+  - FULL-26
+  - FULL-27
+  - FULL-28
+  source_files:
+  - acceptance/full-cases.yaml
+  - acceptance/delivery-checklist.md
+  - execution/templates/release-signoff.md
+  planned_outputs:
+  - acceptance-runs/G-FULL/report.md
+  - docs/known-limitations.md
+  - docs/teacher-guide.md
+  - RELEASE-MANIFEST.json

@@ -1,0 +1,1773 @@
+openapi: 3.1.0
+info:
+  title: 知卷原创命题核心业务 API（设计契约）
+  version: 1.3.0
+  description: 知卷拟开发业务接口；不是 Hermes 原生 API，也没有随文档提供运行服务器。v1.3 补齐当前蓝图读取、完整规格读取、历史列表、当前身份与发布撤回，并将运行对账状态显式化。端到端和生产身份实现仍待开发。
+  x-zhijuan-runtime:
+    agent: hermes
+    provider: deepseek
+    additional-agent-frameworks: []
+servers:
+- url: http://localhost:8000
+  description: 仅本地开发示例，生产必须 HTTPS。
+security:
+- session: []
+paths:
+  /v1/capabilities:
+    get:
+      operationId: listCapabilities
+      summary: 查询真实登记的能力
+      description: ''
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Capabilities'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+  /v1/exams:
+    post:
+      operationId: createExam
+      summary: 创建试卷草稿
+      description: ''
+      responses:
+        '201':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExamSummary'
+          headers:
+            ETag:
+              schema:
+                type: string
+                minLength: 1
+                maxLength: 100
+              description: 当前 revision
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExamSpec'
+    get:
+      operationId: listExams
+      summary: 分页读取本组织可访问的试卷项目
+      description: 只提供项目元数据，不实现跨卷题目检索。按创建时间与 id 稳定排序，游标绑定租户和过滤条件。
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        schema:
+          type: string
+          maxLength: 1000
+      responses:
+        '200':
+          description: 成功（拟开发）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExamList'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+  /v1/exams/{exam_id}:
+    get:
+      operationId: getExam
+      summary: 按权限返回学生或教师投影
+      description: teacher 视图必须具备读取答案权限；student 响应中不包含 private 字段。
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ExamStudentView'
+                - $ref: '#/components/schemas/ExamTeacherView'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: &id001
+          type: string
+          format: uuid
+      - name: view
+        in: query
+        schema:
+          type: string
+          enum:
+          - student
+          - teacher
+          default: student
+  /v1/exams/{exam_id}/spec:
+    patch:
+      operationId: replaceExamSpec
+      summary: 替换完整配置并使计划失效
+      description: ''
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExamSummary'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExamSpec'
+    get:
+      operationId: getExamSpec
+      summary: 读取当前完整命题配置
+      description: 授权后返回完整规格与 ETag。用于页面恢复，不从 Agent 历史重建。
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: 成功（拟开发）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExamSpec'
+          headers:
+            ETag:
+              schema:
+                type: string
+              description: 带引号的当前 exam revision；修改请求用 If-Match 回传。
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+  /v1/exams/{exam_id}/plan-jobs:
+    post:
+      operationId: planExam
+      summary: 创建蓝图规划任务
+      description: ''
+      responses:
+        '202':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+  /v1/exams/{exam_id}/generation-jobs:
+    post:
+      operationId: generateExam
+      summary: 按已确认蓝图生成试卷
+      description: 必须有与当前规格一致且已确认的计划；无计划/未确认/已过期时拒绝。正常失败、取消或未知上游结果不能直接重发计费请求。
+      responses:
+        '202':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+  /v1/exams/{exam_id}/validation-jobs:
+    post:
+      operationId: validateExam
+      summary: 重跑当前版本检查
+      description: ''
+      responses:
+        '202':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+  /v1/exams/{exam_id}/plans/{plan_id}/confirm:
+    post:
+      operationId: confirmPlan
+      summary: 确认指定版本蓝图
+      description: ''
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExamSummary'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - name: plan_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                expected_revision:
+                  type: integer
+                  minimum: 1
+                  maximum: 100000
+                plan_hash: &id002
+                  type: string
+                  pattern: ^[0-9a-f]{64}$
+              required:
+              - expected_revision
+              - plan_hash
+  /v1/jobs/{job_id}:
+    get:
+      operationId: getJob
+      summary: 查询任务及真实计数
+      description: ''
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema: *id001
+  /v1/jobs/{job_id}/events:
+    get:
+      operationId: streamJobEvents
+      summary: 重放和订阅持久化事件
+      description: 优先 Last-Event-ID；同源 Cookie；事件无答案全文。游标过期410，客户端读取快照后重订阅。断线不取消任务。
+      responses:
+        '200':
+          description: SSE，id 为事件序号；15秒心跳。
+          content:
+            text/event-stream:
+              schema:
+                type: string
+              example: 'id: 12
+
+                event: check.completed
+
+                data: {"job_id":"...","sequence":12,"status":"REVIEW"}
+
+
+                '
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+        '410':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema: *id001
+      - name: Last-Event-ID
+        in: header
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 64
+      - name: after
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 2147483647
+  /v1/jobs/{job_id}/cancel:
+    post:
+      operationId: cancelJob
+      summary: 请求取消任务
+      description: ''
+      responses:
+        '202':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                reason:
+                  type: string
+                  minLength: 1
+                  maxLength: 1000
+              required:
+              - reason
+  /v1/jobs/{job_id}/retry:
+    post:
+      operationId: retryJob
+      summary: 创建恢复任务而非复活终态
+      description: ''
+      responses:
+        '202':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+  /v1/exams/{exam_id}/slots/{slot_id}/regeneration-jobs:
+    post:
+      operationId: regenerateQuestion
+      summary: 沿用槽位要求重新生成
+      description: ''
+      responses:
+        '202':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - name: slot_id
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 64
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+  /v1/exams/{exam_id}/slots/{slot_id}/content:
+    patch:
+      operationId: replaceQuestionContent
+      summary: 保存新内容版本并使证据失效
+      description: ''
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExamSummary'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - name: slot_id
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 64
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+  /v1/exams/{exam_id}/checks:
+    get:
+      operationId: getChecks
+      summary: 读取指定版本检查
+      description: ''
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValidationRecord'
+                minItems: 0
+                maxItems: 10000
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - name: revision
+        in: query
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100000
+  /v1/exams/{exam_id}/review-decisions:
+    post:
+      operationId: recordReview
+      summary: 记录人工裁决或审批
+      description: ''
+      responses:
+        '201':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionRecorded'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewDecision'
+  /v1/exams/{exam_id}/export-jobs:
+    post:
+      operationId: createExport
+      summary: 生成待审核的导出产物
+      description: ''
+      responses:
+        '202':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+  /v1/exports/{export_id}:
+    get:
+      operationId: getExport
+      summary: 查询文件预检与哈希
+      description: ''
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Export'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: export_id
+        in: path
+        required: true
+        schema: *id001
+  /v1/exams/{exam_id}/publish:
+    post:
+      operationId: publishExam
+      summary: 锁定版本并原子发布已审文件
+      description: ''
+      responses:
+        '201':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publication'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema: *id001
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/IfMatch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishRequest'
+  /v1/artifacts/{artifact_id}/download:
+    get:
+      operationId: downloadArtifact
+      summary: 授权下载产物
+      description: 一般草稿下载必须带水印且为独立产物；审核角色可受限访问待审最终文件，预览标识不修改文件字节。正式下载要求相同 render_hash 已审批并发布。下载地址不接受外部 URL 或 storage_key
+        参数。
+      responses:
+        '200':
+          description: 授权文件流，正确 Content-Type 和 Content-Disposition。
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '412':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '428':
+          $ref: '#/components/responses/Error'
+        '429':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+        '302':
+          description: 可选短期私有下载地址；教师答案需单独权限。
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+      parameters:
+      - name: artifact_id
+        in: path
+        required: true
+        schema: *id001
+  /v1/session:
+    get:
+      operationId: getSession
+      summary: 读取当前已认证身份及 CSRF 令牌
+      description: 不创建登录会话。生产登录/回调/退出由 M3-02 接入审定身份提供方，开发模式仅受控本地启用。返回 no-store，不含模型或 Hermes 凭据。
+      parameters: []
+      responses:
+        '200':
+          description: 成功（拟开发）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentSession'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+  /v1/exams/{exam_id}/plans/current:
+    get:
+      operationId: getCurrentPlan
+      summary: 读取待确认或已确认的当前命题蓝图
+      description: 无 current_plan_id 返回 404 PLAN_NOT_FOUND；与当前规格不符返回 409 PLAN_STALE。只返回该卷的当前计划，不携带答案。确认接口继续使用 plan_id、plan_hash
+        和期望 exam revision。
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: 成功（拟开发）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentPlan'
+          headers:
+            ETag:
+              schema:
+                type: string
+              description: 当前 exam revision 的强 ETag；plan_hash 是单独的计划内容指纹。
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+  /v1/exams/{exam_id}/publications/{snapshot_id}/revoke:
+    post:
+      operationId: revokePublication
+      summary: 撤回指定已发布快照的后续访问
+      description: 要求撤回权限。同一快照重复撤回返回首次记录；已下载副本无法远程删除。保留不可变快照和审批，停止后续下载并追加审计，不覆盖旧文件。
+      parameters:
+      - name: exam_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: snapshot_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/CsrfToken'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: 成功（拟开发）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Revocation'
+        '401':
+          $ref: '#/components/responses/Error'
+        '403':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '409':
+          $ref: '#/components/responses/Error'
+        '422':
+          $ref: '#/components/responses/Error'
+        '503':
+          $ref: '#/components/responses/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RevokeRequest'
+components:
+  schemas:
+    ExamSpec:
+      $ref: ./exam-spec.schema.json
+    Candidate:
+      $ref: ./candidate.schema.json
+    PublicQuestion:
+      $ref: ./public-question.schema.json
+    ValidationRecord:
+      $ref: ./validation-record.schema.json
+    Error:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 80
+        message:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        details:
+          type: object
+          additionalProperties: true
+        trace_id:
+          type: string
+          minLength: 1
+          maxLength: 128
+        retryable:
+          type: boolean
+      required:
+      - code
+      - message
+      - details
+      - trace_id
+      - retryable
+    ExamSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id001
+        revision:
+          type: integer
+          minimum: 1
+          maximum: 100000
+        state:
+          type: string
+          enum:
+          - DRAFT
+          - PLANNING
+          - PLAN_READY
+          - GENERATING
+          - REVIEW_READY
+          - APPROVED
+          - PUBLISHED
+          - ARCHIVED
+        title:
+          type: string
+          minLength: 1
+          maxLength: 120
+        content_hash:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-9a-f]{64}$
+      required:
+      - id
+      - revision
+      - state
+      - title
+      - content_hash
+    JobAccepted:
+      type: object
+      additionalProperties: false
+      properties:
+        job_id: *id001
+        status:
+          type: string
+          enum:
+          - QUEUED
+        exam_revision:
+          type: integer
+          minimum: 1
+          maximum: 100000
+      required:
+      - job_id
+      - status
+      - exam_revision
+    Job:
+      type: object
+      additionalProperties: false
+      properties:
+        job_id: *id001
+        status:
+          type: string
+          enum:
+          - QUEUED
+          - RUNNING
+          - CANCEL_REQUESTED
+          - CANCELLED
+          - SUCCEEDED
+          - PARTIAL_FAILED
+          - FAILED
+          - TIMED_OUT
+          - BUDGET_EXCEEDED
+          - RECONCILING
+        exam_revision:
+          type: integer
+          minimum: 1
+          maximum: 100000
+        current_event_id:
+          type: integer
+          minimum: 0
+          maximum: 2147483647
+        completed_slots:
+          type: integer
+          minimum: 0
+          maximum: 1000
+        total_slots:
+          type: integer
+          minimum: 0
+          maximum: 1000
+        cost:
+          type: object
+          additionalProperties: false
+          properties:
+            currency:
+              type: string
+              minLength: 1
+              maxLength: 8
+            settled_microunits:
+              type: integer
+              minimum: 0
+              maximum: 1000000000000000
+            reserved_microunits:
+              type: integer
+              minimum: 0
+              maximum: 1000000000000000
+            usage_unknown:
+              type: boolean
+          required:
+          - currency
+          - settled_microunits
+          - reserved_microunits
+          - usage_unknown
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+          minItems: 0
+          maxItems: 100
+      required:
+      - job_id
+      - status
+      - exam_revision
+      - current_event_id
+      - completed_slots
+      - total_slots
+      - cost
+      - errors
+    JobRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expected_revision:
+          type: integer
+          minimum: 1
+          maximum: 100000
+        budget_microunits:
+          type: integer
+          minimum: 1
+          maximum: 1000000000000
+        currency:
+          type: string
+          minLength: 1
+          maxLength: 8
+        note:
+          type: string
+          minLength: 0
+          maxLength: 2000
+      required:
+      - expected_revision
+      - budget_microunits
+      - currency
+      - note
+    ReviewDecision:
+      type: object
+      additionalProperties: false
+      properties:
+        expected_revision:
+          type: integer
+          minimum: 1
+          maximum: 100000
+        action:
+          type: string
+          enum:
+          - resolve_review
+          - approve_content
+          - approve_render
+          - reject
+        target_hash: *id002
+        check_ids:
+          type: array
+          items: *id001
+          minItems: 0
+          maxItems: 1000
+        rationale:
+          type: string
+          minLength: 1
+          maxLength: 4000
+      required:
+      - expected_revision
+      - action
+      - target_hash
+      - check_ids
+      - rationale
+    ExportRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expected_revision:
+          type: integer
+          minimum: 1
+          maximum: 100000
+        format:
+          type: string
+          enum:
+          - pdf
+          - docx
+          - html
+          - json
+        view:
+          type: string
+          enum:
+          - student
+          - teacher
+        source_hash: *id002
+      required:
+      - expected_revision
+      - format
+      - view
+      - source_hash
+    Export:
+      type: object
+      additionalProperties: false
+      properties:
+        export_id: *id001
+        status:
+          type: string
+          enum:
+          - QUEUED
+          - RENDERING
+          - PREFLIGHT_FAILED
+          - REVIEW_READY
+          - PUBLISHED
+          - FAILED
+        source_hash: *id002
+        render_hash:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-9a-f]{64}$
+        artifact_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        format:
+          type: string
+          enum:
+          - pdf
+          - docx
+          - html
+          - json
+        view:
+          type: string
+          enum:
+          - student
+          - teacher
+      required:
+      - export_id
+      - status
+      - source_hash
+      - render_hash
+      - artifact_id
+      - format
+      - view
+    PublishRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expected_revision:
+          type: integer
+          minimum: 1
+          maximum: 100000
+        content_hash: *id002
+        exports:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              export_id: *id001
+              render_hash: *id002
+            required:
+            - export_id
+            - render_hash
+          minItems: 1
+          maxItems: 20
+      required:
+      - expected_revision
+      - content_hash
+      - exports
+    Publication:
+      type: object
+      additionalProperties: false
+      properties:
+        snapshot_id: *id001
+        exam_id: *id001
+        revision:
+          type: integer
+          minimum: 1
+          maximum: 100000
+        content_hash: *id002
+        status:
+          const: PUBLISHED
+      required:
+      - snapshot_id
+      - exam_id
+      - revision
+      - content_hash
+      - status
+    Capabilities:
+      type: object
+      additionalProperties: false
+      properties:
+        policy_version:
+          type: string
+          minLength: 1
+          maxLength: 100
+        entries:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              stage:
+                type: string
+                enum:
+                - primary
+                - junior
+                - senior
+              subject_code:
+                type: string
+                minLength: 1
+                maxLength: 64
+              question_type:
+                type: string
+                enum:
+                - single_choice
+                - multiple_choice
+                - true_false
+                - fill_blank
+                - solution
+                - short_answer
+                - essay
+                - material_group
+              generation:
+                type: string
+                enum:
+                - READY
+                - REVIEW_REQUIRED
+                - UNSUPPORTED
+              verification:
+                type: string
+                enum:
+                - READY
+                - REVIEW_REQUIRED
+                - UNSUPPORTED
+              rendering:
+                type: string
+                enum:
+                - READY
+                - REVIEW_REQUIRED
+                - UNSUPPORTED
+              note:
+                type: string
+                minLength: 0
+                maxLength: 1000
+            required:
+            - stage
+            - subject_code
+            - question_type
+            - generation
+            - verification
+            - rendering
+            - note
+          minItems: 0
+          maxItems: 5000
+      required:
+      - policy_version
+      - entries
+    ExamStudentView:
+      type: object
+      additionalProperties: false
+      properties:
+        exam:
+          $ref: '#/components/schemas/ExamSummary'
+        view:
+          const: student
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicQuestion'
+          minItems: 0
+          maxItems: 1000
+      required:
+      - exam
+      - view
+      - questions
+    ExamTeacherView:
+      type: object
+      additionalProperties: false
+      properties:
+        exam:
+          $ref: '#/components/schemas/ExamSummary'
+        view:
+          const: teacher
+        candidates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Candidate'
+          minItems: 0
+          maxItems: 1000
+      required:
+      - exam
+      - view
+      - candidates
+    DecisionRecorded:
+      type: object
+      additionalProperties: false
+      properties:
+        decision_id: *id001
+        effective:
+          type: boolean
+      required:
+      - decision_id
+      - effective
+    CurrentSession:
+      type: object
+      additionalProperties: false
+      properties:
+        user_id: &id003
+          type: string
+          format: uuid
+        tenant_id: *id003
+        roles:
+          type: array
+          items:
+            type: string
+            enum:
+            - author
+            - reviewer
+            - admin
+            - operator
+        permissions:
+          type: array
+          items:
+            type: string
+        csrf_token: &id004
+          type: string
+          minLength: 1
+          maxLength: 200
+        environment:
+          type: string
+          enum:
+          - development
+          - acceptance
+          - production
+      required:
+      - user_id
+      - tenant_id
+      - roles
+      - permissions
+      - csrf_token
+      - environment
+    PlanSlot:
+      type: object
+      additionalProperties: false
+      properties:
+        slot_id: *id004
+        score_x100:
+          type: integer
+          minimum: 0
+        knowledge_ids:
+          type: array
+          items: *id004
+          minItems: 1
+        objective:
+          type: string
+          minLength: 1
+          maxLength: 3000
+        constraints:
+          type: array
+          items:
+            type: string
+        material_group_id:
+          type:
+          - string
+          - 'null'
+          maxLength: 120
+        kind:
+          type: string
+          enum:
+          - single_choice
+          - multiple_choice
+          - true_false
+          - fill_blank
+          - solution
+          - short_answer
+          - essay
+          - material_group
+        parent_slot_id:
+          type:
+          - string
+          - 'null'
+          minLength: 1
+          maxLength: 200
+          description: 根槽位为 null；子题引用本计划 material_group 槽位。服务端检查存在性、无环及最大深度。
+      required:
+      - slot_id
+      - kind
+      - score_x100
+      - knowledge_ids
+      - objective
+      - constraints
+      - material_group_id
+      - parent_slot_id
+      allOf:
+      - if:
+          properties:
+            kind:
+              const: material_group
+          required:
+          - kind
+        then:
+          properties:
+            score_x100:
+              const: 0
+        else:
+          properties:
+            score_x100:
+              minimum: 1
+      description: 含材料父槽位和叶子题。材料父槽位分值固定为0，只累加叶子题；parent_slot_id形成受校验的无环依赖。
+    CurrentPlan:
+      type: object
+      additionalProperties: false
+      properties:
+        plan_id: *id003
+        exam_id: *id003
+        spec_revision: &id005
+          type: integer
+          minimum: 1
+        plan_revision: *id005
+        plan_hash:
+          type: string
+          pattern: ^[0-9a-f]{64}$
+        slots:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlanSlot'
+          minItems: 1
+          maxItems: 1000
+        confirmed_by:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        confirmed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      required:
+      - plan_id
+      - exam_id
+      - spec_revision
+      - plan_revision
+      - plan_hash
+      - slots
+      - confirmed_by
+      - confirmed_at
+    ExamList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExamSummary'
+          maxItems: 100
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          maxLength: 1000
+      required:
+      - items
+      - next_cursor
+    RevokeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 2000
+      required:
+      - reason
+    Revocation:
+      type: object
+      additionalProperties: false
+      properties:
+        snapshot_id: *id003
+        revoked_at:
+          type: string
+          format: date-time
+        revoked_by: *id003
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 2000
+      required:
+      - snapshot_id
+      - revoked_at
+      - revoked_by
+      - reason
+  securitySchemes:
+    session:
+      type: apiKey
+      in: cookie
+      name: zhijuan_session
+      description: 同源 HTTPS 会话；所有写请求另需 X-CSRF-Token。Agent 内部鉴权不使用此 Cookie。
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 128
+      description: 同一键不同请求体返回409；保留窗口需在部署策略中冻结。
+    IfMatch:
+      name: If-Match
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 100
+      description: 例如 "exam-7"；缺失428，不匹配412。
+    CsrfToken:
+      name: X-CSRF-Token
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 256
+  responses:
+    Error:
+      description: 统一错误。查看 code；不回显密钥、内部路径或敏感正文。
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

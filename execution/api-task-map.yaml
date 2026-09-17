@@ -1,0 +1,193 @@
+document_version: '1.3'
+scope: business_api_not_hermes_api
+operations:
+- method: GET
+  path: /v1/capabilities
+  operation_id: listCapabilities
+  task_ids:
+  - M1-05
+  - M3-01
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams
+  operation_id: createExam
+  task_ids:
+  - M1-05
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/exams
+  operation_id: listExams
+  task_ids:
+  - M2-06
+  first_phase: M2
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/exams/{exam_id}
+  operation_id: getExam
+  task_ids:
+  - M1-05
+  - M2-06
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: PATCH
+  path: /v1/exams/{exam_id}/spec
+  operation_id: replaceExamSpec
+  task_ids:
+  - M1-05
+  - M2-01
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/exams/{exam_id}/spec
+  operation_id: getExamSpec
+  task_ids:
+  - M1-05
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams/{exam_id}/plan-jobs
+  operation_id: planExam
+  task_ids:
+  - M1-06
+  - M2-01
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams/{exam_id}/generation-jobs
+  operation_id: generateExam
+  task_ids:
+  - M1-05
+  - M2-01
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams/{exam_id}/validation-jobs
+  operation_id: validateExam
+  task_ids:
+  - M2-03
+  first_phase: M2
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams/{exam_id}/plans/{plan_id}/confirm
+  operation_id: confirmPlan
+  task_ids:
+  - M1-05
+  - M2-01
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/jobs/{job_id}
+  operation_id: getJob
+  task_ids:
+  - M1-05
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/jobs/{job_id}/events
+  operation_id: streamJobEvents
+  task_ids:
+  - M1-07
+  - M1-08
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/jobs/{job_id}/cancel
+  operation_id: cancelJob
+  task_ids:
+  - M1-03
+  - M2-08
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/jobs/{job_id}/retry
+  operation_id: retryJob
+  task_ids:
+  - M1-04
+  - M3-05
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams/{exam_id}/slots/{slot_id}/regeneration-jobs
+  operation_id: regenerateQuestion
+  task_ids:
+  - M2-05
+  first_phase: M2
+  implementation_status: NOT_STARTED
+- method: PATCH
+  path: /v1/exams/{exam_id}/slots/{slot_id}/content
+  operation_id: replaceQuestionContent
+  task_ids:
+  - M2-05
+  first_phase: M2
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/exams/{exam_id}/checks
+  operation_id: getChecks
+  task_ids:
+  - M2-06
+  first_phase: M2
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams/{exam_id}/review-decisions
+  operation_id: recordReview
+  task_ids:
+  - M2-06
+  - M3-03
+  first_phase: M2
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams/{exam_id}/export-jobs
+  operation_id: createExport
+  task_ids:
+  - M2-07
+  - M3-04
+  first_phase: M2
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/exports/{export_id}
+  operation_id: getExport
+  task_ids:
+  - M2-07
+  first_phase: M2
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams/{exam_id}/publish
+  operation_id: publishExam
+  task_ids:
+  - M3-03
+  first_phase: M3
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/artifacts/{artifact_id}/download
+  operation_id: downloadArtifact
+  task_ids:
+  - M2-07
+  - M3-02
+  - M3-03
+  first_phase: M2
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/session
+  operation_id: getSession
+  task_ids:
+  - M1-05
+  - M3-02
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: GET
+  path: /v1/exams/{exam_id}/plans/current
+  operation_id: getCurrentPlan
+  task_ids:
+  - M1-05
+  - M2-01
+  first_phase: M1
+  implementation_status: NOT_STARTED
+- method: POST
+  path: /v1/exams/{exam_id}/publications/{snapshot_id}/revoke
+  operation_id: revokePublication
+  task_ids:
+  - M3-03
+  first_phase: M3
+  implementation_status: NOT_STARTED

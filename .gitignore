@@ -1,0 +1,16 @@
+# Merge with an existing project's ignore policy; do not overwrite it blindly.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+node_modules/
+.env
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.key
+progress/generated/
+acceptance-runs/ci/
+acceptance-runs/devtools/local-*/
+# Reviewed, redacted release evidence may be committed explicitly.

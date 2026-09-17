@@ -1,0 +1,21 @@
+# Local infrastructure only. No API, Hermes adapter or full product included.
+# Major tags are for local setup; production must use audited digests.
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: zhijuan
+      POSTGRES_USER: zhijuan_dev_owner
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a local development password}
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql"]
+  rabbitmq:
+    image: rabbitmq:4-management
+    environment:
+      RABBITMQ_DEFAULT_USER: zhijuan_dev
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:?Set a local development password}
+    ports: ["127.0.0.1:5672:5672", "127.0.0.1:15672:15672"]
+    volumes: ["rabbitdata:/var/lib/rabbitmq"]
+volumes:
+  pgdata:
+  rabbitdata:

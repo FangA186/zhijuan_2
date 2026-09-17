@@ -1,0 +1,29 @@
+template_only: true
+status: NOT_RUN
+approved_before_run: false
+scope_version: null
+model_id: null
+hermes_commit: null
+skill_bundle_hash: null
+sample_floor_proposed:
+  per_stage: 100
+  per_committed_combination: 20
+thresholds:
+  first_pass_usable_rate_proposed: 0.8
+  complete_delivery_rate_proposed: 0.9
+  approved_first_pass_min: null
+  approved_delivery_min: null
+  approved_severe_escape_max: null
+  approved_review_rate_max: null
+denominators:
+  first_pass: 全部有效命题请求形成的首次候选；失败另报告，不只抽成功候选
+  delivery: 全部已接收的有效整卷任务，含模型故障、超预算与生成失败；用户主动取消单列且总账保留
+  severe_escape: 被自动筛选放行且经过独立人工复核的题中存在严重错误的比例
+  false_reject: 预先经专家确认正确的控制题中被错误拒绝的比例
+outputs_required:
+- 按学段/学科/题型分层结果
+- 首轮/修订后/人工改后三份结果
+- 样本量、分母、分歧与裁定
+- 预算、用时、失败和不确定性
+actual_results: null
+signoffs: []

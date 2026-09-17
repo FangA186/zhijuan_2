@@ -1,0 +1,3 @@
+jsonschema>=4.20,<5
+PyYAML>=6,<7
+# 示例测试依赖范围；生产项目必须生成精确 lockfile。
