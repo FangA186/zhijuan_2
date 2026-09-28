@@ -17,3 +17,14 @@ smartedu_data/
 # Reviewed, redacted release evidence may be committed explicitly.
 vendor/hermes-agent/
 .DS_Store
+
+# Local textbook images and acceptance screenshots stay on disk, outside Git.
+/教材单词图片/**/*.[pP][nN][gG]
+/教材单词图片/**/*.[jJ][pP][gG]
+/教材单词图片/**/*.[jJ][pP][eE][gG]
+/教材单词图片_非课程教学备份/**/*.[pP][nN][gG]
+/教材单词图片_非课程教学备份/**/*.[jJ][pP][gG]
+/教材单词图片_非课程教学备份/**/*.[jJ][pP][eE][gG]
+/acceptance-runs/**/*.[pP][nN][gG]
+/acceptance-runs/**/*.[jJ][pP][gG]
+/acceptance-runs/**/*.[jJ][pP][eE][gG]
