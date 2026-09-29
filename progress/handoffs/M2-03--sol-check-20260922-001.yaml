@@ -1,0 +1,26 @@
+schema_version: 1
+task_id: M2-03
+session_id: sol-check-20260922-001
+created_at: '2026-09-22'
+summary: 独立确定性候选题校验提供 FAIL/REVIEW 和内容哈希绑定；盲解比较去除子串误判。
+completed:
+- services.validators.validate_candidate(candidate, slot, spec, blind_report=None,
+  *, materials=None) 返回 item_id、overall_status、rule_checks、content_hash、revision 和服务端
+  checker 元数据。
+- 直接验证 approved candidate schema、选项 ID、答案引用及基数、评分细则求和、题槽题型分值和材料引用。
+- 数学真实性缺少受信可支持 AST 证据时固定 REVIEW；盲解一致不升级为 PASS。
+- 哈希绑定候选题、题槽、规格、相关材料与检查器版本，排除时间戳；修订只取受信 slot/spec。
+- 盲解来源模型、同模型和比较结论仅作为 REVIEW 证据；结构错误只披露路径与校验器错误码。
+- 单元与相关回归共 20 项通过。
+pending:
+- 主集成者需在 QuestionService 生成后接入，并以任务仓储事务保存题目和检查；哈希及修订变化必须使旧检查失效。
+- 尚无受信数学 AST 证明器；数学真实性仍需人工复核。
+- 未做数据库、权限、浏览器或付费模型验收。
+decisions:
+- checker_id/version/evidence_type 均由服务端固定，不接受候选题或盲解报告自报。
+- 不修改共享 features/work/current 账本。
+failed_approaches: []
+evidence_refs:
+- acceptance-runs/m2-03/sol-check-20260922-001/unit.log
+next_action: 主集成者需在 QuestionService 生成后接入，并以任务仓储事务保存题目和检查；哈希及修订变化必须使旧检查失效。
+metadata_correction: 补齐 next_action（优先引用原 pending）；不改写历史完成结论。

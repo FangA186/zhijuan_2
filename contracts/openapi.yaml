@@ -1771,3 +1771,5 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+
+x-local-planning-contract: ./planning-api.yaml

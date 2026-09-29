@@ -1,0 +1,72 @@
+    /* 全屏画廊 Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(2, 6, 23, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      flex-direction: column;
+      user-select: none;
+    }
+    #lightbox.active { display: flex; }
+
+    .lightbox-top {
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .lightbox-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .lightbox-body {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 20px;
+    }
+    .lightbox-img {
+      max-width: 92%;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+      transition: transform 0.1s ease-out;
+    }
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 64px;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+    .nav-arrow:hover { background: var(--accent); }
+    .nav-arrow.prev { left: 24px; }
+    .nav-arrow.next { right: 24px; }
+
+    .lightbox-bottom {
+      padding: 12px 24px;
+      background: rgba(15, 23, 42, 0.8);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+

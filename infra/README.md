@@ -1,4 +1,5 @@
 # 本地基础设施示例
+当前本机 `3000 → 8000` 工作台的存储、启动和生成配置状态见 [本机开发说明](../docs/local-development.md)。以下 Compose 仍只是基础设施示例。
 仅启动 PostgreSQL 和 RabbitMQ；不会启动业务 API 或 Hermes，也不会自动执行数据库草案。
 
 先在本地环境设置 `POSTGRES_PASSWORD`、`RABBITMQ_PASSWORD`，然后运行：

@@ -1,0 +1,72 @@
+schema_version: 1
+task_id: DEV-01
+session_id: project-overview-20260922-001
+created_at: '2026-09-22T08:42:50.951799+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths: &id001
+  - tools/project_overview.py
+  - tests/test_project_overview.py
+  - progress/file-guide.yaml
+  - apps/web/projectOverviewPlugin.ts
+  - apps/web/vite.config.ts
+  - apps/web/src/main.tsx
+  - apps/web/src/vite-env.d.ts
+  - apps/web/src/components/Header.tsx
+  - apps/web/src/pages/ProjectOverview.tsx
+  - apps/web/src/pages/ProjectOverview.css
+  - quality/suites.yaml
+  - progress/extra-tasks.yaml
+  - progress/work.yaml
+  - progress/features.yaml
+  - docs/project-overview.md
+  - docs/decisions/DEV-003-project-overview.md
+  - AGENTS.md
+  hidden_path_count: 0
+  notice: 仅列本轮范围；保留原有未提交修改。
+summary: 新增本地项目进展页面：真实功能/任务/证据、关联迭代、AGENTS 资料导航与目录文件用途。
+next_action: 从教师顶栏项目进展或 /project 查看；继续产品任务 M0-05，新增文件用途维护 file-guide.yaml。
+completed:
+- 独立 /project 开发页和只读元数据接口，不导入教师应用、不调用模型，不打包仓库快照。
+- 功能状态筛选、任务搜索依赖与旧状态纠正、交接和 Git 提交迭代；离线证据沿用现有过期判断。
+- AGENTS 动态引用与只读文档预览；目录/文件分级分页、用途说明、推断标注、功能关联和历史摘要。
+- 临时目录 7 项安全/状态测试、48 项记录工具测试首轮通过；浏览器筛选、文档、任务、目录和 391px 窄屏操作已检查。
+- 最终报告：48+7 项测试、四组记录/契约检查、生产构建、7 项 HTTP 检查、Host 边界与生产预览通过；教师入口和窄屏真实浏览器回归通过。
+pending:
+- 正式产品功能的模型/数据库/权限/导出验收不属于本轮。
+decisions:
+- 只在本地 Vite 同源回环访问，拒绝跨站和非本机 Host；生产不提供资料入口和接口。
+- 使用现有 React/TypeScript、Python/PyYAML，无新依赖；目录用途手工登记，不把推断当已审阅。
+- 没有功能发布版本则明确展示检查点/提交，不虚构版本号。
+failed_approaches:
+- 初次目录分页测试暴露 macOS /var 与 /private/var 的根路径差异；在目录读取边界统一 resolve，保留失败复现测试。
+- 本机 HTTP 检查受环境代理影响返回 502；对 localhost 显式禁用代理后验证，不更改系统代理。
+- 一次在仓库根误执行 npm run build，无根 package.json；改在 apps/web 执行通过。
+evidence_refs:
+- acceptance-runs/maintenance/project-overview-20260922-001/change-impact.md
+- acceptance-runs/maintenance/project-overview-20260922-001/http-checks.json
+- acceptance-runs/devtools/project-overview-20260922-001/report.json
+- acceptance-runs/maintenance/project-overview-20260922-001/verification.json
+- acceptance-runs/devtools/project-overview-20260922-002/report.json
+scope_patterns: *id001
+files:
+  tools/project_overview.py: 0b3d67d42698cef6f005ae6f153a123d3bc69587e817a30fa41dbf7a27c27257
+  tests/test_project_overview.py: 657f26ec09437763c48e6051e8158ab0f447a0412ff225a5ce517cb27c79d3a4
+  progress/file-guide.yaml: ecac879ebc95b0e9d86e0d242388ed52596046b7df8d643273537f32e25c60bf
+  apps/web/projectOverviewPlugin.ts: 69b6591a40e7b32d289f2cc77d07eb94e8b87695d28f4585aa83b62d54dcd032
+  apps/web/vite.config.ts: e0c3044636d8c24b1b127ac1a149ceb2e1e1bb4528cf4bf08d7d6afefb06b947
+  apps/web/src/main.tsx: b61c23f75102099f76d8c814cbfe91b4ac667e7e0774574039d949a533ea08ae
+  apps/web/src/vite-env.d.ts: 65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5
+  apps/web/src/components/Header.tsx: b8a99524b32fa5bd09c212211e8f57af286d297d2cef5a86fbe644d5a32f1f23
+  apps/web/src/pages/ProjectOverview.tsx: 54fa2c36acdf6e3235af3a9f88878980a9d613b273b95092720c04b6f2112ccc
+  apps/web/src/pages/ProjectOverview.css: 0a2d8333f6e84229465221ba12c0056209837841242d490987fb4a3cd04aa911
+  quality/suites.yaml: ec207fe31171127e3c91fe5d7965008229c9f9e2deaec35b37d5784b6e779104
+  progress/extra-tasks.yaml: 9b6a04ed558b7215916423a6abdf6d6e2e1eb29a770dc90445f9a6c7a1483739
+  progress/work.yaml: 7679127a73221b3a53aa1839d3d89898b44e4c82b89b9442be73e3f52583c8b6
+  progress/features.yaml: dfdb55d3822d2e06b11c10991fb1a0b3eea6b7dbd5a295d5d497fa03824250dc
+  docs/project-overview.md: af21f44de3bf0fcb81e8882275a5de0e88bc9ad145a8a38afb9ae9e8f82d43a3
+  docs/decisions/DEV-003-project-overview.md: 27f80d57393bfd67330aa186344fca280fa8fe4f33c0b31a2298a65112de6c76
+  AGENTS.md: 0656079fb3331725816ecb1f5c74c693a16f67623dd4feef61aeb15777c93348

@@ -1,0 +1,25 @@
+# Verified local integration versions; Hermes uses its separate pinned container.
+fastapi==0.141.1
+uvicorn==0.53.0
+pydantic==2.13.5
+httpx==0.28.1
+PyYAML==6.0.3
+jsonschema==4.26.0
+psycopg==3.3.6
+psycopg-binary==3.3.6
+celery==5.6.3
+kombu==5.6.2
+amqp==5.4.0
+billiard==4.3.0
+vine==5.1.0
+click==8.5.0
+click-didyoumean==0.3.1
+click-repl==0.4.0
+click-plugins==1.1.1.2
+python-dateutil==2.9.0.post0
+six==1.17.0
+tzdata==2026.4
+tzlocal==5.4.4
+prompt_toolkit==3.0.53
+wcwidth==0.8.4
+packaging==26.3

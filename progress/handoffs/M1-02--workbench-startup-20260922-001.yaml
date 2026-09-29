@@ -1,0 +1,58 @@
+schema_version: 1
+task_id: M1-02
+session_id: workbench-startup-20260922-001
+created_at: '2026-09-22T14:07:48+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - database/003_generation_jobs.sql
+  - database/004_generation_exam_state.sql
+  - services/api/repositories.py
+  - services/api/store.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15025
+summary: 常用8000已接独立本地zhijuan_local库并保留原草稿；并非生产租户/RLS迁移。
+next_action: 接续真实生成配置与完整验收；不得把配置齐备当运行健康或教学质量通过。
+completed:
+- 常用8000已接独立本地zhijuan_local库并保留原草稿；并非生产租户/RLS迁移。
+- 219项Python、8项专属数据库、3项Node及前端构建通过；浏览器11题蓝图预览成功，模型调用新增0。
+pending:
+- 真实生成服务尚未配置完整，页面和后端均阻止启动。
+decisions:
+- 使用独立本地库保留草稿；验收环境与日常入口分开记录。
+- 配置状态只报告布尔值，不读取或输出密钥；不把Key存在当就绪。
+failed_approaches:
+- 此前只验证独立8001入口，常用8000缺DATABASE_URL；本轮修复接线。
+- 旧样例隐藏题型考点与所选范围不一致，预览被拒；调整后重新要求范围确认。
+evidence_refs:
+- acceptance-runs/workflow/workbench-startup-20260922-001/report.md
+- acceptance-runs/workflow/workbench-startup-20260922-001/unit.json
+- acceptance-runs/workflow/workbench-startup-20260922-001/integration.json
+- acceptance-runs/workflow/workbench-startup-20260922-001/runtime.json
+scope_patterns:
+- database/001_schema_draft.sql
+- database/002_v13_required_changes.md
+- database/003_generation_jobs.sql
+- database/004_generation_exam_state.sql
+- docs/local-development.md
+- infra/README.md
+- migrations/versions/0001_core.py
+- services/api/repositories.py
+- services/api/store.py
+- tests/integration/test_persistence.py
+files:
+  '[missing-pattern] migrations/versions/0001_core.py': MISSING
+  '[missing-pattern] tests/integration/test_persistence.py': MISSING
+  database/001_schema_draft.sql: 8050ed224b1b20d55829b76d81d10368642a6e259022168e0962ec06525b1292
+  database/002_v13_required_changes.md: cfd0212b423c2ade31d151ddcab66e1739222763ab118655203685046ee58dd3
+  database/003_generation_jobs.sql: 8a6fc194f822506a0c7eaeab6f75ccaa41823e8d1d07e9037ac26c8410b697e6
+  database/004_generation_exam_state.sql: 75cd089575c28752d67f4e198a57a79ada7f0a626c3bfea09c526aabf6785337
+  docs/local-development.md: 41b6ee1b044a20d168c92584166934ad66a4ecbf4d4f007808fa3db05178877f
+  infra/README.md: fb4e504feb511260c6760e34de137b5f6550ad75a0f8dae8bd014cd4664f3bc0
+  services/api/repositories.py: cf2de67ea8ec85995d622399d0cfc6937765015e2de24bbf0756bd01cafe8048
+  services/api/store.py: b062258f202588e464fb7ad48c2041608ef7e52c8fece7a73f242df422fd8a97
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

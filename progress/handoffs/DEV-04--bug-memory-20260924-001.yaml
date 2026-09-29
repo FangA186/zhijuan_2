@@ -1,0 +1,136 @@
+schema_version: 1
+task_id: DEV-04
+session_id: bug-memory-20260924-001
+created_at: '2026-09-24T12:28:31+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - AGENTS.md
+  - apps/web/src/pages/ProjectOverview.tsx
+  - apps/web/src/pages/project-overview/BugPanel.css
+  - apps/web/src/pages/project-overview/BugPanel.tsx
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - docs/decisions/DEV-016-bug-memory.md
+  - docs/project-map.md
+  - docs/project-overview.md
+  - progress/bugs/BUG-20260924-001.yaml
+  - progress/bugs/BUG-20260924-002.yaml
+  - progress/bugs/BUG-20260924-003.yaml
+  - progress/bugs/BUG-20260924-004.yaml
+  - progress/bugs/BUG-20260924-005.yaml
+  - progress/bugs/BUG-20260924-006.yaml
+  - progress/bugs/BUG-20260924-007.yaml
+  - progress/bugs/BUG-20260924-008.yaml
+  - progress/bugs/BUG-20260924-009.yaml
+  - progress/bugs/README.md
+  - progress/bugs/notion-sync.json
+  - progress/file-guide.yaml
+  - progress/templates/bug-record.yaml
+  - quality/README.md
+  - quality/suites.yaml
+  - tests/test_bug_memory.py
+  - tools/bug_memory.py
+  - tools/bug_notion.py
+  - tools/bug_records.py
+  - tools/bug_workflow.py
+  - tools/memory_context.py
+  - tools/memory_finish.py
+  - tools/project_overview.py
+  - tools/project_overview_files.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15496
+summary: 建立Bug修复记忆、修前检索门禁与本地/Notion看板，9条记录同步回读完成
+next_action: 以后修Bug按AGENTS先检索再复现，复发沿用原ID，修后回写Notion
+completed:
+- 建立progress/bugs一Bug一YAML，9条历史记录含根因、复现、修复、回归与证据；8条历史修复、1条缺图待处理。
+- AGENTS持久规则、context相关Bug索引、search任务回执及finish声明Bug任务校验已实现；旧检查点检索不能复用。
+- 本地项目页新增Bug搜索/筛选/详情和同步状态，桌面1343/窄屏388像素实测无横向溢出，控制台无error。
+- Notion新增库、表格/状态看板和项目总览/接手指南入口；9条写入逐条fetch回读并登记指纹，待同步0。
+- 最终9组离线PASS，基线420项含Bug8项，记忆55项、看板9项；前端构建与200行检查通过。
+pending:
+- 后续Bug的远端同步由开发代理在交付时执行；非后台双向同步，连接不可用时保留待同步。
+- 本次为开发记忆工具交付，不代替真实命题、数据库、打印发布或全站APP-E2E。
+decisions:
+- 采用docs/decisions/DEV-016-bug-memory.md；本地文件为事实来源，原Notion任务卡保留，以任务ID关联修复记忆。
+failed_approaches:
+- Notion rows查询不在当前连接允许范围，使用返回的view URL完成完整回读。
+- macOS临时路径别名造成首轮测试失败，在加载器统一resolve修复。
+- 首轮全量门禁被并行任务的210行文件阻断；未覆盖其改动，待其拆回规范后重跑同一9组通过。
+evidence_refs:
+- acceptance-runs/devtools/bug-memory-20260924-001/offline-final/report.json
+- acceptance-runs/devtools/bug-memory-20260924-001/browser.md
+- acceptance-runs/devtools/bug-memory-20260924-001/change-impact.md
+scope_patterns:
+- AGENTS.md
+- apps/web/src/pages/ProjectOverview.tsx
+- apps/web/src/pages/project-overview/BugPanel.css
+- apps/web/src/pages/project-overview/BugPanel.tsx
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- docs/decisions/DEV-016-bug-memory.md
+- docs/project-map.md
+- docs/project-overview.md
+- progress/bugs/BUG-20260924-001.yaml
+- progress/bugs/BUG-20260924-002.yaml
+- progress/bugs/BUG-20260924-003.yaml
+- progress/bugs/BUG-20260924-004.yaml
+- progress/bugs/BUG-20260924-005.yaml
+- progress/bugs/BUG-20260924-006.yaml
+- progress/bugs/BUG-20260924-007.yaml
+- progress/bugs/BUG-20260924-008.yaml
+- progress/bugs/BUG-20260924-009.yaml
+- progress/bugs/README.md
+- progress/bugs/notion-sync.json
+- progress/file-guide.yaml
+- progress/templates/bug-record.yaml
+- quality/README.md
+- quality/suites.yaml
+- tests/test_bug_memory.py
+- tools/bug_memory.py
+- tools/bug_notion.py
+- tools/bug_records.py
+- tools/bug_workflow.py
+- tools/memory_context.py
+- tools/memory_finish.py
+- tools/project_overview.py
+- tools/project_overview_files.py
+files:
+  AGENTS.md: 593be9dc6068685d5f2a5deb88353f6b8fdf8ce7a7e420a0688730fdb2919c5d
+  apps/web/src/pages/ProjectOverview.tsx: c90a1df75270656e7b63773fe1b82bca2a1b7ae579ba1629e6d7c10e345c7822
+  apps/web/src/pages/project-overview/BugPanel.css: 623ecad5776c7e4ab819c840bc64356b220d589db8d4ba07a8e2f8de7e904bed
+  apps/web/src/pages/project-overview/BugPanel.tsx: 04a9e52d95dfa85129d7da83e106b33f7f03dcb9be6f74c8e74b2db9cd6abe31
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  docs/decisions/DEV-016-bug-memory.md: 1d487e6aef1f626c488486d3f4239f2df707dc6b0365937b575a329c82697ecd
+  docs/project-map.md: 5d6b0513cb22f402402633e1c9dcd719ad68b0b164d5d35f9812f4afd697a115
+  docs/project-overview.md: b3ccb5aaa78092741412252fc824272cd371e1f816e27ddbd82930b2829b2da3
+  progress/bugs/BUG-20260924-001.yaml: 2f8db135cc47394ef83623aad51dbc47ae77791ca9852e373651c1c8f1b3a809
+  progress/bugs/BUG-20260924-002.yaml: 996116c65b9009d90064615d76af9c444f23b36e38ca8eb796e0024a621e1134
+  progress/bugs/BUG-20260924-003.yaml: e9dd4ec8e8b9207b960d1cabd0b0dc1efbd998e3762b0b24869cc99c0c241aad
+  progress/bugs/BUG-20260924-004.yaml: 1247c58f40ef05acfc6aeb54a3b4f36a6f6b5f9f134aa000b956fe7a82c04ecb
+  progress/bugs/BUG-20260924-005.yaml: 6a464fa8f1f00e409e48a44cdba73165bce18ded24ce2613d742e5f2a40a7062
+  progress/bugs/BUG-20260924-006.yaml: 47e042c632cb4abfdf2a573cabe3d451fc81b9f143fb36b646167904753dc71b
+  progress/bugs/BUG-20260924-007.yaml: 92d88fd8c9e7ddfeedd95dd71c98ff9d56c2f33387bbc97cca776e29b8733bbe
+  progress/bugs/BUG-20260924-008.yaml: 3a4852b0c9c259f0a62d7e6619071034792e15925fb8735066888aaf3b3affa7
+  progress/bugs/BUG-20260924-009.yaml: a5d90afb2e82c5f996bca45d1c5bf23044ca5e8d0b273ff1ae40aa00ffa5dbd5
+  progress/bugs/README.md: 1dfd655fe26378c9bf5a4769bd2a602ec7e549a5e40c9c09aa5bc855f610e6de
+  progress/bugs/notion-sync.json: 193b74372142b7185626c802c925cc6117a4398ad90c2458d199f74e84c43d44
+  progress/file-guide.yaml: 5e8d7a10dc12a982137cd7474b6042394bb1fb470ce42717b8b9eaec06a01997
+  progress/templates/bug-record.yaml: 8ab51debccee19c90d7e454481f41aa05774f18e019f50e132b85d9aee8044c7
+  quality/README.md: d59fef67554cfc2b9ea5ba663e49d6936c2075b42b9360bd1fb44dad6f8f5592
+  quality/suites.yaml: 3db682f8152b562b6219b6540ebe540715b092bc806f85dd358ae73ee879a815
+  tests/test_bug_memory.py: fef86c55b3647613bfdc8890977c98f8933152abf14bc214d4dbdff573e0b286
+  tools/bug_memory.py: a8a565568bb22a53af3c6b84b01129e42b1341c71fff65805790a024f5d498a4
+  tools/bug_notion.py: a3ed53c0b797be246a7172e7f9505eed75d9c0d07ae1abd58c2ad43e9ae1b697
+  tools/bug_records.py: 9bfc13cba46a139bab4e0d8e2d9599ef1a92e2a31490ce2d4f61784eef3ea819
+  tools/bug_workflow.py: ef9a521a9bae5dc2ae79e4887453b1e9118b7e71b1e9a30a2ad7186d86f88417
+  tools/memory_context.py: 8cca9a98ff25c1cefc8c8db85b71a8a6259502d02f8effddf544361571a31853
+  tools/memory_finish.py: d76027afc5024293f48260066ba6f17c7b463b04a22f7f718b2024ac93dfbe95
+  tools/project_overview.py: 527c07939f27925f7baa57752987ef1ecedcc848d349f4c53e117677b1a5ecbb
+  tools/project_overview_files.py: ea771873ec31096d367b32aa094f7265c32a93336ff92b38f5c49ae4c594dcad
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

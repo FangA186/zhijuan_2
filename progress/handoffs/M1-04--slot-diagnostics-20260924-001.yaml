@@ -1,0 +1,81 @@
+schema_version: 1
+task_id: M1-04
+session_id: slot-diagnostics-20260924-001
+created_at: '2026-09-24T12:29:01+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15534
+summary: 题槽逐题展示失败/复核证据，修复FAIL误标待出题和终态等待文案
+next_action: 补后端逐题异常持久化；历史缺失诊断不能反推
+completed:
+- 23题逐题显示绑定本轮的失败与复核原因，FAIL改为失败标签。
+- 确认本轮13题REVIEW/10题FAIL；第11-13题仅一个正确选项；第17/23题盲解分歧；其余7题缺历史精确诊断，页面如实标注。
+- 快照同步当前状态和活动题，终态不再订阅或显示等待事件。
+- 8项Node测试、前端构建、200行门禁通过；实际桌面/390窄屏及刷新浏览器验证通过，最终刷新无新控制台错误。
+pending:
+- 历史7题未保存字段级异常，无法恢复；后端逐题失败代码/阶段/字段持久化尚待实现。
+- 未触发真实模型、生成重试或发布；新任务运行态增量回归与完整M1-04验收未测。
+decisions:
+- 复用已有只读validation/questions接口；以question_revision_id绑定job/slot，不放宽审核。
+failed_approaches:
+- 旧UI将FAIL兜底成待出题，快照未同步当前状态。
+- 初版订阅Hook超过200行，抽出快照摘要职责后通过。
+- 开发热更新Hook顺序报错保留日志，最终整页刷新验证无新错误。
+evidence_refs:
+- acceptance-runs/m1-04/slot-diagnostics-20260924-001/report.md
+- acceptance-runs/m1-04/slot-diagnostics-20260924-001/change-impact.md
+- acceptance-runs/m1-04/slot-diagnostics-20260924-001/tests.log
+- acceptance-runs/m1-04/slot-diagnostics-20260924-001/build.log
+- acceptance-runs/m1-04/slot-diagnostics-20260924-001/lines.log
+- acceptance-runs/m1-04/slot-diagnostics-20260924-001/network.json
+- acceptance-runs/m1-04/slot-diagnostics-20260924-001/desktop.png
+- acceptance-runs/m1-04/slot-diagnostics-20260924-001/mobile.png
+- acceptance-runs/m1-04/slot-diagnostics-20260924-001/console-final.json
+scope_patterns:
+- configs/business-policy.example.yaml
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- infra/compose.yaml
+- services/worker/celery_app.py
+- services/worker/leases.py
+- services/worker/outbox.py
+- services/worker/tasks.py
+files:
+  '[missing-pattern] services/worker/celery_app.py': MISSING
+  '[missing-pattern] services/worker/leases.py': MISSING
+  '[missing-pattern] services/worker/outbox.py': MISSING
+  '[missing-pattern] services/worker/tasks.py': MISSING
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  infra/compose.yaml: 649b54742085b24ef3b6fc01c62b0756d208f58e9402b8e87048e0863fc1b38a
+  apps/web/src/pages/ExamPaperWorkbench.tsx: 0e7d3ef383e235f06396022961df3aaba982a77f2b2091aa4984aacecb499a88
+  apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx: a047e669dd773f0d5118bb72346d18fe325e17775020f0807b06ef58e13599ab
+  apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx: f972869a43a9a691845ffb4a173de3856b3773b0f845f3f6e2d523cef5659b6b
+  apps/web/src/pages/exam-paper/WorkbenchProgressSummary.tsx: 4ec2caeef51004380312b433dd305d6c163033d19a6871da94969260dc901577
+  apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx: 537e8443eabf187a4a6d8ac710108d13a9a963c3f276eb1b06df41b7c1a9b9ba
+  apps/web/src/pages/exam-paper/useExamPaperStream.ts: 89afd353a87ffb697f3cc0a894692339f4d48cba9139c4d9987aeb5475cbebea
+  apps/web/src/pages/exam-paper/slotDiagnostics.ts: d6eb5d7a0912a1faff5732c26431c2624528d3b643eb8b64d18f985f2edc6d19
+  apps/web/src/pages/exam-paper/useSlotDiagnostics.ts: 29df48bc34e8c4e3b4116bde796b6a81f5d769190e433d750c0c2719f5936813
+  apps/web/src/pages/exam-paper/jobSnapshotSummary.ts: 1a76e8ba1c3530eac98c1033b7df4a93ecd2efa078ac02606121cee08d28f3bd
+  tests/frontend_slot_diagnostics.test.mjs: ab7ff974e88ea7e696f561787e4f605e3675d060846028f21634b84f6e99581a
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+this_change_paths:
+- apps/web/src/pages/ExamPaperWorkbench.tsx
+- apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx
+- apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx
+- apps/web/src/pages/exam-paper/WorkbenchProgressSummary.tsx
+- apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx
+- apps/web/src/pages/exam-paper/useExamPaperStream.ts
+- apps/web/src/pages/exam-paper/slotDiagnostics.ts
+- apps/web/src/pages/exam-paper/useSlotDiagnostics.ts
+- apps/web/src/pages/exam-paper/jobSnapshotSummary.ts
+- tests/frontend_slot_diagnostics.test.mjs

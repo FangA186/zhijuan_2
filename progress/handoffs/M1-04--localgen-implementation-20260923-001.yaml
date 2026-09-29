@@ -1,0 +1,69 @@
+schema_version: 1
+task_id: M1-04
+session_id: localgen-implementation-20260923-001
+created_at: '2026-09-23T01:09:05+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15094
+summary: 实施W0-W6：真实就绪(readyz七组件+心跳表005)、预算代理/internal/budget、C5受理幂等链路、前端状态闭环与页头修复、隔离复核修复、本地运行工具；三门禁+PG集成17项+队列集成4项+浏览器只读核验通过
+next_action: 用户决定预算端点宿主可达方案与23题验收预算授权后，启动网关容器并重跑start-generation；完整23题真实验收仍被预算门控阻断
+completed:
+- "DEV-010+运行时变绿：预算代理仅环回发布 127.0.0.1:8650（用户批准后实施，账本卷原样、16/16 延续验证）；三网关容器启动；start-generation 报告真就绪，/readyz 七组件全绿，浏览器截图确认页头绿色'生成服务已就绪'。"
+- "L01 单题真实验收完成：专用验收库+8020 临时 API+验收 vhost，真实受理链路（预算门禁通过）→ 真实 author run_id run_c0160ba7...（5535 tokens）→ 真实 solver run_id run_d514037d...（1271 tokens）→ 作业 COMPLETED、validation=REVIEW 待教师复核；账本 16→18 次调用（+2 元预留），与最低估算一致；日常草稿零接触（version 12、jobs=0 不变）。"
+
+- "L03/L04 整卷真实验收完成（DEV-011 用户放宽授权）：三次尝试定位并修复 vhost 权限全串锚定语义、author 输出截断、run_job 单槽中止三个真实缺陷；最终 job 3d418c40 PARTIAL_FAILED：18 槽 REVIEW_REQUIRED 待教师复核、5 槽确定性 FAIL（无假成功），23/23 处理完毕；账本 18→65 次调用（上限 80），0 未决；日常入口 8000 直接驱动，浏览器实时进度页与成卷渲染均验证。"
+- "L01 工具两处缺陷由主代理修复：plans/generate 与 confirm 响应不带 ETag（改用 PUT spec 的版本，与集成测试同款）；run() 成功时先写报告后置 ok 的顺序缺陷（修正并在证据 JSON 附说明，无新增调用）。"
+- "W0: 库身份/备份/账本快照/草稿核对完成（backup/zhijuan_local_backup.sql sha256 8cb463517782964b...；草稿23题15000分版本12未动）；范围澄清遵守，zygf仅记录最少归属。"
+- "W1/W2: tools/local_runtime.py(doctor/start/stop fail-closed) + configs/local-runtime.env.example + offline_gate.sh；/readyz升级C1七组件契约；心跳表005（测试库先验证→日常库应用）；Worker/调度器心跳线程；/internal/budget(C3鉴权+min_requests+旧账延续)。"
+- "W3: C5受理契约（428/412/409/503/202）、同版本幂等重放零副作用、预算快照随job持久化、advisory锁内二次核对、500分支不再泄漏异常。"
+- "W4: 前端运行状态fail-closed、草稿单一状态源（页头高一150分修复）、精确禁用原因、预设卡计数从数据计算（小测6题）、范围来源标记、SSE先GET后重连、终态页、updateCandidate经responseJson不再fail-open。"
+- "W5: 七项约束核验，6项已有实现补测试，1项修复（shared materials计费前最早期拒绝material_id槽）。"
+- "W6: 离线361项/前端12项/构建 PASS；PG集成17项（专属库zhijuan_accept_w6）；队列集成4项（真实Worker+专用vhost+假Hermes，受理计数断言）；浏览器只读核验8项（3000→8000、页头、原因码、零副作用）。"
+- "运行实测: start-generation真实启动Worker+调度器并写入日常库心跳，因预算不可达按设计回滚且只回收自有进程； doctor修复AMQP帧判断与sys.path两缺陷；恢复中断的API与Vite。"
+pending:
+- "完整23题真实验收仍被预算门控（最低46次请求 vs 剩余2次）：需用户明确新增预算授权或§7.3上界预留评审；L01 成功不构成教学质量验收，也不得代签全卷。"
+- "浏览器交互类用例（模板导入/确认/断网恢复/终态页DOM操作/U11上传）未在日常入口执行，保护用户草稿。"
+- "ETAG_MISMATCH码不在C5枚举、兜底readiness dict缺checked_at：T10观察项，不误绿，待裁定。"
+decisions:
+- "新增心跳表为本地运行元数据（DEV-007）：测试schema先验证，日常库应用加表不动用户数据；回滚=停新代码保留表。"
+- "/internal/budget与C3预算契约（DEV-008）：只读、内部鉴权、min_requests评估；账本路径暂不迁移。"
+- "C5受理错误契约（DEV-009）：幂等重放优先于就绪/预算门禁且永不收费；412用ETAG_MISMATCH码（C5枚举外，待裁定）。"
+- "预算代理不发布宿主端口属安全边界变更，未获用户批准前保持fail-closed，不擅自重建容器。"
+- "API/Vite进程会话中途死亡（原因未查明，本会话无杀进程操作），按原启动形态分离重启并记录于w1-runtime/report.json。"
+failed_approaches:
+- "队列集成初版用例把'重复派发后dispatch计数0'误判为门禁失败，并用'外部派遣者'假设排查；手动worker对照实验证明无外部派遣者，真因是测试自身断言写反与跨运行遗留数据，已修正测试设计（产品代码无缺陷）。"
+- "doctor的AMQP握手最初只接受协议头回显，RabbitMQ 4实际回connection.start帧导致误报BROKER_UNAVAILABLE；已改为双形态识别。"
+evidence_refs:
+- acceptance-runs/workflow/handoff-localgen-20260922-2000/report.md
+- acceptance-runs/workflow/handoff-localgen-20260922-2000/manifest.json
+- acceptance-runs/workflow/handoff-localgen-20260922-2000/gates/unit-final.json
+- acceptance-runs/workflow/handoff-localgen-20260922-2000/w6-pg-integration/report.json
+- acceptance-runs/workflow/handoff-localgen-20260922-2000/w6-queue/report.json
+- acceptance-runs/workflow/handoff-localgen-20260922-2000/w6-browser/report.json
+- acceptance-runs/workflow/handoff-localgen-20260922-2000/w6-budget/report.json
+- acceptance-runs/workflow/handoff-localgen-20260922-2000/w1-runtime/report.json
+- acceptance-runs/workflow/handoff-localgen-20260922-2000/W0-SNAPSHOT.md
+scope_patterns:
+- configs/business-policy.example.yaml
+- configs/local-runtime.env.example
+- infra/compose.yaml
+- services/worker/celery_app.py
+- services/worker/leases.py
+- services/worker/outbox.py
+- services/worker/tasks.py
+files:
+  '[missing-pattern] services/worker/celery_app.py': MISSING
+  '[missing-pattern] services/worker/leases.py': MISSING
+  '[missing-pattern] services/worker/outbox.py': MISSING
+  '[missing-pattern] services/worker/tasks.py': MISSING
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  infra/compose.yaml: 649b54742085b24ef3b6fc01c62b0756d208f58e9402b8e87048e0863fc1b38a
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

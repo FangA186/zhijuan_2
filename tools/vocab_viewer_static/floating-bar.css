@@ -1,0 +1,26 @@
+    /* 底部悬浮删除栏 */
+    #bottom-floating-bar {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      border-radius: 12px;
+      padding: 10px 22px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(239, 68, 68, 0.35);
+      z-index: 1000;
+      align-items: center;
+      gap: 16px;
+      animation: floatUp 0.2s ease-out;
+    }
+    @keyframes floatUp {
+      from { transform: translate(-50%, 20px); opacity: 0; }
+      to { transform: translate(-50%, 0); opacity: 1; }
+    }
+    #bottom-floating-bar.active {
+      display: flex;
+    }
+

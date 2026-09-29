@@ -1,0 +1,15 @@
+{
+  "report_kind": "offline-gates-v1",
+  "when": "after coding batch 1 (10 tasks) + coding batch 2 (3 fix tasks) + main-agent doctor fixes",
+  "gates": [
+    {"name": "python offline unittest", "command": "bash tools/offline_gate.sh acceptance-runs/workflow/handoff-localgen-20260922-2000/gates/unit-final.json", "tests_run": 361, "failures": 0, "errors": 0, "skipped": 0, "exit": 0, "report": "gates/unit-final.json"},
+    {"name": "frontend node tests", "command": "node --test tests/frontend_stage_year.test.mjs tests/frontend_section_scope.test.mjs tests/frontend_scoring.test.mjs tests/frontend_runtime_state.test.mjs tests/frontend_job_progress.test.mjs", "pass": 12, "fail": 0, "skipped": 0, "exit": 0},
+    {"name": "frontend build", "command": "npm --prefix apps/web run build", "exit": 0, "note": "vite build succeeded in 909ms"}
+  ],
+  "status": "PASS",
+  "notes": [
+    "361 Python tests = baseline 219 + 142 new offline tests across runtime readiness/heartbeats/budget endpoint/accept chain/local runtime/proxy/batch-2 fixes.",
+    "0 skipped: the offline gate rejects skips by design (tools/run_unittests.py).",
+    "Environment sanitized by tools/offline_gate.sh per test plan (no DSN, no keys, ZHIJUAN_SKIP_DOTENV=1)."
+  ]
+}

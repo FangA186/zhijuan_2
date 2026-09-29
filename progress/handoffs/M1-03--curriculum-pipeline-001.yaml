@@ -1,0 +1,123 @@
+schema_version: 1
+task_id: M1-03
+session_id: curriculum-pipeline-001
+created_at: '2026-09-17T15:23:05+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - apps/web/src/lib/api.ts
+  - apps/web/src/pages/ExamSetup.tsx
+  - apps/web/src/pages/JobProgress.tsx
+  - services/api/routes/curriculum.py
+  - services/api/routes/exams.py
+  - services/blueprint/__init__.py
+  - services/blueprint/allocator.py
+  - services/blueprint/generator.py
+  - services/blueprint/rules.py
+  - services/blueprint/schema.py
+  - services/blueprint/slot_builder.py
+  - services/curriculum/__init__.py
+  - services/curriculum/models.py
+  - services/curriculum/repository.py
+  - services/curriculum/service.py
+  - services/exam/__init__.py
+  - services/exam/blueprint_service.py
+  - services/exam/job_service.py
+  - services/exam/question_service.py
+  - services/exam/spec_service.py
+  - services/hermes_adapter/adapter.py
+  - tests/test_blueprint_engine.py
+  - tests/test_curriculum_domain.py
+  - tests/test_generation_pipeline.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+summary: 落地 GPT-6-pro 审计关键项 PR-003(Curriculum 领域抽取) 与 PR-004(Generation Pipeline 工单调度流水线与单槽重生)
+next_action: 验证试卷编辑区真实 LaTeX 渲染与盲解对比差异看板
+completed:
+- "PR-003 Curriculum Domain: 创建 services/curriculum/ (models.py, repository.py, service.py)，将 3209 本 SmartEdu 教材数据与章节树读取抽象为纯领域层"
+- "重构 services/api/routes/curriculum.py 为轻量路由控制器，委托 CurriculumService 执行"
+- "PR-004 Generation Pipeline: 创建 services/exam/job_service.py，定义槽位级状态机 (PENDING->AUTHORING->SOLVING->CHECKING->READY/REVIEW_REQUIRED)"
+- "扩展 services/api/routes/exams.py 提供 generation-jobs 与 slots/{slot_id}/regenerate 端点"
+- "在 services/hermes_adapter/adapter.py 中增强栈式 JSON 括号与 LaTeX 自动修复器，避免模型偶发格式扰动"
+- "在 services/exam/question_service.py 中接入弹性离线降级与 BlindSolveReport 结构化自适应"
+- "前端 apps/web/src/lib/api.ts 与 JobProgress.tsx 接入真实后端流水线轮询并保留离线平滑模拟"
+- "编写 tests/test_curriculum_domain.py (5项) 与 tests/test_generation_pipeline.py (4项)，全量 137 项单元测试全绿通过"
+- "前端 apps/web npm run build 验证通过 (1.01s，零错误)"
+pending:
+- "验证试卷编辑区真实 LaTeX 渲染与盲解对比差异看板"
+- "多轮质检与教师手动仲裁逻辑流转"
+decisions:
+- "教材可见性与官网筛选规则集中在 CurriculumRepository/CurriculumService 内部维护"
+- "GenerationJob 采用细粒度题槽状态机，支持单槽独立重生与整体流水线单步/自动推进"
+- "LLM JSON 解析采用栈式括号平衡与 unescaped LaTeX 转义正则预处理，增强对大模型输出波动的容错度"
+failed_approaches:
+- "直接正则替换反斜杠可能导致双反斜杠被错误重复转义，改为负向后行/先行断言精准识别"
+- "未考虑题槽首度生成时无旧 candidate，改为自适应从 blueprint slot 初始化"
+evidence_refs:
+- "tests/test_curriculum_domain.py"
+- "tests/test_generation_pipeline.py"
+- "tests/test_blueprint_engine.py"
+scope_patterns:
+- apps/web/src/lib/api.ts
+- apps/web/src/pages/ExamSetup.tsx
+- apps/web/src/pages/JobProgress.tsx
+- execution/templates/hermes-capability-probe.yaml
+- reference_code/adapter_contract.py
+- services/api/routes/curriculum.py
+- services/api/routes/exams.py
+- services/blueprint/__init__.py
+- services/blueprint/allocator.py
+- services/blueprint/generator.py
+- services/blueprint/rules.py
+- services/blueprint/schema.py
+- services/blueprint/slot_builder.py
+- services/curriculum/__init__.py
+- services/curriculum/models.py
+- services/curriculum/repository.py
+- services/curriculum/service.py
+- services/exam/__init__.py
+- services/exam/blueprint_service.py
+- services/exam/job_service.py
+- services/exam/question_service.py
+- services/exam/spec_service.py
+- services/hermes_adapter/adapter.py
+- services/hermes_adapter/http_adapter.py
+- services/hermes_adapter/runtime_factory.py
+- services/hermes_adapter/status_map.py
+- tests/test_blueprint_engine.py
+- tests/test_curriculum_domain.py
+- tests/test_generation_pipeline.py
+files:
+  apps/web/src/lib/api.ts: 9bd8bc2d4dd8bd0067b8c8e46b5b57f6806edb4239bb5e78962538938f91d0da
+  apps/web/src/pages/ExamSetup.tsx: fe70debe10a6a65a803a2d2b1147e05590095d36c850c7bf6815d7ab17d1784c
+  apps/web/src/pages/JobProgress.tsx: 7d63fa08b23fa7a8bc5e4595dae6ac274eeb476b5eaa6fb12af93af0cc791a8c
+  execution/templates/hermes-capability-probe.yaml: 672622b5822e538458a699d934b03c101676a15259f7cc8faf6a07651f8fed0e
+  reference_code/adapter_contract.py: d944c5313a36f2cc89c5b4d79c62e741bf9834e7c5a430f4479a3b6d63a35819
+  services/api/routes/curriculum.py: 84674772c7b76ab8a1e8930e60d8251758e2b01365fa65e0e24da4210dddc14b
+  services/api/routes/exams.py: 368a9feefe4b8c5bb91046603726d63b14603f8d29083f4c2a9549c5f2252d8e
+  services/blueprint/__init__.py: 89ebf12e0fbf8912943a4dbc06ee872a6b2ceb8e17be68a3a19d2ed04322060a
+  services/blueprint/allocator.py: 3e6263dca7361b3c23e80a0ca492dff0a4dc4e9b3153115d33684544130c3603
+  services/blueprint/generator.py: adc6d4c03abe9c186f1caac01543e5048245bd7907974c5219eff4d217e7cacb
+  services/blueprint/rules.py: 4094af02c28c815dc27f060853b1acef47b9407dae1f320a4300b0dc835e5465
+  services/blueprint/schema.py: 4c18d0c0c6b6316adf268962384c4471b70237c7c86f2f67e7bfec579ad49100
+  services/blueprint/slot_builder.py: 3b3cf9e967270a1f2986b8a9520e728a9d22c448c244628efe7833692c52590a
+  services/curriculum/__init__.py: 9655d3f00ef2f08a8f2c08900f2528837df43586e2c61e398de936fe714f575f
+  services/curriculum/models.py: cd77b750386c889abf92a41f37a7dab4357adb79c89f55cea61a0bf0e27b7d4b
+  services/curriculum/repository.py: fb43b8a34ddcac55f5e03233a4bfac1a2b6f656b2c867e10fecdf60ff08dc32d
+  services/curriculum/service.py: 67c33d879a11da6f7ead5fafa1366a57091032a7e0c971fe7cc8b6118fd7a761
+  services/exam/__init__.py: 1f4285c510b87edad597ae8ec67c797fc4c3cac20293dba69f5560239cf481c3
+  services/exam/blueprint_service.py: 128c51f8bbfa8e693a014f6393e99441d89e54ae2e9318cec1791f8141680a05
+  services/exam/job_service.py: 4480987fe52283ef05e0581272caf1e3de6e9d44ef09637ca9c42d24cd104e61
+  services/exam/question_service.py: f04e900654c9b275aeaea0b5aef186236694df1875a8fbaedd67ffcd42973c6c
+  services/exam/spec_service.py: f7a26cd25b973fbbb6f60470683a600bff934bf75b2d890b6616cd62b23975bb
+  services/hermes_adapter/adapter.py: ee147022289027b810d79d4434d2c0dd3b70af185583d61b0a1374c424aa3aeb
+  services/hermes_adapter/http_adapter.py: 0ac77052d545c19f71c367d63851955890be8ecbcf27ae3d01d94f521bd51761
+  services/hermes_adapter/runtime_factory.py: d0b029f7b0f6817ae23174a48c047a8450aea2bfd7d91f13ed6be965c34a5a8d
+  services/hermes_adapter/status_map.py: 6d906f6cd07c5870923fd54335766f07201416212381a078c1218fdb9256c3d4
+  tests/test_blueprint_engine.py: 14bd6296538f560f96261691db2f783cb7b6d6c59e5d331c2f6eeda89f2e5bdd
+  tests/test_curriculum_domain.py: 6b87d0896a1a9902a8f82be6dcba18170cf1a46c85e0e33e59df5b0bb0680d61
+  tests/test_generation_pipeline.py: b42f3b6f9768f7aed41de67220d91ca274bd7757ab9a4e218e33bca9aaa08231
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

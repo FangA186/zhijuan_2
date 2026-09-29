@@ -1,0 +1,41 @@
+schema_version: 1
+task_id: M0-03
+session_id: agents-refactor-20260922-001
+created_at: '2026-09-22T07:57:42.281659+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths: &id001
+  - AGENTS.md
+  - docs/project-map.md
+  - docs/agent-workflow-detail.md
+  - docs/09_长期开发与跨会话手册.md
+  - docs/decisions/DEV-002-agents-routing.md
+  hidden_path_count: 0
+  notice: 仅本轮文档范围；既有用户修改保留，原现场见 impact-before.json。
+summary: 按官方文章重构 AGENTS：任务路由、项目不变量、明确完成与授权边界；纠正过时状态和离线保证。
+next_action: 后续开发沿新入口定位任务；产品下一项仍是 M0-05，不因本轮文档重构签收 M0-03。
+completed:
+- 重写根开发入口；同步源码导航和旧手册历史范围标记。
+- 保留隔离、公开投影、score_x100、版本证据、预算及授权约束。
+- DEV-002 登记本轮用户授权、选择、影响和恢复方式。
+- 15 个链接有效；记录严格检查、任务基线和文档 diff 检查通过。未进行模型效果 A/B 或应用验收。
+pending:
+- 产品真实验收和 M0-03 完整交付未执行。
+decisions:
+- 仅重构开发指令，不更换生产框架/模型，不改生产 Skills，不无关重测。
+failed_approaches:
+- 官方 .md URL 返回不支持的内容类型，改读 HTML 页正文；不依赖搜索摘要。
+evidence_refs:
+- acceptance-runs/maintenance/agents-refactor-20260922-001/change-impact.md
+- docs/decisions/DEV-002-agents-routing.md
+- acceptance-runs/maintenance/agents-refactor-20260922-001/verification.json
+scope_patterns: *id001
+files:
+  AGENTS.md: 0e1c98233c371fd924f81cec8144b678be740de5b5c42d0fe0a1d3aa50a4c8e5
+  docs/project-map.md: 6d369c84032748018ca3a95c8a9683e7c2b923b5f0153491d8e8a27de367556c
+  docs/agent-workflow-detail.md: 010eaf2df70e77acc0b9be9f2c8951b67216b2c4c7f1c2f33b29da6932e4e24f
+  docs/09_长期开发与跨会话手册.md: 0305d615e7d45caede5fc481d319bed4f9e41d78dc50a02ef400d00b184701cc
+  docs/decisions/DEV-002-agents-routing.md: 39e311c56be8f925474922b8b554d34705a504d9af9b8115f43c18808e71d2bb

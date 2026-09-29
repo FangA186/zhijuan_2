@@ -1,0 +1,27 @@
+task_id: M2-01
+feature_id: FEAT-PLAN
+status: partial
+completed:
+- Canonical ExamSpec validation precedes blueprint expansion.
+- Exact integer score and teacher-confirmed section topic scope are enforced.
+- Stable leaf slot IDs, difficulty quotas, frozen spec, revision, and plan hash are
+  emitted.
+- Direct slot mutation is rejected by BlueprintService.
+pending:
+- Store and routes integration of save, current plan, and confirmation gate by main
+  agent.
+- Template parser legacy caller currently passes noncanonical spec and needs canonicalization.
+- Real model and application acceptance remain unrun.
+decisions:
+- No score tolerance, residual reassignment, or generic topic fallback.
+- No model calls in blueprint generation.
+failed_approaches:
+- Legacy template parser fixture cannot pass canonical validation because curriculum_system
+  is absent.
+evidence_refs:
+- acceptance-runs/m2-01/sol-plan-20260922-001/change-impact.md
+schema_version: 1
+session_id: sol-plan-20260922-001
+summary: M2-01 Sol 开发交付；原完成事项与待办见下文，主验收另记。
+next_action: 主代理继续独立集成验收并生成新的接手记录。
+metadata_correction: 补齐 schema/session/摘要字段；不改写历史完成结论或声称新验收。

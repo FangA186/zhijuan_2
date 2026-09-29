@@ -1,0 +1,190 @@
+{
+  "report_kind": "l01-live-single-question-v1",
+  "created_at": "2026-09-23T05:21:22.557454+00:00",
+  "runtime_id": "zhijuan-accept-l01",
+  "preflight": {
+    "tool": "live-single-question-preflight",
+    "runtime_id": "zhijuan-accept-l01",
+    "checked_at": "2026-09-23T05:20:18.690194+00:00",
+    "ready": true,
+    "budget": {
+      "run_id": "zhijuan-workflow-20260922",
+      "calls": 16,
+      "max_requests": 20,
+      "reserved_cny": 16,
+      "max_reserved_cny": 30,
+      "remaining_requests": 4,
+      "remaining_cny": 14,
+      "reserve_per_request_cny": 1,
+      "pending_count": 0,
+      "sufficient": true,
+      "reason_code": "BUDGET_OK",
+      "shortfall": {
+        "requests": 0,
+        "cny": 0
+      },
+      "estimate_note": "最低估计不是严格最坏上界",
+      "checked_at": "2026-09-23T05:20:18.699537+00:00"
+    },
+    "components": {
+      "budget": {
+        "ok": true,
+        "detail": "预算接口可达",
+        "code": null,
+        "next_action": "无需操作"
+      },
+      "author": {
+        "ok": true,
+        "detail": "author 网关就绪（200 status=ok）",
+        "code": null,
+        "next_action": "无需操作"
+      },
+      "solver": {
+        "ok": true,
+        "detail": "solver-entry 就绪（200 status=OK upstream_configured=true）",
+        "code": null,
+        "next_action": "无需操作"
+      },
+      "database": {
+        "ok": true,
+        "detail": "PG 就绪（zhijuan_accept_w6，7 张表包含心跳表）",
+        "code": null,
+        "next_action": "无需操作"
+      },
+      "broker": {
+        "ok": true,
+        "detail": "CELERY_BROKER_URL 已配置（验收 vhost）",
+        "code": null,
+        "next_action": "无需操作"
+      },
+      "port_8020": {
+        "ok": true,
+        "detail": "8020 端口空闲",
+        "code": null,
+        "next_action": "无需操作"
+      }
+    },
+    "reason_codes": []
+  },
+  "budget_before": {
+    "run_id": "zhijuan-workflow-20260922",
+    "calls": 16,
+    "max_requests": 20,
+    "reserved_cny": 16,
+    "max_reserved_cny": 30,
+    "remaining_requests": 4,
+    "remaining_cny": 14,
+    "reserve_per_request_cny": 1,
+    "pending_count": 0,
+    "sufficient": true,
+    "reason_code": "BUDGET_OK",
+    "shortfall": {
+      "requests": 0,
+      "cny": 0
+    },
+    "estimate_note": "最低估计不是严格最坏上界",
+    "checked_at": "2026-09-23T05:20:18.756365+00:00"
+  },
+  "budget_after": {
+    "run_id": "zhijuan-workflow-20260922",
+    "calls": 18,
+    "max_requests": 20,
+    "reserved_cny": 18,
+    "max_reserved_cny": 30,
+    "remaining_requests": 2,
+    "remaining_cny": 12,
+    "reserve_per_request_cny": 1,
+    "pending_count": 0,
+    "sufficient": true,
+    "reason_code": "BUDGET_OK",
+    "shortfall": {
+      "requests": 0,
+      "cny": 0
+    },
+    "estimate_note": "最低估计不是严格最坏上界",
+    "checked_at": "2026-09-23T05:21:22.554129+00:00"
+  },
+  "budget_delta_calls": 2,
+  "budget_delta_reserved_cny": 2,
+  "job": {
+    "job_id": "000f4846-14a9-4aa7-80c5-508d30d4725b",
+    "status": "COMPLETED",
+    "accept_status": "QUEUED",
+    "evidence": {
+      "job_id": "000f4846-14a9-4aa7-80c5-508d30d4725b",
+      "status": "COMPLETED",
+      "total_slots": 1,
+      "completed_slots": 1,
+      "usage_status": "TOKENS_REPORTED",
+      "tokens_used": 6806,
+      "tokens_used_known": 6806,
+      "slots": [
+        {
+          "slot_id": "slot_001",
+          "status": "REVIEW_REQUIRED",
+          "kind": "single_choice",
+          "score_x100": 100,
+          "target_topic": "整数四则运算"
+        }
+      ],
+      "validation_overall": [
+        "REVIEW"
+      ],
+      "author_runs": [
+        {
+          "task_ref": "000f4846-14a9-4aa7-80c5-508d30d4725b:slot_001:author",
+          "run_id": "run_c0160ba73ee8494a84c416e7a322a089",
+          "state": "completed",
+          "usage_total_tokens": 5535
+        }
+      ],
+      "solver_runs": [
+        {
+          "task_ref": "000f4846-14a9-4aa7-80c5-508d30d4725b:slot_001:solver",
+          "run_id": "run_d514037dfe3543b4ba3bfbb2592ff95f",
+          "state": "completed",
+          "usage_total_tokens": 1271
+        }
+      ],
+      "phase_count": 2
+    },
+    "results_count": 1,
+    "slots": [
+      {
+        "slot_id": "slot_001",
+        "status": "REVIEW_REQUIRED",
+        "kind": "single_choice",
+        "score_x100": 100,
+        "target_topic": "整数四则运算"
+      }
+    ],
+    "validation_overall": [
+      "REVIEW"
+    ],
+    "author_runs": [
+      {
+        "task_ref": "000f4846-14a9-4aa7-80c5-508d30d4725b:slot_001:author",
+        "run_id": "run_c0160ba73ee8494a84c416e7a322a089",
+        "state": "completed",
+        "usage_total_tokens": 5535
+      }
+    ],
+    "solver_runs": [
+      {
+        "task_ref": "000f4846-14a9-4aa7-80c5-508d30d4725b:slot_001:solver",
+        "run_id": "run_d514037dfe3543b4ba3bfbb2592ff95f",
+        "state": "completed",
+        "usage_total_tokens": 1271
+      }
+    ]
+  },
+  "limitations": [
+    "单题真实链路不构成教学质量验收；REVIEW 表示待教师复核，不代表题目正确。",
+    "本证据只覆盖 L01 单题：author 1 次 + solver 1 次真实上游请求的最低链路。",
+    "完整 23 题、学段覆盖、学生 API 与发布/导出不在本报告范围（按预算另行门控）。"
+  ],
+  "ok": true,
+  "reason": null,
+  "report_path": "/Users/fangzengxing/zhijuan_spec_v1_4/acceptance-runs/workflow/handoff-localgen-20260922-2000/l01-live/report.json",
+  "note": "ok 字段修正：run() 原实现在 write_report 之后才置 ok=True，导致成功运行被记为 false。本修正由主代理基于同一份证据重新生成（测试库 generation_jobs/results 行保留可复核），未发起任何新的上游调用；工具已修复为先置 ok 再写报告。"
+}

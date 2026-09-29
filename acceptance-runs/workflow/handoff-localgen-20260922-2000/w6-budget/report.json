@@ -1,0 +1,38 @@
+{
+  "report_kind": "budget-gate-report-v1",
+  "ledger": {
+    "path": "/tmp/zhijuan-workflow-20260922/budget/acceptance.sqlite (mode 0600, unchanged location per plan §7.2.6)",
+    "run_id": "zhijuan-workflow-20260922",
+    "calls": 16,
+    "reserved_cny": 16,
+    "reservation_status_counts": {"SUCCEEDED": 16},
+    "pending_or_unknown": 0,
+    "max_requests": 20,
+    "max_reserved_cny": 30,
+    "reserve_per_request_cny": 1,
+    "verified_at": ["W0 session start", "after coding batch 2", "at final report"]
+  },
+  "this_session_model_calls": 0,
+  "this_session_cost": "0 (no official-model request was made; all testing offline or fake-Hermes)",
+  "full_paper_arithmetic": {
+    "plan_slots": 23,
+    "min_requests": "2 x 23 = 46 (author + blind solve per slot, excluding Hermes continuation/retries)",
+    "remaining_requests": 4,
+    "remaining_cny_conservative": 14,
+    "verdict": "B05 gate would refuse with 409 BUDGET_INSUFFICIENT before any upstream call"
+  },
+  "live_acceptance_status": {
+    "L01_single_question": "NOT_RUN — blocked by the same user decision as daily readiness: the budget status endpoint (/internal/budget) is not reachable from the host, so the accept-chain budget gate correctly refuses any admission; also requires the four gateway containers started and a dedicated acceptance draft (the user's daily draft must not be overwritten). Remaining 4 requests would cover the >=2 needed.",
+    "L02_small_multi": "NOT_RUN — same blockers as L01.",
+    "L03_full_23": "NOT_RUN — budget-gated per user instruction: 46 minimum requests vs 4 remaining; requires explicit new budget authorization or a reviewed strict-upper-bound reservation redesign (plan §7.3) with its own decision and approval.",
+    "L04_daily_entry_live": "NOT_RUN — depends on L01 path and would need a plan whose admission does not overwrite the user's 23-question draft."
+  },
+  "user_decisions_required": [
+    "Make /internal/budget reachable from the host (loopback-only publication; requires recreating the proxy container; write a decision first) OR another approved path for the read-only budget status.",
+    "Additional budget authorization (or reviewed §7.3 upper-bound design) before any full-paper live acceptance."
+  ],
+  "integrity_statements": [
+    "No ledger key, RUN_NAME, MAX_* constant was changed.",
+    "No reservation was cleared, refunded or re-spent; actual provider cost remains unknown (16 CNY is a conservative reservation, not a verified bill)."
+  ]
+}

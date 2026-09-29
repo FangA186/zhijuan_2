@@ -1,0 +1,52 @@
+schema_version: 1
+task_id: M1-02
+session_id: astra-closeout-20260922-003
+created_at: '2026-09-22T12:18:12+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - database/003_generation_jobs.sql
+  - database/004_generation_exam_state.sql
+  - services/api/repositories.py
+  - services/api/store.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 14978
+summary: 本地current草稿及任务结果PostgreSQL持久化落地
+next_action: 仍是单本地草稿；正式租户/RLS、全审计表和Alembic迁移任务未完成。
+completed:
+- 增加专属测试环境使用的003/004表，重启回读、并发版本与历史保存验证通过。
+pending:
+- 仍是单本地草稿；正式租户/RLS、全审计表和Alembic迁移任务未完成。
+decisions:
+- 任务保持IN_PROGRESS，开发实现/离线通过/真实单题执行/教学正确性分开。
+- 仅验收专属数据库与容器，本轮已停止付费服务；未提交或推送。
+failed_approaches:
+- 最终复核发现同规格重拟计划会复用旧结果；已加事务与查询版本围栏，保留失败复现。
+evidence_refs:
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+- acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+- acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+scope_patterns:
+- database/001_schema_draft.sql
+- database/002_v13_required_changes.md
+- database/003_generation_jobs.sql
+- database/004_generation_exam_state.sql
+- migrations/versions/0001_core.py
+- services/api/repositories.py
+- services/api/store.py
+- tests/integration/test_persistence.py
+files:
+  '[missing-pattern] migrations/versions/0001_core.py': MISSING
+  '[missing-pattern] tests/integration/test_persistence.py': MISSING
+  database/001_schema_draft.sql: 8050ed224b1b20d55829b76d81d10368642a6e259022168e0962ec06525b1292
+  database/002_v13_required_changes.md: cfd0212b423c2ade31d151ddcab66e1739222763ab118655203685046ee58dd3
+  database/003_generation_jobs.sql: 8a6fc194f822506a0c7eaeab6f75ccaa41823e8d1d07e9037ac26c8410b697e6
+  database/004_generation_exam_state.sql: 75cd089575c28752d67f4e198a57a79ada7f0a626c3bfea09c526aabf6785337
+  services/api/repositories.py: cf2de67ea8ec85995d622399d0cfc6937765015e2de24bbf0756bd01cafe8048
+  services/api/store.py: b062258f202588e464fb7ad48c2041608ef7e52c8fece7a73f242df422fd8a97
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

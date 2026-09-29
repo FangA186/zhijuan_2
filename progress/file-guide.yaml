@@ -1,0 +1,288 @@
+schema_version: 1
+directories:
+  progress/bugs: 可检索的缺陷根因、修复和回归记录；Notion 为展示副本。
+  apps/web/src/pages/project-overview: 本地项目资料页的 Bug 搜索和详情视图。
+  apps: 前端应用代码。
+  apps/web: React 教师工作台及本地项目进展页面。
+  apps/web/src: 页面、组件、接口封装与类型定义。
+  apps/web/src/app: 教师工作台的跨页面状态与草稿恢复逻辑。
+  apps/web/src/pages: 完整页面；是否当前可访问需结合 main.tsx / App.tsx。
+  apps/web/src/pages/exam-paper: 试卷工作台的题型展示、打印视图与任务流辅助模块。
+  apps/web/src/pages/exam-editor: 旧试卷编辑页的画布、题目列表与证据展示模块。
+  apps/web/src/pages/exam-setup: 旧配置页的状态、范围、分值与操作模块；当前 App 使用 FoolproofSetup。
+  apps/web/src/pages/foolproof-setup: 当前教师配置页的表单、范围、弹窗与状态动作模块。
+  apps/web/src/pages/job-progress: 命题任务进度的订阅、状态文案、题槽与日志模块。
+  apps/web/src/pages/review: 复核页的检查表与完整性提示模块。
+  apps/web/src/components: 页面复用的表单、弹窗、导航和状态组件。
+  apps/web/src/lib: API 客户端、分值、公式渲染与公开投影工具。
+  apps/web/src/types: TypeScript 业务数据契约。
+  services: Python 应用服务；目录存在不代表生产能力完成。
+  services/api: FastAPI 入口、配置、健康检查及内存数据容器。
+  services/api/routes: HTTP 路由，接收请求并委托领域服务。
+  services/exam: 规格、蓝图、题目、模板解析与生成任务业务。
+  services/blueprint: 题槽生成、分值配平与考点分配。
+  services/curriculum: 教材、章节树和英语词汇资源查询。
+  services/hermes_adapter: 当前模型接入、角色分派、结构校验与答案比较；实际边界查功能账本。
+  progress: 当前项目事实账本；不是生产 Agent 的记忆。
+  progress/handoffs: 每任务每会话的历史交接与检查点，不等于正式版本发布。
+  progress/templates: 变更影响、交接等记录模板。
+  progress/generated: 可重新生成的接手上下文，不是权威源。
+  docs: 产品、架构、接口与长期开发说明。
+  docs/archive: 历史交付包资料，不代表当前实现或验收。
+  docs/archive/v1.4-bundle: 原 v1.4 ZIP 的说明、版本、校验记录与文件指纹。
+  docs/decisions: 记录重要取舍、批准范围和后续替代关系。
+  execution: 冻结的 32 项任务基线、依赖和执行手册。
+  execution/runbooks: 启动、验收、故障注入等操作说明。
+  execution/templates: 环境清单、能力探测与实施记录模板。
+  acceptance: 验收用例、控制样例与交付基线，不是已执行结果。
+  acceptance-runs: 实际检查报告；只证明报告登记范围。
+  acceptance-runs/devtools: 开发工具和离线检查的报告与日志。
+  acceptance-runs/maintenance: 维护任务的变更影响、清理清单和验证记录。
+  contracts: JSON Schema 与 OpenAPI 接口契约。
+  configs: 模型、业务策略与 Skill 配置示例，不代表部署生效。
+  database: SQL 草案和迁移要求，不代表数据库已执行。
+  infra: 本地 PostgreSQL / RabbitMQ 基础设施配置。
+  install: Hermes 来源锁定与安装脚本。
+  skills: 生产命题角色的流程与输入输出规则，区别于开发 AGENTS。
+  quality: 检查组目录和业务回归映射。
+  reference_code: 契约与规则的参考实现，不冒充实际鉴权和发布服务。
+  tests: 离线与应用测试；部分测试可能加载模型凭据，不能自动全部执行。
+  tools: 项目记录、质量验证、教材处理等开发工具。
+  tools/crawler: 教材和词汇图片抓取脚本。
+  tools/bin: 本地辅助可执行文件，如 OCR。
+  scripts: 人工运行的冒烟脚本，可能产生模型费用。
+  deliverables: 正式交付版本的 Markdown、HTML、Word 文档。
+  examples: 契约与业务输入输出样例。
+  smartedu_data: 已抓取的教材目录、章节、封面等资源；仅展示文件清单。
+  教材单词图片: 本地教材词汇图片及处理元数据，供词汇范围选择使用。
+  教材单词图片_非课程教学备份: 清洗时移出的非课程资料备份，保留恢复用途。
+  uploads: 用户上传的资源；本页不读取内容。
+  vendor: 固定来源的第三方源码，当前包含 Hermes。
+  .git: Git 历史、对象和索引；仅展示用途，不读取内部文件。
+  .github: CI 与协作配置，文件存在不证明远端已启用。
+  .venv: 本地 Python 解释器和依赖，不是业务源码。
+  .zcode: 本地工作流草稿与运行脚本；保留用户工作资料，项目看板不读取正文。
+  services/worker: 真实Celery/RabbitMQ任务执行与outbox调度入口。
+  services/validators: 独立确定性检查与证据生成，模型不能自报通过。
+  tests/integration: 需要显式专属PostgreSQL环境的集成测试，独立于默认离线组。
+  infra/hermes-solver: 独立盲解Hermes容器、只读Skill和窄入口配置。
+  infra/workflow-acceptance: 仅本轮批准的隔离验收配置与费用出口；不用于通用生产部署。
+files:
+  progress/bugs/README.md: 修Bug前检索、修后记录与Notion回读同步流程。
+  progress/bugs/notion-sync.json: Bug ID对应的Notion页面和已回读内容指纹，不含凭据。
+  progress/templates/bug-record.yaml: 新Bug的复现、根因、修复和证据模板。
+  tools/bug_memory.py: Bug检索、记录校验、待同步导出与回读回执CLI。
+  AGENTS.md: 编程助手的当前开发入口，说明任务路由、项目不变量与授权边界。
+  README.md: 当前项目入口；历史 ZIP 交付说明已归档。
+  docs/archive/v1.4-bundle/README.md: 原交付包说明，内述初始状态已过时。
+  docs/archive/v1.4-bundle/START_HERE.md: 最初交接包的入门步骤，属于历史背景。
+  docs/archive/v1.4-bundle/BUNDLE_INFO.json: 交接包版本与生成时快照，不是当前功能状态。
+  docs/archive/v1.4-bundle/CHANGELOG.md: 交付包历史版本变更；不等于每个功能的发布历史。
+  docs/archive/v1.4-bundle/VALIDATION.md: 原交付包验证说明，当前结果查看 acceptance-runs。
+  docs/archive/v1.4-bundle/MANIFEST.sha256: 原交付文件指纹清单，不是签名或当前运行证明。
+  requirements-test.txt: 离线工具测试依赖说明。
+  requirements-ci.lock: 离线 CI 的精确依赖版本锁定。
+  verify_bundle.py: 验证 Schema、OpenAPI 引用和基础配置。
+  verify_acceptance_assets.py: 校验验收材料与用例资产的一致性。
+  spider_smartedu.py: 原抓取命令的兼容入口；实际模块在 tools/crawler/。
+  tools/crawler/spider_smartedu.py: 国家智慧教育平台教材抓取入口；从仓库根运行 python -m tools.crawler.spider_smartedu。
+  tools/crawler/smartedu_client.py: 抓取请求与本地数据目录。
+  tools/crawler/smartedu_details.py: 教材详情与章节树抓取。
+  tools/crawler/smartedu_preview.html: 已生成的教材目录静态预览；本地服务从仓库根提供文件。
+  tools/check_code_lines.py: 检查自有可维护代码文件的 200 行上限。
+  progress/features.yaml: 功能实现、入口、依赖、限制与最近登记证据的唯一账本。
+  progress/work.yaml: 覆盖原任务模板的实际状态，保留旧完成声明与纠正原因。
+  progress/current.md: 从账本生成的概览，不应手工修改状态。
+  progress/extra-tasks.yaml: 原 32 项任务外，经用户批准新增的任务。
+  progress/policy.yaml: 上下文范围、元数据读取限制和全局影响规则。
+  progress/file-guide.yaml: 本页目录与文件用途的中文说明；未登记项明确标为推断。
+  execution/task-index.yaml: 原 32 项实施任务定义、依赖及验收要求；状态由 work.yaml 覆盖。
+  execution/api-task-map.yaml: 将业务接口映射到对应实施任务。
+  execution/traceability.yaml: 任务、产物与验收项的追踪关系。
+  quality/suites.yaml: 可执行检查和规划中的检查目录，定义命令与范围。
+  quality/regression-map.yaml: 将关键业务行为映射到回归检查。
+  docs/project-map.md: 实际模块的源码导航。
+  docs/agent-workflow-detail.md: 原开发细则历史参考，当前流程以 AGENTS 为准。
+  docs/09_长期开发与跨会话手册.md: 账本、交接与证据机制的完整说明，开头注明历史范围。
+  services/api/main.py: 注册 FastAPI 应用和路由。
+  services/api/settings.py: 读取应用配置；本页不会读取环境密钥。
+  services/api/health.py: 业务服务与接入配置的健康检查接口。
+  services/api/store.py: 当前试卷内存状态、审核与发布原型，尚非 PostgreSQL 仓储。
+  services/api/seed_data.json: 开发试卷种子数据，不在项目资料页展示正文。
+  services/api/routes/exams.py: 规格、蓝图、题目、任务、裁决和发布 API。
+  services/api/routes/curriculum.py: 教材筛选、章节、词汇图片上传与读取接口。
+  services/exam/spec_service.py: 读取和更新出卷规格。
+  services/exam/blueprint_service.py: 蓝图生成、确认与题槽调整。
+  services/exam/question_service.py: 单题生成、替换和盲解比较；降级限制见功能账本。
+  services/exam/job_service.py: 显式任务命令与只读GET/SSE；不再模拟进度或由读取触发模型调用。
+  services/exam/template_parser.py: DOCX/TXT 试卷结构提取与模板识别。
+  services/exam/authentic_math.py: 保留的历史本地数学题生成代码，正式任务不再使用该降级路径。
+  services/blueprint/generator.py: 从规格生成题槽蓝图，先校验分值。
+  services/blueprint/allocator.py: 将考点分配到题槽并处理排除范围。
+  services/blueprint/slot_builder.py: 构建单题槽的题型、认知与难度目标。
+  services/blueprint/rules.py: 蓝图分值配平等确定性规则。
+  services/blueprint/schema.py: 蓝图和题槽的数据结构。
+  services/curriculum/repository.py: 读取本地教材、章节和词汇资源。
+  services/curriculum/service.py: 组织教材筛选、详情与范围查询。
+  services/curriculum/models.py: 教材与查询过滤条件的数据模型。
+  services/curriculum/vocab_catalog.json: 教材与词汇图片的映射索引。
+  services/hermes_adapter/adapter.py: 只通过Hermes Runs执行角色，旧DeepSeek直连与流式旁路已禁用。
+  services/hermes_adapter/http_adapter.py: 固定Hermes Runs客户端；核对run_id、取消、未知状态与输出结构。
+  services/hermes_adapter/blind_runtime.py: 公开题面过滤、调用独立解题与比较。
+  services/hermes_adapter/comparator.py: 对比参考答案和独立答案并标记同模型。
+  services/hermes_adapter/skills_loader.py: 读取生产角色 Skill 文本。
+  services/hermes_adapter/status_map.py: 将调用结果映射到业务运行状态。
+  services/hermes_adapter/schema_validator.py: 纯结构验证，拒绝非法数据；不补默认答案、评分或改写题面。
+  services/hermes_adapter/runtime_factory.py: 按逻辑角色选择运行封装，不能代替权限隔离。
+  apps/web/src/main.tsx: 浏览器入口；开发环境 /project 进入项目进展，其他路径保持教师应用。
+  apps/web/src/App.tsx: 当前教师向导和试卷工作台的主流程。
+  apps/web/src/pages/FoolproofSetup.tsx: 教师出卷配置向导。
+  apps/web/src/pages/ExamPaperWorkbench.tsx: 当前试卷排版、生成事件与单题操作工作台。
+  apps/web/src/pages/ProjectOverview.tsx: 本地只读项目进展、开发资料与目录导航页面。
+  apps/web/src/pages/ExamSetup.tsx: 旧详细配置页面，当前主入口使用 FoolproofSetup。
+  apps/web/src/pages/ExamEditor.tsx: 旧题目编辑页面，保留既有改动。
+  apps/web/src/pages/Generation.tsx: 旧生成页导出兼容入口。
+  apps/web/src/pages/JobProgress.tsx: 旧任务进度页面，包含历史演示逻辑。
+  apps/web/src/pages/Review.tsx: 旧审核页面，当前主入口未直接挂载。
+  apps/web/src/pages/History.tsx: 旧试卷历史页面，当前主入口未直接挂载。
+  apps/web/src/components/Header.tsx: 教师页面顶栏与本地项目进展入口。
+  apps/web/src/components/ExportModal.tsx: 打印、JSON 和 HTML 包装 Word 的导出界面。
+  apps/web/src/lib/api.ts: 前端业务 API 客户端，保留演示模式分支。
+  apps/web/src/lib/scoring.ts: score_x100 的显示和计算辅助。
+  apps/web/src/lib/projection.ts: 构建不含私有答案的公开题面。
+  apps/web/src/lib/math.tsx: KaTeX 数学公式渲染。
+  apps/web/src/lib/mockData.ts: 开发演示数据，不是新生成的试题证据。
+  apps/web/vite.config.ts: 前端开发服务器与构建配置。
+  apps/web/projectOverviewPlugin.ts: 仅开发服务启用的只读资料接口，拒绝远程与跨站访问。
+  tools/project_overview.py: 聚合账本、交接、证据和目录元数据，不加载应用或调用模型。
+  tools/project_memory.py: 记录检查、上下文、影响映射、摘要生成和交接 CLI。
+  tools/memory_lib.py: 路径安全、账本校验、证据指纹与过期判断。
+  tools/run_quality_checks.py: 按登记检查组执行并保存独立报告。
+  tools/run_unittests.py: 记录测试数量、失败和跳过，防止空测试冒充通过。
+  tests/test_project_overview.py: 资料读取边界、状态合并和目录分页的离线回归。
+  docs/01_产品需求说明.md: 定义用户、三学段范围、出卷流程与产品承诺。
+  docs/02_技术选型与架构.md: 解释前端、API、数据库、任务、Hermes、检查与排版之间的职责。
+  docs/03_接口与开发契约.md: 说明 API、数据形状、版本和开发协作契约。
+  docs/04_测试运维与交付计划.md: 规划测试、部署、运维与交付要求，不等于已经执行。
+  docs/05_参考资料.md: 技术选型和方案引用的资料索引。
+  docs/06_DeepSeek_Hermes接入指南.md: DeepSeek 与 Hermes 来源、配置、接入和真实隔离的验收要求。
+  docs/07_MVP阶段_验收链路_交付效果.md: MVP 范围、阶段门和教师可看到的交付效果要求。
+  docs/08_阶段开发执行手册.md: M0 到 M3 的完整开发步骤、失败处理和签收规范。
+  docs/project-overview.md: 本页面的打开方式、五个入口、数据来源与可读边界。
+  docs/runtime-baseline.md: Hermes 固定来源与运行环境基线记录；具体完成范围看任务状态。
+  docs/decisions/README.md: 重要决定的记录格式与批准状态说明。
+  docs/decisions/DEV-015-maintainable-code-200-lines.md: 用户确认的 200 行上限、目录整理、兼容与回归边界。
+  docs/decisions/TEMPLATE.md: 新决策的背景、方案、影响、回退与回归模板。
+  docs/decisions/MEM-001-development-records.md: 为什么将功能、任务、证据和交接分开存储。
+  docs/decisions/DEV-002-agents-routing.md: AGENTS 按任务加载资料与授权边界重构的决定。
+  docs/decisions/DEV-003-project-overview.md: 本地项目看板的实现方式、只读范围和验证要求。
+  progress/README.md: 解释实现状态、验证状态、任务覆盖层与证据过期。
+  progress/templates/change-impact.md: 修改前说明影响、保留行为、验证与恢复方式的模板。
+  progress/templates/session-handoff.yaml: 会话交接结构模板，填写已做、未做和证据。
+  progress/templates/restart-prompt.md: 新会话接手时恢复必要上下文的提示模板。
+  quality/README.md: 解释检查组、离线报告与真实应用验收的区别。
+  contracts/exam-spec.schema.json: 出卷规格的数据约束：范围、题型、分值与要求。
+  contracts/validation-record.schema.json: 检查结果与可信证据记录的数据约束。
+  contracts/public-question.schema.json: 可交给学生与盲解角色的公开题面结构。
+  contracts/candidate.schema.json: 候选题 public/private 两部分的结构约束。
+  contracts/openapi.yaml: 业务 HTTP 接口、请求响应和错误约定。
+  contracts/blind-input.schema.json: 独立解题角色可接收的输入约束。
+  database/001_schema_draft.sql: 试卷、任务、版本、审核与证据的数据库设计草案。
+  database/002_v13_required_changes.md: v1.3 数据结构需要补齐的迁移要求。
+  infra/README.md: 本地基础设施的使用说明与边界。
+  infra/compose.yaml: 仅启动 PostgreSQL 与 RabbitMQ，不是完整应用部署。
+  install/hermes-install.sh: 按固定来源安装 Hermes 的操作脚本。
+  install/hermes-source.lock.json: Hermes 仓库、固定提交、许可与依赖文件指纹。
+  reference_code/adapter_contract.py: Hermes 适配器的参考接口，不是实际运行实现。
+  reference_code/runtime_policy.py: 配置与运行约束的参考拒绝规则。
+  reference_code/publish_gate.py: 发布门禁的参考逻辑，不代表实际服务已完成。
+  tools/verify_execution_plan.py: 校验任务、接口与验收映射是否一致。
+  tools/generate_vocab_catalog.py: 生成教材和词汇图片的索引。
+  tools/vocab_detector.py: 识别教材页面中词汇表的候选范围。
+  tools/smart_filter_vocab.py: 批量扫描词汇页并提供清理/报告操作，不能随意运行清理选项。
+  tools/download_smartedu_covers.py: 下载教材封面资源。
+  tools/vocab_viewer.py: 词汇资源的本地查看辅助工具。
+  tools/bin/mac_vision_ocr: macOS Vision OCR 辅助可执行文件。
+  tools/crawler/crawl_english_vocab_images.py: 抓取英语教材词汇图片。
+  scripts/smoke_test_deepseek.py: DeepSeek 真实调用冒烟脚本，需单独明确计费授权。
+  acceptance/README.md: 验收资产使用入口，区分用例定义与实际执行结果。
+  acceptance/current-delivery-status.json: 原始交接时的交付状态快照，不覆盖当前账本。
+  acceptance/minimum-cases.yaml: 最小可用链路的验收用例要求。
+  acceptance/full-cases.yaml: 完整产品与安全、质量、运维的验收用例要求。
+  acceptance/mvp-plan.yaml: MVP 验收范围与阶段安排。
+  acceptance/demo-runbook.md: 演示和验证业务链路的操作手册。
+  acceptance/delivery-checklist.md: 阶段交付前需要逐项核对的清单。
+  acceptance/acceptance-report.template.md: 真实验收报告填写模板，模板存在不是通过。
+  acceptance/evidence-manifest.template.json: 验收证据清单结构模板。
+  acceptance/capability-matrix.template.yaml: 学段、学科与题型能力评估模板。
+  execution/README.md: 任务索引、实施手册与验收追踪的总入口。
+  execution/M0_实施手册.md: 准备阶段：范围、环境、来源、能力探测和预算。
+  execution/M1_实施手册.md: 骨架阶段：API、存储、适配器、任务和前端。
+  execution/M2_实施手册.md: MVP 阶段：蓝图、盲解、检查、编辑与草稿导出。
+  execution/M3_实施手册.md: 完整阶段：权限、发布、Word、故障恢复与交付。
+  execution/verified-sources.md: 实施基线所引用资料的核查索引。
+  execution/runbooks/fault-injection.md: 取消、重试、故障和恢复的验证步骤。
+  execution/runbooks/boot-acceptance.md: 工程骨架启动验收的步骤与证据要求。
+  execution/runbooks/commands-and-api.md: 区分离线工具、真实调用与应用 API 的命令说明。
+  execution/templates/hermes-capability-probe.yaml: Hermes 原生能力、隔离、用量与取消验证模板。
+  execution/templates/quality-evaluation.yaml: 教学质量评测记录模板。
+  execution/templates/task-record.md: 单项任务实施与验证记录模板。
+  execution/templates/release-signoff.md: 阶段交付签收模板，不能自动代签。
+  configs/skill-bundle.example.yaml: 生产角色 Skill 版本包配置示例。
+  configs/business-policy.example.yaml: 业务模型映射、修订次数与预算策略示例。
+  configs/hermes-reviewed-fragment.yaml: 已核对的 Hermes 原生配置片段，不能当完整部署。
+  configs/deepseek.env.example: DeepSeek 环境变量占位示例，不含真实运行授权。
+  apps/web/index.html: Vite HTML 页面入口。
+  apps/web/package.json: 前端依赖、包版本与 dev/build/preview 命令。
+  apps/web/package-lock.json: 前端 npm 依赖的精确解析结果。
+  apps/web/tsconfig.json: TypeScript 严格类型与未使用项检查设置。
+  apps/web/tailwind.config.js: Tailwind 扫描路径、品牌颜色和主题设置。
+  apps/web/postcss.config.js: CSS 构建处理插件设置。
+  apps/web/src/index.css: 应用全局样式及公式显示调整。
+  apps/web/src/vite-env.d.ts: Vite 环境类型声明，用于开发/生产入口区分。
+  apps/web/src/types/validation.ts: 检查结果与人工裁决的前端类型。
+  apps/web/src/types/candidate.ts: 候选题与答案的前端类型。
+  apps/web/src/types/spec.ts: 出卷规格、蓝图、教材和词汇的前端类型。
+  apps/web/src/types/job.ts: 生成任务、题槽状态与事件的前端类型。
+  apps/web/src/components/EnglishScopeConfig.tsx: 英语范围与词汇图片选择、上传、恢复默认界面。
+  apps/web/src/components/ChineseScopeConfig.tsx: 语文篇目、古诗文与考试范围配置界面。
+  apps/web/src/components/StageNav.tsx: 旧工作流的阶段导航组件。
+  apps/web/src/components/ExamTemplateModal.tsx: 试卷模板上传、解析与应用弹窗。
+  apps/web/src/components/StatusBadge.tsx: 显示题目和任务状态的徽标。
+  apps/web/src/components/ChapterTreeScopeSelector.tsx: 从教材章节树选择考查与排除范围。
+  apps/web/src/components/TextbookSelectModal.tsx: 多条件筛选并选择教材。
+  apps/web/src/components/SlotEditorModal.tsx: 编辑单个蓝图题槽的目标参数。
+  apps/web/src/components/ErrorBoundary.tsx: 捕获 React 渲染异常并显示恢复提示。
+  apps/web/src/lib/events.ts: 旧 SSE 事件格式解析辅助。
+  apps/web/src/pages/ProjectOverview.css: 项目看板的独立布局、状态颜色和窄屏样式。
+  tests/test_contracts.py: 验证数据结构与契约样例。
+  tests/test_execution_plan.py: 验证冻结任务与验收追踪一致性。
+  tests/test_publish_gate.py: 验证参考发布门禁逻辑，不能替代实际发布接口验收。
+  tests/test_vocab_upload.py: 词汇图片上传、类型与读取相关测试。
+  tests/test_curriculum_vocab.py: 教材词汇索引与图片映射测试。
+  tests/test_curriculum_domain.py: 教材领域查询与筛选测试。
+  tests/test_runtime_policy.py: 参考运行配置和策略约束测试。
+  tests/test_blueprint_engine.py: 蓝图分值配平、考点排除与题槽结构测试。
+  tests/test_acceptance_assets.py: 验收材料及控制资产的一致性测试。
+  tests/test_project_memory.py: 开发记录、路径限制、证据过期与状态工具回归。
+  tests/test_generation_pipeline.py: 题槽状态与重生成测试；部分路径可能调用模型。
+  tests/test_template_parser.py: DOCX/TXT 模板提取与结构识别测试。
+  tests/test_hermes_adapter.py: 当前适配器、状态映射与角色封装测试，不等于原生隔离验收。
+  tools/memory_finish.py: 任务收尾门禁：核对修改、交接指纹、证据、实际状态与摘要；不会自动代签。
+  tools/live_budget_proxy.py: 本轮授权验收专用限额代理：收费请求前持久预留额度，固定模型/地址/输出上限。
+  services/api/repositories.py: PostgreSQL生成任务、outbox、结果和旧运行记录的事务仓储。
+  services/worker/jobs.py: Celery任务消费、定时outbox派发和未知运行隔离；调用前后检查取消与版本。
+  services/exam/spec_validation.py: 规范出卷规格的严格校验，区分草稿与范围已确认的生成输入。
+  services/validators/candidate.py: 服务端确定性检查、内容和盲解证据指纹；不能证明的数学语义保持REVIEW。
+  services/hermes_adapter/isolation_gateway.py: 只允许公开题面和指定模型的盲解Runs入口，不开放会话或文件管理接口。
+  database/003_generation_jobs.sql: 本轮专属测试库的任务、outbox、结果、版本栅栏与历史运行表。
+  database/004_generation_exam_state.sql: 本地current单试卷草稿状态表，不等于完整多租户迁移。
+  requirements-runtime.lock: 本机集成依赖的已安装精确版本；Hermes使用独立容器环境。
+  apps/web/src/lib/stageYear.ts: 年级标签与学段内序号、学科规范代码的共用纯映射。
+  tests/integration/test_generation_job_postgres.py: 专属PostgreSQL并发、取消、版本栅栏与历史保留测试。
+  tests/integration/test_workflow_integration.py: 专属数据库中的三学段规格/蓝图、API ETag和只读任务集成测试。
+  tests/test_workflow_safety_closeout.py: 最终无网络安全回归：前置检查、取消、盲证据绑定和未实现发布阻断。
+  tests/test_candidate_integrity.py: 保证校验器不擅自补答案/评分、不截断分值或改写图片题面。
+  tests/test_live_budget_proxy.py: 预算原子预留、并发限额、异常不退款与凭据不回显的Mock测试。
+  tests/test_hermes_runs_transport.py: 原生Runs线协议、运行身份、未知结果、取消和截止时间的Mock测试。
+  tests/test_blind_isolation.py: 公开题面递归隔离与真实客户端请求形状的无网络检查。

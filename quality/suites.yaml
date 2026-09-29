@@ -103,3 +103,38 @@ suites:
   timeout_seconds: 120
   unit_report: null
   purpose: 授权的 Hermes/DeepSeek 与教学质量回归
+- id: project-overview-tests
+  status: IMPLEMENTED
+  mode: OFFLINE
+  argv:
+  - '{python}'
+  - tools/run_unittests.py
+  - --pattern
+  - test_project_overview.py
+  - --report
+  - '{run_dir}/project-overview-tests.json'
+  timeout_seconds: 120
+  unit_report: project-overview-tests.json
+  purpose: 本地项目看板元数据、安全边界与证据状态；使用临时文件，无模型调用
+- id: code-line-limit
+  status: IMPLEMENTED
+  mode: OFFLINE
+  argv:
+  - '{python}'
+  - tools/check_code_lines.py
+  timeout_seconds: 120
+  unit_report: null
+  purpose: 自有可维护代码单文件不超过 200 物理行；生成物、第三方源码与已执行迁移除外
+- id: bug-memory-tests
+  status: IMPLEMENTED
+  mode: OFFLINE
+  argv:
+  - '{python}'
+  - tools/run_unittests.py
+  - --pattern
+  - test_bug_memory.py
+  - --report
+  - '{run_dir}/bug-memory-tests.json'
+  timeout_seconds: 120
+  unit_report: bug-memory-tests.json
+  purpose: Bug检索、状态校验、同步指纹与收尾门禁；临时数据，无外部调用

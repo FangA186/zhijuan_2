@@ -1,0 +1,40 @@
+    /* 智能定位状态徽章 */
+    .smart-badge {
+      position: absolute;
+      top: 10px;
+      left: 42px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      z-index: 9;
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .smart-badge.badge-start {
+      background: rgba(245, 158, 11, 0.95);
+      color: #fff;
+      border: 1px solid rgba(251, 191, 36, 0.9);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+      animation: pulseGold 2s infinite;
+    }
+    @keyframes pulseGold {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+      70% { box-shadow: 0 0 0 7px rgba(245, 158, 11, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+    }
+    .smart-badge.badge-vocab {
+      background: rgba(16, 185, 129, 0.88);
+      color: #fff;
+      border: 1px solid rgba(52, 211, 153, 0.4);
+    }
+    .smart-badge.badge-non-vocab {
+      background: rgba(51, 65, 85, 0.88);
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+

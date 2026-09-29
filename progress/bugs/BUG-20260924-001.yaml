@@ -1,0 +1,31 @@
+schema_version: 1
+id: BUG-20260924-001
+title: 教材弹窗拆分后搜索和链接入口消失
+status: FIXED
+module: frontend
+updated_at: '2026-09-24'
+task_ids:
+- DEV-03
+keywords:
+- 教材
+- 搜索
+- URL
+- Tab
+- TextbookSelectModal
+symptom: 教材弹窗仅剩级联选择，关键词、URL 和全库切换不可用。
+reproduction:
+- 打开配置页的切换教材弹窗；检查三种入口。
+root_cause: 拆分只迁移部分 JSX，遗漏其它分支与状态。
+resolution: 恢复级联、搜索、URL 与 visible/all 状态，分到独立面板和 Hook。
+affected_files:
+- apps/web/src/components/TextbookSelectModal.tsx
+- apps/web/src/components/useTextbookUrlImport.ts
+regression:
+- 浏览器核对三种入口、未匹配提示与全库切换；不选用教材避免改写草稿。
+verified_at: '2026-09-24'
+verification: 历史离线/页面范围通过，完整边界见证据
+evidence_refs:
+- acceptance-runs/maintenance/dev-03-code-structure-20260924-001/browser-check.md
+events:
+- 2026-09-24：从DEV-03实际验收回填；按登记范围修复。
+source_hashes: {}

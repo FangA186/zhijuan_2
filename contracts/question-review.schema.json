@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "question_revision_id",
+    "action",
+    "issues",
+    "summary"
+  ],
+  "properties": {
+    "question_revision_id": {
+      "type": "string"
+    },
+    "action": {
+      "enum": [
+        "repair",
+        "no_change",
+        "manual_review"
+      ],
+      "type": "string"
+    },
+    "issues": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1000
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 3000
+    }
+  }
+}

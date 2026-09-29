@@ -1,0 +1,45 @@
+{
+  "report_kind": "controlled-diagrams-offline-v1",
+  "created_at": "2026-09-24T02:51:30Z",
+  "scope": "local counting-rods SVG, asset integrity/API, frontend image and export guards",
+  "status": "OFFLINE_PASS",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_diagram_assets tests.test_diagram_asset_gate tests.test_validators tests.test_candidate_integrity tests.test_generation_pipeline -v",
+      "tests_run": 23,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "env -u DATABASE_URL ZHIJUAN_SKIP_DOTENV=1 .venv/bin/python -m unittest tests.test_contracts tests.test_blind_isolation tests.test_workflow_safety_closeout -v",
+      "tests_run": 18,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "node --test tests/frontend_diagram_asset.test.mjs",
+      "tests_run": 3,
+      "failures": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "cd apps/web && npm run build",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "environment_note": "An initial broader unittest invocation loaded local .env and failed during import because PostgreSQL at 127.0.0.1:55432 was unavailable. The same tests passed with dotenv loading disabled and DATABASE_URL removed. No database writes or model calls were made.",
+  "limitations": [
+    "No live Hermes/model run or browser/API integration against the user's stored paper",
+    "Only counting rods 1–5 are supported; other figures fail closed",
+    "Existing slot_022 is not rewritten",
+    "Image-bearing PDF and legacy Word export remain blocked pending the proper renderer pipeline",
+    "Local file store is not production object storage or tenant authorization",
+    "This report does not establish teaching correctness or product acceptance"
+  ]
+}

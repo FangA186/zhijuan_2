@@ -37,7 +37,7 @@ def normalize_text(text: str) -> str:
     if not text:
         return ""
     # Remove leading/trailing whitespaces and common punctuation
-    return text.strip().upper().replace(" ", "").replace("，", ",").replace("。", "")
+    return " ".join(text.strip().casefold().split())
 
 def compare_answers(
     reference_answer: str,
@@ -51,12 +51,9 @@ def compare_answers(
     """Compare author's reference answer with blind solver's derived answer."""
     # Option ID match takes precedence for multiple-choice questions
     match = False
-    if reference_option_ids and derived_option_ids:
-        match = sorted(reference_option_ids) == sorted(derived_option_ids)
-    elif normalize_text(reference_answer) == normalize_text(derived_answer):
-        match = True
-    elif reference_answer.strip() in derived_answer.strip() or derived_answer.strip() in reference_answer.strip():
-        # Soft match
+    if reference_option_ids or derived_option_ids:
+        match = bool(reference_option_ids and derived_option_ids) and sorted(reference_option_ids) == sorted(derived_option_ids) and len(set(reference_option_ids)) == len(reference_option_ids) and len(set(derived_option_ids)) == len(derived_option_ids)
+    elif normalize_text(reference_answer) and normalize_text(reference_answer) == normalize_text(derived_answer):
         match = True
 
     notes = (

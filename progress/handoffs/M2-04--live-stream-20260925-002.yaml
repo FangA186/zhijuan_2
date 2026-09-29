@@ -1,0 +1,215 @@
+schema_version: 1
+task_id: M2-04
+session_id: live-stream-20260925-002
+created_at: '2026-09-24T18:23:28+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - apps/web/src/lib/apiGeneration.ts
+  - apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx
+  - apps/web/src/pages/exam-paper/WorkbenchProgressSummary.tsx
+  - apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx
+  - apps/web/src/pages/exam-paper/slotDiagnostics.ts
+  - apps/web/src/pages/exam-paper/useExamPaperStream.ts
+  - apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+  - apps/web/src/pages/job-progress/JobProgressLogs.tsx
+  - apps/web/src/pages/job-progress/useJobProgressStream.ts
+  - apps/web/src/types/job.ts
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - contracts/exam-spec.schema.json
+  - contracts/question-review.schema.json
+  - docs/decisions/DEV-019-review-stream.md
+  - infra/workflow-acceptance/compose.yaml
+  - infra/workflow-acceptance/profile.yaml
+  - services/api/job_repository_execution.py
+  - services/api/job_run_events.py
+  - services/api/routes/exam_activity_routes.py
+  - services/api/routes/exam_job_routes.py
+  - services/api/routes/exams.py
+  - services/exam/generation_context.py
+  - services/exam/job_service.py
+  - services/exam/question_generation.py
+  - services/exam/question_review.py
+  - services/exam/question_service.py
+  - services/hermes_adapter/http_adapter.py
+  - services/hermes_adapter/isolation_gateway.py
+  - services/hermes_adapter/run_stream.py
+  - services/worker/failures.py
+  - services/worker/jobs.py
+  - skills/question-author/SKILL.md
+  - skills/question-reviewer/SKILL.md
+  - tests/browser/review_activity_fixture.py
+  - tests/hermes_adapter_cases_1.py
+  - tests/hermes_adapter_cases_2.py
+  - tests/test_activity_stream.py
+  - tests/test_diagram_assets.py
+  - tests/test_native_stream_transport.py
+  - tests/test_review_workflow.py
+  - tests/test_workflow_safety_closeout.py
+  - tools/deepseek_json_contract.py
+  - tools/live_budget_proxy.py
+  - tools/live_budget_stream.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15780
+summary: 重载实际生成后台并完成真实三角色两轮修订、对话式流正文浏览器验收
+next_action: 保持待人工复核；另行进行整卷和三学段质量验收
+completed:
+- 运行态旧Worker/容器已重载，真实provider/native events/PG/SSE链路生效。
+- 最终独立单题实际9角色调用、2轮修订、56事件，答案AB修订为ABD，最终盲解一致；仍REVIEW_REQUIRED。
+- 对话式正文、原始返回展开、复制、刷新回放和390窄屏实际浏览器通过；旧试卷保持并标注保存结果来源。
+- 107项离线、5项Node、构建及200行门禁通过；Notion原Bug卡片已更新回读。
+pending:
+- 三学段/整卷教学质量、生产身份和真实并发崩溃恢复尚未签收。
+- 前两次provider记账UNKNOWN保留；未伪造费用或盲重发。
+decisions:
+- 用户本轮明确授权实际调用；采用独立单题避免覆盖当前23题。
+- 复用现有Docker凭据仅在子进程环境；不输出/持久化密钥。
+- 原始协议完成与候选格式校验分离，未知结果保持对账。
+failed_approaches:
+- 旧后台未重载导致新用户任务0事件。
+- 第1次真实盲解流异常，第2次审核502；保留实际失败记录，没有包装成通过。
+- 真实页面发现事件ID与旧日志index重复，修复命名空间后复验。
+evidence_refs:
+- acceptance-runs/m2-04/live-stream-20260925-002/report.md
+- acceptance-runs/m2-04/live-stream-20260925-002/report.json
+- acceptance-runs/m2-04/live-stream-20260925-002/change-impact.md
+- acceptance-runs/m2-04/live-stream-20260925-002/live-evidence.json
+- acceptance-runs/m2-04/live-stream-20260925-002/budget-reservations.json
+- acceptance-runs/m2-04/live-stream-20260925-002/tests.log
+- acceptance-runs/m2-04/live-stream-20260925-002/frontend-tests.log
+- acceptance-runs/m2-04/live-stream-20260925-002/build.log
+- acceptance-runs/m2-04/live-stream-20260925-002/lines.log
+- acceptance-runs/m2-04/live-stream-20260925-002/first-live-failure.png
+- acceptance-runs/m2-04/live-stream-20260925-002/live-review-repair-running.png
+- acceptance-runs/m2-04/live-stream-20260925-002/live-review-final.png
+- acceptance-runs/m2-04/live-stream-20260925-002/live-mobile.png
+- acceptance-runs/m2-04/live-stream-20260925-002/current-paper-results.png
+- acceptance-runs/m2-04/live-stream-20260925-002/console-final.json
+scope_patterns:
+- apps/web/src/lib/apiGeneration.ts
+- apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx
+- apps/web/src/pages/exam-paper/WorkbenchProgressSummary.tsx
+- apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx
+- apps/web/src/pages/exam-paper/slotDiagnostics.ts
+- apps/web/src/pages/exam-paper/useExamPaperStream.ts
+- apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+- apps/web/src/pages/job-progress/JobProgressLogs.tsx
+- apps/web/src/pages/job-progress/useJobProgressStream.ts
+- apps/web/src/types/job.ts
+- configs/business-policy.example.yaml
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- contracts/exam-spec.schema.json
+- contracts/question-review.schema.json
+- docs/decisions/DEV-019-review-stream.md
+- infra/workflow-acceptance/compose.yaml
+- infra/workflow-acceptance/profile.yaml
+- services/api/domain/repair_policy.py
+- services/api/job_repository_execution.py
+- services/api/job_run_events.py
+- services/api/routes/exam_activity_routes.py
+- services/api/routes/exam_job_routes.py
+- services/api/routes/exams.py
+- services/exam/generation_context.py
+- services/exam/job_service.py
+- services/exam/question_generation.py
+- services/exam/question_review.py
+- services/exam/question_service.py
+- services/hermes_adapter/http_adapter.py
+- services/hermes_adapter/isolation_gateway.py
+- services/hermes_adapter/run_stream.py
+- services/worker/failures.py
+- services/worker/jobs.py
+- services/worker/repair_tasks.py
+- skills/question-author/SKILL.md
+- skills/question-reviewer/SKILL.md
+- tests/browser/review_activity_fixture.py
+- tests/hermes_adapter_cases_1.py
+- tests/hermes_adapter_cases_2.py
+- tests/test_activity_stream.py
+- tests/test_diagram_assets.py
+- tests/test_native_stream_transport.py
+- tests/test_review_workflow.py
+- tests/test_workflow_safety_closeout.py
+- tools/deepseek_json_contract.py
+- tools/live_budget_proxy.py
+- tools/live_budget_stream.py
+files:
+  '[missing-pattern] services/api/domain/repair_policy.py': MISSING
+  '[missing-pattern] services/worker/repair_tasks.py': MISSING
+  apps/web/src/lib/apiGeneration.ts: 5ddadd15624d020bfbb52c957b29983618e29e2b1d0a999f641786086f847575
+  apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx: 946f2ebd9ebac89a2d70b5f4396ade0303407c55ac927de66fa03cad4944f3d6
+  apps/web/src/pages/exam-paper/WorkbenchProgressSummary.tsx: d430512201b2233de8ec90bcecfef814d7cec6667730657225bf3428b05a973b
+  apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx: 7393a0e3dc35841d7ff8268043470eae4fcfaab1384d3c585f3a5779892686a7
+  apps/web/src/pages/exam-paper/slotDiagnostics.ts: 14f668dcad5b6e94ff81874ddaaff1617d900a4df30efa2651c13b7257baffec
+  apps/web/src/pages/exam-paper/useExamPaperStream.ts: 7e2b7c9f47b8e12156eed2b01ea7197a8ab19955d781e316668543b53ad0c51a
+  apps/web/src/pages/job-progress/AgentActivityConsole.tsx: 09ed6d2827877f494e804d9f4a7885394d22dcce01cf47c69704a9281b305cbb
+  apps/web/src/pages/job-progress/JobProgressLogs.tsx: 873f252674ba734de2b38012c9907214b42b4df1d9072cb5685a09efdb6b7abd
+  apps/web/src/pages/job-progress/useJobProgressStream.ts: df66610212d8c26fc50c8df888e95b50dbeb88741c3fd0288c3ed6df1ccd6008
+  apps/web/src/types/job.ts: 5432fb7b94ba5ae744f5ce009dcfdd582de96f095a588b8b47079464e7959069
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 0ad8273511bc8bdb844276435991eeb161af32a759e25d32a08590ec80a66cfd
+  contracts/exam-spec.schema.json: 01fbc48ad9d37c0b88689e8ceb87eaea5218bce8b4e7c4dc7f8e3b1dadfa6ca6
+  contracts/question-review.schema.json: 11c4600f35296bfc33cde95c88170497e5ddb9c54d844fac1fb712dd6bcae9f0
+  docs/decisions/DEV-019-review-stream.md: 9e4ddfdfe02d247fba4fe0015e5fbe7bbb307c8391b69e4c8522ffbd2e3da19e
+  infra/workflow-acceptance/compose.yaml: b2dc0eb7c2dad59bf48984f4d369e7e16e96e845dcdad6c136112a04f2642b0a
+  infra/workflow-acceptance/profile.yaml: ea50c8a18cc1a07898c06ffdd9c27f5db24e2b2ceb8639c1c6c35310bcaf9322
+  services/api/job_repository_execution.py: b9377c28e9fd35cb154d58d9a160bc2cc4991c89f983018580f61c86abf0b22c
+  services/api/job_run_events.py: 00f0fab3bf215bd62c074e81b3906d404cb14b362c9edaac7066060033417ba4
+  services/api/routes/exam_activity_routes.py: 67daa1cc5f7a75242fb3f4be55f73a1d109f59c62884a650b33c17da62d7602d
+  services/api/routes/exam_job_routes.py: 373cc05229670ae7c2294f8e37276fbd3b276e0eae48107d940ca3100ba46b5a
+  services/api/routes/exams.py: 9469f98f71881bb808044cdb82f55d5f95d735e6facf3321f79373f2b4576ff3
+  services/exam/generation_context.py: b20d11eb1a20f4e722130ff07527bf9c38b4d20f37ce94ae3b714efeb2467d79
+  services/exam/job_service.py: 79e18e91882fe838775022aa9ad2fa4a6bedc73df71d5f56f65adda529d6f387
+  services/exam/question_generation.py: a8e18e412722cc013b689f3768065c662f72b2bfbff97de3c70343584ca5cdad
+  services/exam/question_review.py: 76f19d951524bfeee4c7a5c9094e290c0527e314a3c98c0118e52d1d1c3ab9bf
+  services/exam/question_service.py: cbfa552601896ecd1fbde3e938d497ccf456d6131263e295c4acced095f1e157
+  services/hermes_adapter/http_adapter.py: b2534e9c7b94b19dc44a1026712abd6d9c07a781c300259fd2c3a1265967ccb1
+  services/hermes_adapter/isolation_gateway.py: ed0af0b8a3590e97d615ca31cc06f3ee646e54434cc78bcebf0b823f72ae0c9e
+  services/hermes_adapter/run_stream.py: 271ed9830cb6934d0bbc98bc0edfec5ececf2a66eb7cf59e6a14681291ad8f85
+  services/worker/failures.py: a809b7882539f509b1a3cbc050bc8a3c46d9bc5c1ad29a4dbaf6d871d74d52e1
+  services/worker/jobs.py: a476e8246c5ce4d488473160ef6683f703ee77072d823518bb4d9da6704af75e
+  skills/question-author/SKILL.md: 6af0aed7c963e0c138e7b3e9010ebea525c2ab550593ad2ed04baeddf0180057
+  skills/question-reviewer/SKILL.md: 23d7a9281450ce60f1162fa883318175e5b5673e8a3ecc74742bcb8a5f0d497b
+  tests/browser/review_activity_fixture.py: 2d773bf1b50b6d23ed444514bc0e68fa172f9510ce9f244ac51ac4cf2f9fbb8a
+  tests/hermes_adapter_cases_1.py: d985be8e08a31d4b6f0b9efd1b7a879b3371072610462c760ce6ba88d99d8a28
+  tests/hermes_adapter_cases_2.py: acb66653b4f2cafcb620b1ba8e08c8df8a066da5ed6f448069c758c4986803f8
+  tests/test_activity_stream.py: 6c374bb6f6a25f6d12dd17dbc2c7a253c5d818f759f0989495677d71ba6679ce
+  tests/test_diagram_assets.py: 51ccc63a31933eec2ab7e66c37d474ff49e6420c61d354f9f44703c13b3c8e9a
+  tests/test_native_stream_transport.py: 223270a7babff6226282f3391d4035df0239a7944c51dadd015e6ba8d8781ce7
+  tests/test_review_workflow.py: 96f2d6562a6374b2179e0f4e6d54dcda18e534f2d82b19537c995138659490ea
+  tests/test_workflow_safety_closeout.py: 4e5a33f502719ca6f324c733f705e7269393ead99cabeae183fce3861824d94b
+  tools/deepseek_json_contract.py: ad6eb11001ea0c03ed7fc0fb841fea334048dd911d29f3064424d12ece27c262
+  tools/live_budget_proxy.py: 4e012d024a5c4c7174cd7bd22f34b9dc197bf45695f0cb60c17356c8c6656711
+  tools/live_budget_stream.py: 2b837a85d48c7474b08f4b6a1bf08c3b3950948ec10e97f4c3b099caafacbed5
+  apps/web/src/pages/job-progress/activityPresentation.ts: 063c12748a38458b979c4ec7f2f23aeeb8bc4823976f04d2dec4e1f36b1eacf4
+  tools/live_budget_status.py: c601a12e80c116e8b4d6074ae542d099a150b1f79b1afb48b426b84ef1b872f4
+  tools/live_review_probe.py: 42eaf9e688a32948f9bef2b6104915bdad1daafd732fccdd7029aec32de83cc3
+  tests/frontend_activity_presentation.test.mjs: 22d82f876d79ffc11b2687fddc7a0aec0d87c39ac25f8ff5ef92324393844c72
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+bug_ids:
+- BUG-20260925-001
+- BUG-20260925-002
+this_change_paths:
+- apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+- apps/web/src/pages/job-progress/activityPresentation.ts
+- apps/web/src/types/job.ts
+- services/api/routes/exam_activity_routes.py
+- services/hermes_adapter/run_stream.py
+- services/hermes_adapter/http_adapter.py
+- services/hermes_adapter/isolation_gateway.py
+- tools/live_budget_stream.py
+- tools/live_budget_proxy.py
+- tools/live_budget_status.py
+- tools/live_review_probe.py
+- contracts/question-review.schema.json
+- tests/frontend_activity_presentation.test.mjs
+- tests/test_activity_stream.py
+- tests/test_native_stream_transport.py
+- docs/decisions/DEV-019-review-stream.md

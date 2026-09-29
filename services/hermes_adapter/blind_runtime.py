@@ -21,13 +21,22 @@ class BlindSolverRuntime:
 
     def prepare_blind_input(self, question_public: dict[str, Any]) -> dict[str, Any]:
         """Strip any private fields and validate public question schema."""
-        # Hard isolation check: Reject any payload containing private fields
-        for forbidden in (
+        # Reject private keys at every depth, including material and child blocks.
+        forbidden_fields = {
             "private", "answers", "solution", "rubric", "accepted_answers",
-            "correct_option_ids", "answer_text", "explanation", "scoring_rubric",
-        ):
-            if forbidden in question_public:
-                raise SecurityIsolationError(f"Security invariant violated: forbidden field '{forbidden}' found in blind-solver input")
+            "correct_option_ids", "answer_text", "explanation", "scoring_rubric", "scoring_mode", "partial_score_x100",
+        }
+        def reject_private(value: Any) -> None:
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    if key in forbidden_fields:
+                        raise SecurityIsolationError(f"Forbidden blind-solver field: {key}")
+                    reject_private(child)
+            elif isinstance(value, list):
+                for child in value:
+                    reject_private(child)
+
+        reject_private(question_public)
 
         # Deep copy to ensure no shared memory references
         clean_input = copy.deepcopy(question_public)

@@ -1,24 +1,297 @@
 schema_version: 1
 stage_hint: M1
-recommended_next_task: M1-04
+recommended_next_task: M0-05
 tasks:
   M0-04:
-    status: DONE
-    completed_by: agent
-    completed_at: '2026-09-17T08:00:00+00:00'
-    evidence_refs:
+    previous_completion_claim:
+      status: DONE
+      completed_by: agent
+      completed_at: '2026-09-17T08:00:00+00:00'
+      evidence_refs:
       - install/hermes-source.lock.json
       - docs/runtime-baseline.md
       - acceptance-runs/devtools/run-hermes-004/report.json
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-22T12:18:12.096513+00:00'
+    review_note: 已在固定Hermes源码构建独立镜像并核对运行；传递依赖锁定/第二干净环境复现和正式运维审批尚未完成。
+    evidence_refs:
+    - install/hermes-source.lock.json
+    - docs/runtime-baseline.md
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
   M1-03:
-    status: DONE
-    completed_by: agent
-    completed_at: '2026-09-17T09:20:00+00:00'
-    evidence_refs:
+    previous_completion_claim:
+      status: DONE
+      completed_by: agent
+      completed_at: '2026-09-17T09:20:00+00:00'
+      evidence_refs:
       - acceptance-runs/devtools/run-hermes-004/report.json
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-28T14:02:55.345933+00:00'
+    review_note: 原生Hermes Runs已接入；当前本地代理按用户决定取消累计请求/金额上限，保留鉴权、模型白名单与旧账记录。无新模型调用，生产接入仍需预算策略和部署签收。
+      2026-09-28补充：原始SSE/JSON诊断与来源分离完成；后台由用户启动，未运行新思考调用。 原始流视图已改为连续显示全部调用；只读确认thinking仍关闭，开启由用户操作。
+    evidence_refs:
+    - services/hermes_adapter/adapter.py
+    - services/hermes_adapter/http_adapter.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/gates/unit-final.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/w6-pg-integration/report.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/w1-runtime/report.json
+    - acceptance-runs/workflow/local-uncapped-20260924-001/report.json
+    - acceptance-runs/m1-03/raw-api-20260928-001/report.md
+    - acceptance-runs/m1-03/raw-timeline-20260928-002/report.md
   M1-07:
+    previous_completion_claim:
+      status: DONE
+      completed_by: agent
+      completed_at: '2026-09-17T08:30:00+00:00'
+      evidence_refs:
+      - acceptance-runs/devtools/run-hermes-004/report.json
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-22T12:18:12.096516+00:00'
+    review_note: 页面使用真实GET/SSE，明确确认蓝图后仅POST一次；年级和教材浏览器路径已测，正式角色与全学段全流程验收尚未签收。
+    evidence_refs:
+    - apps/web/src/App.tsx
+    - apps/web/src/pages/FoolproofSetup.tsx
+    - apps/web/src/pages/ExamPaperWorkbench.tsx
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/w6-browser/report.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/gates/unit-final.json
+  M1-01:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-22T07:48:45.520815+00:00'
+    review_note: 已有 FastAPI 入口、配置和健康检查；受信身份、服务边界及启动验收未完成。
+    evidence_refs:
+    - services/api/main.py
+    - services/api/health.py
+  M1-04:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-24T03:36:52+00:00'
+    review_note: 本地真实Worker/Hermes已恢复并显示READY；按用户选择移除整卷预算预检，仍保留蓝图确认、幂等、就绪及数据库版本门禁。未发起新命题，旧PARTIAL_FAILED作业不会自动重跑。
+    evidence_refs:
+    - services/exam/job_service.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    - acceptance-runs/workflow/workbench-startup-20260922-001/report.md
+    - acceptance-runs/workflow/workbench-startup-20260922-001/unit.json
+    - acceptance-runs/workflow/workbench-startup-20260922-001/integration.json
+    - acceptance-runs/workflow/workbench-startup-20260922-001/runtime.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/w6-queue/report.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/w6-pg-integration/report.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/gates/unit-final.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/w6-budget/report.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/l01-live/report.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/l03-full-paper/report.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/w1-runtime/report.json
+    - progress/handoffs/M1-04--localgen-implementation-20260923-001.yaml
+    - acceptance-runs/workflow/local-uncapped-20260924-001/report.json
+  M1-05:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-24T03:47:31+00:00'
+    review_note: 23题150分模板结构仍可规则提取；旧AI深度识别直连被禁用，原文52/40分矛盾显式待核对，损坏文件不再伪装成功。Hermes模板解析尚未实现，完整产品任务保持进行中。
+    evidence_refs:
+    - services/api/routes/exams.py
+    - services/exam/spec_service.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    - acceptance-runs/workflow/workbench-startup-20260922-001/report.md
+    - acceptance-runs/workflow/workbench-startup-20260922-001/unit.json
+    - acceptance-runs/workflow/workbench-startup-20260922-001/integration.json
+    - acceptance-runs/workflow/workbench-startup-20260922-001/runtime.json
+    - acceptance-runs/workflow/template-scoring-20260922-001/report.md
+    - acceptance-runs/workflow/template-scoring-20260922-001/pipeline.json
+    - acceptance-runs/workflow/template-scoring-20260922-001/browser-readback.json
+    - acceptance-runs/workflow/template-parser-20260924-001/report.json
+  M1-06:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-22T12:18:12.096515+00:00'
+    review_note: 只读角色Skill已在真实Hermes加载，命题结构规则已补；队列级完整不可变Skill资源包审批仍待完善。
+    evidence_refs:
+    - services/hermes_adapter/skills_loader.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+  M1-08:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-24T03:36:52+00:00'
+    review_note: 真实Hermes run引用及token用量保留；本地代理取消累计上限但继续逐次记账，费用缺失保持未知，预留口径不等于平台账单。
+    evidence_refs:
+    - services/exam/job_service.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    - acceptance-runs/workflow/local-uncapped-20260924-001/report.json
+  M2-01:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-28T16:04:02.632557+00:00'
+    review_note: Hermes规划Agent接入，持久队列/版本围栏/实时输出/教师确认/命题快照完成；81项Python、3项PostgreSQL、7项前端与构建及隔离浏览器通过；真实模型未调用，保留IN_PROGRESS。
+    evidence_refs:
+    - services/blueprint/generator.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    - acceptance-runs/workflow/template-scoring-20260922-001/report.md
+    - acceptance-runs/workflow/template-scoring-20260922-001/pipeline.json
+    - acceptance-runs/workflow/template-scoring-20260922-001/browser-readback.json
+    - acceptance-runs/m2-01/topic-diversity-20260928-001/report.md
+    - acceptance-runs/m2-01/planner-agent-20260929-001/report.md
+  M2-02:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-22T12:18:12.096509+00:00'
+    review_note: 盲解输入白名单、隔离容器/状态卷与空工具集已验证；共享材料与更广泛对抗/跨租户场景待补。
+    evidence_refs:
+    - services/hermes_adapter/blind_runtime.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/gates/unit-final.json
+  M2-03:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-24T02:51:30+00:00'
+    review_note: 本地受控算筹图1～5已生成内容哈希资产；缺图/伪造引用的完整性检查FAIL，并在盲解前阻断。离线回归通过，真实模型与教学质量验收未做；数学语义仍REVIEW。
+    evidence_refs:
+    - services/hermes_adapter/schema_validator.py
+    - services/hermes_adapter/comparator.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    - acceptance-runs/workflow/handoff-localgen-20260922-2000/gates/unit-final.json
+    - acceptance-runs/workflow/controlled-diagrams-20260924-001/report.json
+    - docs/decisions/DEV-012-controlled-diagram-assets.md
+  M2-05:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-22T12:18:12.096518+00:00'
+    review_note: 旧同步未记账重生成与持久结果直接编辑已阻断；版本化单题队列仍待实现。
+    evidence_refs:
+    - services/exam/question_service.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+  M2-06:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-22T07:48:45.520815+00:00'
+    review_note: 已有内存审核及旧页面；持久草稿确认和当前入口流程未完成。
+    evidence_refs:
+    - services/api/store.py
+    - apps/web/src/pages/Review.tsx
+  M2-07:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-24T02:51:30+00:00'
+    review_note: 本地页面可读取受控SVG，缺图显式提示；含图浏览器打印和旧.doc导出暂阻断。正式PDF/Word管线、权限与真实产物验收未完成。
+    evidence_refs:
+    - apps/web/src/components/ExportModal.tsx
+    - acceptance-runs/workflow/controlled-diagrams-20260924-001/report.json
+  M3-03:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-22T12:18:12.096519+00:00'
+    review_note: 正式发布返回501，避免新旧来源混用和假产物哈希；完整可信发布/撤回仍待开发。
+    evidence_refs:
+    - services/api/store.py
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+  DEV-01:
     status: DONE
     completed_by: agent
-    completed_at: '2026-09-17T08:30:00+00:00'
+    completed_at: '2026-09-22T08:45:47.010542+00:00'
+    review_note: 修复功能卡遗漏任务/交接阶段证据的问题；展示已有记录、最近已做和待办，完整验收状态不变。看板9项、记忆54项、构建及现有Chrome页面核对通过。
     evidence_refs:
-      - acceptance-runs/devtools/run-hermes-004/report.json
+    - acceptance-runs/maintenance/project-overview-20260922-001/verification.json
+    - acceptance-runs/devtools/project-overview-20260922-002/report.json
+    - docs/decisions/DEV-003-project-overview.md
+    - acceptance-runs/devtools/project-evidence-display-20260922-001/report.json
+    - acceptance-runs/devtools/project-evidence-display-20260922-001/change-impact.md
+    reviewed_at: '2026-09-22T13:54:23.673829+00:00'
+  DEV-02:
+    status: DONE
+    review_note: 主代理独立验收：最终记忆54项、看板8项和7组离线验证通过；混合时区交接按真实时间排序，收尾门禁/当前指纹/摘要闭环。工具不自动编造事实或证明审核身份。
+    evidence_refs:
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/offline-final-004/report.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/maintenance/memory-time-order-20260922-001/verification.yaml
+    completed_by: gpt-5.6-sol / memory_workflow
+    completed_at: '2026-09-22T12:24:43.256686+00:00'
+  DEV-03:
+    status: DONE
+    review_note: gpt-6-sol high 独立审查本次结构重构无剩余阻断；离线8组、基线412项、前端构建/Node16项及登记的桌面和窄屏浏览器操作通过。真实生成、极端公式、用户DOCX、打印发布与数据库不在本次产品验收范围。
+    evidence_refs:
+    - acceptance-runs/maintenance/dev-03-code-structure-20260924-001/offline-final-6/report.json
+    - acceptance-runs/maintenance/dev-03-code-structure-20260924-001/browser-check.md
+    - acceptance-runs/maintenance/dev-03-code-structure-20260924-001/sol-review.md
+    completed_by: Codex root / gpt-6-luna xhigh worker team
+    completed_at: '2026-09-24T10:03:22Z'
+    reviewed_at: '2026-09-24T10:03:22Z'
+  M0-05:
+    status: IN_PROGRESS
+    review_note: 已实测原生Runs、空工具集与独立solver容器，完成受限真实调用；完整权限/能力评估与生产预算批准待补。
+    evidence_refs:
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    reviewed_at: '2026-09-22T12:18:12.096514+00:00'
+  M1-02:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-22T14:07:48.539358+00:00'
+    review_note: 常用8000已接独立本地zhijuan_local库并保留原草稿；并非生产租户/RLS迁移。
+    evidence_refs:
+    - acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+    - acceptance-runs/workflow/sol-six-features-resume-20260922-002/all-tests.json
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+    - acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+    - acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+    - acceptance-runs/workflow/workbench-startup-20260922-001/report.md
+    - acceptance-runs/workflow/workbench-startup-20260922-001/unit.json
+    - acceptance-runs/workflow/workbench-startup-20260922-001/integration.json
+    - acceptance-runs/workflow/workbench-startup-20260922-001/runtime.json
+  DEV-04:
+    status: DONE
+    review_note: Bug目录、修前检索及复发历史、本地页面与Notion9条回读同步已完成；声明的Bug任务由finish核对检索/记录/同步，不能认证所有外部Agent。
+    evidence_refs:
+    - acceptance-runs/devtools/bug-memory-20260924-001/offline-final/report.json
+    - acceptance-runs/devtools/bug-memory-20260924-001/browser.md
+    - acceptance-runs/devtools/bug-memory-20260924-001/change-impact.md
+    completed_by: Codex
+    completed_at: '2026-09-24T12:28:16.926052+00:00'
+  M2-04:
+    status: IN_PROGRESS
+    reviewed_at: '2026-09-24T18:25:18.828355+00:00'
+    review_note: 生成容器和Worker已重载；真实单题三角色、两轮修订、56条事件与浏览器正文验证完成。最终题目仍需教师复核，不代签整卷/三学段验收。
+    work_type: BUGFIX
+    evidence_refs:
+    - acceptance-runs/m2-04/review-stream-20260925-001/report.md
+    - acceptance-runs/m2-04/review-stream-20260925-001/tests.log
+    - acceptance-runs/m2-04/live-stream-20260925-002/report.md
+    - acceptance-runs/m2-04/live-stream-20260925-002/live-evidence.json

@@ -1,0 +1,88 @@
+schema_version: 1
+id: BUG-20260925-001
+title: 审核Agent未进入生成流程，失败候选无有限修订
+status: FIXED
+module: generation
+updated_at: '2026-09-25'
+task_ids:
+- M2-04
+keywords:
+- 审核
+- 修订
+- 流式
+- HERMES_FAILED
+symptom: 题型或输出结构失败后直接结束。
+reproduction:
+- 用户提供失败任务页面；源码核对重现缺失路径。
+- 离线事件与候选夹具验证，不触发计费。
+root_cause: 只调用author/solver；审核Skill存在但无实际调用、修订事务和新版本复检。
+resolution: 新增审核契约、两轮原子额度、版本化候选检查点和重新盲解；未知外部执行不重试。
+affected_files:
+- services/hermes_adapter/http_adapter.py
+- services/hermes_adapter/run_stream.py
+- services/hermes_adapter/isolation_gateway.py
+- services/exam/question_service.py
+- services/exam/generation_context.py
+- services/exam/question_generation.py
+- services/exam/question_review.py
+- services/exam/job_service.py
+- services/api/job_repository_execution.py
+- services/api/job_run_events.py
+- services/api/routes/exams.py
+- services/api/routes/exam_job_routes.py
+- services/api/routes/exam_activity_routes.py
+- services/worker/jobs.py
+- services/worker/failures.py
+- skills/question-reviewer/SKILL.md
+- apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+- apps/web/src/pages/job-progress/activityPresentation.ts
+- apps/web/src/types/job.ts
+- tools/live_budget_stream.py
+- tools/live_budget_proxy.py
+- tools/live_budget_status.py
+- tools/live_review_probe.py
+- contracts/question-review.schema.json
+- tests/frontend_activity_presentation.test.mjs
+- tests/test_activity_stream.py
+- tests/test_native_stream_transport.py
+regression:
+- .venv/bin/python -m unittest tests.test_review_workflow tests.test_activity_stream
+  tests.test_native_stream_transport
+- npm run build --prefix apps/web
+verified_at: '2026-09-25'
+verification: 107项离线、5项Node与实际三角色/两轮修订流式浏览器验证通过；最终题目仍REVIEW_REQUIRED，非教学质量签收。
+evidence_refs:
+- acceptance-runs/m2-04/review-stream-20260925-001/tests.log
+- acceptance-runs/m2-04/review-stream-20260925-001/report.md
+- acceptance-runs/m2-04/live-stream-20260925-002/report.md
+- acceptance-runs/m2-04/live-stream-20260925-002/live-evidence.json
+events:
+- 2026-09-25：代码修复并离线/局部浏览器验证；生成容器重载及真实模型验证待完成。
+- 2026-09-25：用户实际重跑仍无输出，重新核查；旧Worker/容器未重载，原任务activity=0，运行态问题复发。
+- 2026-09-25：复用现有Docker配置完成重载，三次独立真实单题测试；最终9角色调用、两轮修订和56条真实事件，浏览器正文可见。
+source_hashes:
+  services/hermes_adapter/http_adapter.py: b2534e9c7b94b19dc44a1026712abd6d9c07a781c300259fd2c3a1265967ccb1
+  services/hermes_adapter/run_stream.py: 271ed9830cb6934d0bbc98bc0edfec5ececf2a66eb7cf59e6a14681291ad8f85
+  services/hermes_adapter/isolation_gateway.py: ed0af0b8a3590e97d615ca31cc06f3ee646e54434cc78bcebf0b823f72ae0c9e
+  services/exam/question_service.py: cbfa552601896ecd1fbde3e938d497ccf456d6131263e295c4acced095f1e157
+  services/exam/generation_context.py: b20d11eb1a20f4e722130ff07527bf9c38b4d20f37ce94ae3b714efeb2467d79
+  services/exam/question_generation.py: a8e18e412722cc013b689f3768065c662f72b2bfbff97de3c70343584ca5cdad
+  services/exam/question_review.py: 76f19d951524bfeee4c7a5c9094e290c0527e314a3c98c0118e52d1d1c3ab9bf
+  services/exam/job_service.py: 79e18e91882fe838775022aa9ad2fa4a6bedc73df71d5f56f65adda529d6f387
+  services/api/job_repository_execution.py: b9377c28e9fd35cb154d58d9a160bc2cc4991c89f983018580f61c86abf0b22c
+  services/api/job_run_events.py: 00f0fab3bf215bd62c074e81b3906d404cb14b362c9edaac7066060033417ba4
+  services/api/routes/exams.py: 9469f98f71881bb808044cdb82f55d5f95d735e6facf3321f79373f2b4576ff3
+  services/api/routes/exam_job_routes.py: 373cc05229670ae7c2294f8e37276fbd3b276e0eae48107d940ca3100ba46b5a
+  services/api/routes/exam_activity_routes.py: 67daa1cc5f7a75242fb3f4be55f73a1d109f59c62884a650b33c17da62d7602d
+  services/worker/jobs.py: a476e8246c5ce4d488473160ef6683f703ee77072d823518bb4d9da6704af75e
+  services/worker/failures.py: a809b7882539f509b1a3cbc050bc8a3c46d9bc5c1ad29a4dbaf6d871d74d52e1
+  apps/web/src/pages/job-progress/AgentActivityConsole.tsx: 09ed6d2827877f494e804d9f4a7885394d22dcce01cf47c69704a9281b305cbb
+  apps/web/src/pages/job-progress/activityPresentation.ts: 063c12748a38458b979c4ec7f2f23aeeb8bc4823976f04d2dec4e1f36b1eacf4
+  apps/web/src/types/job.ts: 5432fb7b94ba5ae744f5ce009dcfdd582de96f095a588b8b47079464e7959069
+  tools/live_budget_stream.py: 2b837a85d48c7474b08f4b6a1bf08c3b3950948ec10e97f4c3b099caafacbed5
+  tools/live_budget_proxy.py: 4e012d024a5c4c7174cd7bd22f34b9dc197bf45695f0cb60c17356c8c6656711
+  tools/live_budget_status.py: c601a12e80c116e8b4d6074ae542d099a150b1f79b1afb48b426b84ef1b872f4
+  tools/live_review_probe.py: 42eaf9e688a32948f9bef2b6104915bdad1daafd732fccdd7029aec32de83cc3
+  tests/frontend_activity_presentation.test.mjs: 22d82f876d79ffc11b2687fddc7a0aec0d87c39ac25f8ff5ef92324393844c72
+  tests/test_activity_stream.py: 6c374bb6f6a25f6d12dd17dbc2c7a253c5d818f759f0989495677d71ba6679ce
+  tests/test_native_stream_transport.py: 223270a7babff6226282f3391d4035df0239a7944c51dadd015e6ba8d8781ce7

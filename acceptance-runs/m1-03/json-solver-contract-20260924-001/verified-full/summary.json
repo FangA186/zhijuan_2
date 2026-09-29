@@ -1,0 +1,64 @@
+{
+  "job_status": "PARTIAL_FAILED",
+  "processed": 23,
+  "total": 23,
+  "slot_counts": {
+    "REVIEW_REQUIRED": 19,
+    "FAIL": 4
+  },
+  "requests": 44,
+  "valid_json": 42,
+  "invalid_json": 2,
+  "steps_over_four": [
+    {
+      "question": "q06",
+      "steps": 5,
+      "status": "REVIEW"
+    },
+    {
+      "question": "q08",
+      "steps": 5,
+      "status": "REVIEW"
+    },
+    {
+      "question": "q09",
+      "steps": 5,
+      "status": "REVIEW"
+    },
+    {
+      "question": "q16",
+      "steps": 6,
+      "status": "REVIEW"
+    },
+    {
+      "question": "q17",
+      "steps": 5,
+      "status": "REVIEW"
+    },
+    {
+      "question": "q18",
+      "steps": 5,
+      "status": "REVIEW"
+    },
+    {
+      "question": "q19",
+      "steps": 5,
+      "status": "REVIEW"
+    },
+    {
+      "question": "q21",
+      "steps": 7,
+      "status": "REVIEW"
+    },
+    {
+      "question": "q22",
+      "steps": 7,
+      "status": "REVIEW"
+    },
+    {
+      "question": "q23",
+      "steps": 20,
+      "status": "REVIEW"
+    }
+  ]
+}

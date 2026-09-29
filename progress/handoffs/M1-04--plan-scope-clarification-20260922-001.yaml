@@ -1,0 +1,46 @@
+schema_version: 1
+task_id: M1-04
+session_id: plan-scope-clarification-20260922-001
+created_at: '2026-09-22T15:35:47+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths: []
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15052
+summary: 按用户澄清收紧计划：只排查知卷，zygf等其他项目仅为排除对象
+next_action: 接手AI重新读取实施计划开头的范围澄清及W0；如已经深入其他项目，停止该分支，只回报是否有过操作。
+completed:
+- 删除W0对其他项目做广泛容器调查的表述，明确仅核对知卷及必要端口占用元数据。
+- 禁止读取其他项目仓库、配置、环境变量、日志、连接其数据库或做健康诊断；保护测试改用模拟清单。
+pending:
+- 实施计划仍待接手AI执行，本次只有范围说明修订。
+decisions:
+- 其他项目同样出现3000端口只能触发最小归属核对，不代表知卷依赖或跨项目排查授权。
+failed_approaches:
+- 原W0“列出本项目和其他项目容器”措辞过宽，可能误导接手AI展开范围外调查，现已纠正。
+evidence_refs:
+- docs/plans/2026-09-22-local-generation-implementation-plan.md
+- docs/plans/2026-09-22-local-generation-test-plan.md
+scope_patterns:
+- configs/business-policy.example.yaml
+- docs/plans/2026-09-22-local-generation-implementation-plan.md
+- docs/plans/2026-09-22-local-generation-test-plan.md
+- infra/compose.yaml
+- services/worker/celery_app.py
+- services/worker/leases.py
+- services/worker/outbox.py
+- services/worker/tasks.py
+files:
+  '[missing-pattern] services/worker/celery_app.py': MISSING
+  '[missing-pattern] services/worker/leases.py': MISSING
+  '[missing-pattern] services/worker/outbox.py': MISSING
+  '[missing-pattern] services/worker/tasks.py': MISSING
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  docs/plans/2026-09-22-local-generation-implementation-plan.md: 2aa9090b8c014e3e11548343450c994ebe5d424abf33f8c329fbb3fcea9eac5b
+  docs/plans/2026-09-22-local-generation-test-plan.md: 63fbc5f92e5a32402a258139924ee154c64cbd8427e610019006a77945122847
+  infra/compose.yaml: 649b54742085b24ef3b6fc01c62b0756d208f58e9402b8e87048e0863fc1b38a
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

@@ -1,0 +1,100 @@
+schema_version: 1
+task_id: M1-04
+session_id: json-solver-contract-20260924-001
+created_at: '2026-09-24T13:43:46+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15652
+summary: 完整生成回归：19题待复核4题业务失败，坏JSON恢复计费逐次记录
+next_action: 处理剩余业务失败，通用失败题重生成仍待实现
+completed:
+- 最终启用严格原生结构化返回strict-json-v3，按角色直接返回，无新增可执行工具或Hermes旁路。
+- 最多一次已完成坏JSON格式重试；两次调用各自记账并汇总实际usage，超时未知不重发。
+- 盲解不设4步上限，按每步500/合计6000字符和text字段白名单限制。
+- 最终整卷23题处理，19 REVIEW、4业务FAIL；44次上游含2次坏JSON均恢复，最终0题JSON语法/步数失败；第9题5步及复杂题20步通过。
+- 430项全量离线、57项相关测试、构建及200行门禁通过；实际Chrome桌面/窄屏/刷新通过，最终浏览器error为0。
+pending:
+- 4道业务规则失败未处理，题目数学质量和发布仍须独立验收。
+- 通用失败题多次重生成尚未实现；连续两次坏格式仍明确失败，不承诺供应商永不出错。
+decisions:
+- 用户明确要求修复两项问题；DEV-016记录输出接口与摘要格式调整的依据、边界、迁移及回归。
+- 同一模型盲解、结构合规和数学证明分开；不放宽业务检查或伪造PASS；不修改私有推理隔离。
+failed_approaches:
+- 只启用json_object的真实回归仍有上游坏JSON，未作为最终修复。
+- 额外result包装与混合Schema在复杂题中出现坏参数，改为按角色直接返回。
+- 仅严格返回仍有1/43坏格式，补仅已完成坏JSON的一次有界恢复并验证。
+- 旧容器遗漏重构后的依赖挂载，环境文件不足以重建已有凭据；保留现有运行凭据及账本后更新。
+evidence_refs:
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/report.md
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/change-impact.md
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/tests-final.log
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/offline-final.json
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/lines.log
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/build.log
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/verified-full/summary.json
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/verified-full/runtime-contract.json
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/verified-full/transport-results.json
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/verified-full/solver-step-counts.json
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/verified-full/per-question.json
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/verified-full/desktop.png
+- acceptance-runs/m1-03/json-solver-contract-20260924-001/verified-full/mobile.png
+scope_patterns:
+- configs/business-policy.example.yaml
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- infra/compose.yaml
+- services/worker/celery_app.py
+- services/worker/leases.py
+- services/worker/outbox.py
+- services/worker/tasks.py
+files:
+  '[missing-pattern] services/worker/celery_app.py': MISSING
+  '[missing-pattern] services/worker/leases.py': MISSING
+  '[missing-pattern] services/worker/outbox.py': MISSING
+  '[missing-pattern] services/worker/tasks.py': MISSING
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  infra/compose.yaml: 649b54742085b24ef3b6fc01c62b0756d208f58e9402b8e87048e0863fc1b38a
+  tools/deepseek_json_contract.py: 372173669f808d31df913b6abcf8ce3dd50d37ce5c61ba77d94631182fc5ebab
+  tools/json_format_retry.py: e39ca266ab44c9f6473178ab9a39981f170b6a6df062c6ec5df72a2f0ecdb844
+  tools/live_budget_proxy.py: 722b346d2583fbf2c00ea0e034860f428a2e84307d6dd3beb28c85f9ee1c9076
+  tools/live_budget_status.py: c23a8556649b2eda8b8a636d796b602d7e157c54370ebc43ef5946edd4ce584f
+  services/hermes_adapter/solver_output.py: 25ad69e39e7632fb4abf45b17c8fd1843c8860784065097d6f85ae377120c36a
+  services/hermes_adapter/isolation_gateway.py: c5bb4f657db0ec9bb9bb4d5f42a529c8d9c66c2b4d55967eb82aa9b0ac8895b5
+  services/exam/question_service.py: b8875c01a6b3c0bec8b4a09c3aaac9f932fc3829781e4e0375b731e0e11ac976
+  services/worker/failures.py: af4336db1b29464ee5e92592082a9a7ab8eb9d882a708c2775a33abf9774b476
+  infra/workflow-acceptance/compose.yaml: 5feb8ecb42e296340f99d3f8f5631f83e6ce368e7ab780ac791e4273fc498c29
+  infra/hermes-solver/compose.yaml: d30d9ff0d4284214c576944d3e30ef0d5dff0261dd25db2b6b12b3ed3fcc5551
+  tests/test_solver_output.py: b9c6aa66f7019d2deb870717704dcebfccb04cc4b3d722554938faa2f414e473
+  tests/test_strict_json_output.py: bbe37808080d27e88a42edab3d7c6bf9d8173b5369ce484c89b83da19d9af180
+  tests/test_json_format_retry.py: ecca259d5065364b9590b8171843691f9c060430763a28c2660191ed37183f02
+  tests/live_budget_proxy_cases.py: a37a45b2bc0c30891c3f50f5ab1944fc4a9cae5dce89847b5def54100e496d40
+  docs/decisions/DEV-016-json-solver-output.md: a58f7d4df75f91baba6358c48d71066ecb38004e55ac6436c21b93bd83920355
+  docs/decisions/README.md: a36bee44e6b5d38213374a3c507226d123bc72995bced17e1c6955ae22ecb1b4
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+this_change_paths:
+- tools/deepseek_json_contract.py
+- tools/json_format_retry.py
+- tools/live_budget_proxy.py
+- tools/live_budget_status.py
+- services/hermes_adapter/solver_output.py
+- services/hermes_adapter/isolation_gateway.py
+- services/exam/question_service.py
+- services/worker/failures.py
+- infra/workflow-acceptance/compose.yaml
+- infra/hermes-solver/compose.yaml
+- tests/test_solver_output.py
+- tests/test_strict_json_output.py
+- tests/test_json_format_retry.py
+- tests/live_budget_proxy_cases.py
+- docs/decisions/DEV-016-json-solver-output.md
+- docs/decisions/README.md

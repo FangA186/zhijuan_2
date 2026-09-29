@@ -1,0 +1,50 @@
+schema_version: 1
+task_id: M1-07
+session_id: cleanup-status-20260922-001
+created_at: '2026-09-22T07:48:45+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths: &id001
+  - progress/features.yaml
+  - progress/work.yaml
+  - apps/web/src/components/ScoreBadge.tsx
+  - scratch_test_img
+  - acceptance-runs/maintenance/cleanup-status-20260922-001/change-impact.md
+  - acceptance-runs/maintenance/cleanup-status-20260922-001/cleanup-manifest.json
+  - tests/test_project_memory.py
+  - tests/test_project_memory.py
+  hidden_path_count: 0
+  notice: 仅列本轮修改；启动时用户已有大量改动已保留，完整原现场见 impact-before.json。
+summary: 清理无用临时产物并按当前源码校正任务状态；不宣称产品验收完成
+next_action: 先补 M0-05 Hermes 能力隔离验证，再修正 M1-03 真实接入
+completed:
+- 清理零引用 ScoreBadge、临时图片与可再生缓存；图片移至项目外恢复目录。
+- 10 个产品功能改为 IN_PROGRESS 并登记实现入口与限制。
+- 15 个任务按源码登记进行中；M0-04、M1-03、M1-07 的旧 DONE 声明保留在 previous_completion_claim，未签收。
+- 前端构建退出码 0；第二轮 48 项记录工具测试和四组检查通过，失败首轮保留。
+- 旧快照测试改为验证未开始/进行中状态都不会被工具自动提升，未删除安全用例。
+pending:
+- M0-05 能力隔离探测；正式持久化、队列、真实校验、导出与发布尚未完成。
+decisions:
+- 不删除用户修改中的旧页面、教材和备份、历史证据、依赖与固定 Hermes 源码。
+- 产品 last_evidence 保持空，不将开发工具测试当产品验收。
+failed_approaches:
+- handoff 自动包含大量教材图片路径导致元数据超过读取上限；收敛为本轮真实修改路径，未放宽工具限制。
+- 首轮旧测试断言全部产品为 NOT_STARTED，与实际状态更新冲突；改为显式两种状态输入并断言无自动变更，保留完整失败证据。
+evidence_refs:
+- acceptance-runs/maintenance/cleanup-status-20260922-001/change-impact.md
+- acceptance-runs/maintenance/cleanup-status-20260922-001/cleanup-manifest.json
+- acceptance-runs/devtools/cleanup-status-20260922-002/report.json
+- acceptance-runs/maintenance/cleanup-status-20260922-001/verification.json
+- acceptance-runs/maintenance/cleanup-status-20260922-001/frontend-build.log
+scope_patterns: *id001
+files:
+  progress/features.yaml: db1b6cbe206298048ba9881488e9b68322a34f3c6aa60648066ce3348d0f181e
+  progress/work.yaml: 375d40045c108395ce647d3f530233b5552f4773c74a7c87b615d370fe0d51ff
+  acceptance-runs/maintenance/cleanup-status-20260922-001/change-impact.md: 74cae189d6f982cbc9c1b8244d92648b1564c0770a2e96d0f12ed51558c9150b
+  acceptance-runs/maintenance/cleanup-status-20260922-001/cleanup-manifest.json: 72e5933a57c6e6529ec07c0d79c2f792c8a5d247c3d47f6376c2db2e2fd6092e
+  tests/test_project_memory.py: c25b1fdbb3a1b2b9105e7c4e7b7b2b3cd963c92de8751b17f68c5ca20f781f89
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

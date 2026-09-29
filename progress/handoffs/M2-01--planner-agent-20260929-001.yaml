@@ -1,0 +1,248 @@
+schema_version: 1
+task_id: M2-01
+session_id: planner-agent-20260929-001
+created_at: '2026-09-28T16:04:03+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - apps/web/src/components/examReferenceTemplates.ts
+  - apps/web/src/lib/apiBlueprint.ts
+  - apps/web/src/lib/sectionScope.ts
+  - apps/web/src/lib/topicPlanning.ts
+  - apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx
+  - apps/web/src/pages/exam-paper/slotDiagnostics.ts
+  - apps/web/src/pages/exam-setup/ExamSetupFlowActions.ts
+  - apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx
+  - apps/web/src/pages/foolproof-setup/FoolproofSetupForm.tsx
+  - apps/web/src/pages/foolproof-setup/FoolproofSetupModel.ts
+  - apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts
+  - apps/web/src/pages/foolproof-setup/useFoolproofSetupScope.ts
+  - apps/web/src/pages/foolproof-setup/usePlanner.ts
+  - apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+  - apps/web/src/pages/job-progress/JobProgressSlots.tsx
+  - apps/web/src/pages/job-progress/activityPresentation.ts
+  - apps/web/src/types/planning.ts
+  - apps/web/src/types/spec.ts
+  - apps/web/tsconfig.json
+  - configs/local-runtime.env.example
+  - configs/template-topic-labels.json
+  - contracts/blueprint-design.schema.json
+  - contracts/candidate.schema.json
+  - contracts/exam-spec.schema.json
+  - contracts/openapi.yaml
+  - contracts/planning-api.yaml
+  - contracts/question-review.schema.json
+  - docs/decisions/DEV-022-planner-agent.md
+  - docs/decisions/README.md
+  - docs/local-development.md
+  - docs/planner-agent.md
+  - infra/workflow-acceptance/compose.yaml
+  - services/api/planning_repository.py
+  - services/api/routes/exam_setup_routes.py
+  - services/api/routes/exams.py
+  - services/api/routes/planning_routes.py
+  - services/blueprint/__init__.py
+  - services/blueprint/allocator.py
+  - services/blueprint/generator.py
+  - services/blueprint/planner.py
+  - services/blueprint/rules.py
+  - services/blueprint/schema.py
+  - services/blueprint/slot_builder.py
+  - services/blueprint/topic_scope.py
+  - services/exam/blueprint_service.py
+  - services/exam/planning_service.py
+  - services/exam/question_generation.py
+  - services/exam/question_review.py
+  - services/exam/template_parser_sections.py
+  - services/validators/candidate.py
+  - services/validators/diversity.py
+  - services/worker/failures.py
+  - services/worker/jobs.py
+  - services/worker/planning.py
+  - skills/exam-planner/SKILL.md
+  - skills/question-author/SKILL.md
+  - skills/question-reviewer/SKILL.md
+  - tests/frontend_topic_planning.test.mjs
+  - tests/integration/test_planner_postgres.py
+  - tests/test_blueprint_engine.py
+  - tests/test_bug_memory.py
+  - tests/test_generation_pipeline.py
+  - tests/test_planner_agent.py
+  - tests/test_topic_diversity.py
+  - tools/bug_workflow.py
+  - tools/deepseek_json_contract.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15866
+summary: Hermes规划Agent接入持久队列、设计校验与命题交接
+next_action: 用户重载后验证真实规划输出与教学质量；不自动发起计费
+completed:
+- Hermes planner与结构化代理输出契约接通
+- 持久规划任务、幂等与版本围栏，失败/未知无规则回退
+- 前端显式规划、实际活动读取、刷新恢复、教师确认与命题快照交接
+- 81项Python、3项PostgreSQL、7项前端及构建；独立HTTP/DB浏览器启动刷新确认停止与窄屏验收
+pending:
+- 用户重载API/Worker/结构化代理；真实DeepSeek规划尚未调用
+- LIVE-QUALITY教学设计合理性、实际23题输出预算、真实RabbitMQ投递待验收
+decisions:
+- docs/decisions/DEV-022-planner-agent.md
+failed_approaches:
+- 旧高级配置页修改范围会隐式重算，改为只失效计划防止自动计费
+- 结构化代理原先把非author/reviewer都当solver，新增planner独立schema映射
+evidence_refs:
+- acceptance-runs/m2-01/planner-agent-20260929-001/report.md
+- acceptance-runs/m2-01/planner-agent-20260929-001/tests.log
+- acceptance-runs/m2-01/planner-agent-20260929-001/postgres.log
+- acceptance-runs/m2-01/planner-agent-20260929-001/node-tests.log
+- acceptance-runs/m2-01/planner-agent-20260929-001/build.log
+- acceptance-runs/m2-01/planner-agent-20260929-001/browser-db-readback.json
+- acceptance-runs/m2-01/planner-agent-20260929-001/desktop.png
+- acceptance-runs/m2-01/planner-agent-20260929-001/narrow.png
+scope_patterns:
+- acceptance/fixtures/minimum-primary.json
+- apps/web/src/components/examReferenceTemplates.ts
+- apps/web/src/lib/apiBlueprint.ts
+- apps/web/src/lib/sectionScope.ts
+- apps/web/src/lib/topicPlanning.ts
+- apps/web/src/pages/PlanReview.tsx
+- apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx
+- apps/web/src/pages/exam-paper/slotDiagnostics.ts
+- apps/web/src/pages/exam-setup/ExamSetupFlowActions.ts
+- apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx
+- apps/web/src/pages/foolproof-setup/FoolproofSetupForm.tsx
+- apps/web/src/pages/foolproof-setup/FoolproofSetupModel.ts
+- apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts
+- apps/web/src/pages/foolproof-setup/useFoolproofSetupScope.ts
+- apps/web/src/pages/foolproof-setup/usePlanner.ts
+- apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+- apps/web/src/pages/job-progress/JobProgressSlots.tsx
+- apps/web/src/pages/job-progress/activityPresentation.ts
+- apps/web/src/types/planning.ts
+- apps/web/src/types/spec.ts
+- apps/web/tsconfig.json
+- configs/local-runtime.env.example
+- configs/template-topic-labels.json
+- contracts/blueprint-design.schema.json
+- contracts/candidate.schema.json
+- contracts/exam-spec.schema.json
+- contracts/openapi.yaml
+- contracts/planning-api.yaml
+- contracts/question-review.schema.json
+- docs/decisions/DEV-022-planner-agent.md
+- docs/decisions/README.md
+- docs/local-development.md
+- docs/planner-agent.md
+- infra/workflow-acceptance/compose.yaml
+- services/api/domain/plans.py
+- services/api/planning_repository.py
+- services/api/routes/exam_setup_routes.py
+- services/api/routes/exams.py
+- services/api/routes/planning_routes.py
+- services/blueprint/__init__.py
+- services/blueprint/allocator.py
+- services/blueprint/generator.py
+- services/blueprint/planner.py
+- services/blueprint/rules.py
+- services/blueprint/schema.py
+- services/blueprint/slot_builder.py
+- services/blueprint/topic_scope.py
+- services/exam/blueprint_service.py
+- services/exam/planning_service.py
+- services/exam/question_generation.py
+- services/exam/question_review.py
+- services/exam/template_parser_sections.py
+- services/validators/candidate.py
+- services/validators/diversity.py
+- services/worker/failures.py
+- services/worker/jobs.py
+- services/worker/plan_tasks.py
+- services/worker/planning.py
+- skills/exam-planner/SKILL.md
+- skills/question-author/SKILL.md
+- skills/question-reviewer/SKILL.md
+- tests/frontend_topic_planning.test.mjs
+- tests/integration/test_planner_postgres.py
+- tests/test_blueprint_engine.py
+- tests/test_bug_memory.py
+- tests/test_generation_pipeline.py
+- tests/test_planner_agent.py
+- tests/test_topic_diversity.py
+- tools/bug_workflow.py
+- tools/deepseek_json_contract.py
+files:
+  '[missing-pattern] apps/web/src/pages/PlanReview.tsx': MISSING
+  '[missing-pattern] services/api/domain/plans.py': MISSING
+  '[missing-pattern] services/worker/plan_tasks.py': MISSING
+  acceptance/fixtures/minimum-primary.json: df1f1f2f25606cc1eb4812852913d64c7f67240ce857efcb8d6020ac755b8aa1
+  apps/web/src/components/examReferenceTemplates.ts: 60653c3f2446f06d2ca67c1bb57e8e51da470bd9d81313b70dd215e9207b86d8
+  apps/web/src/lib/apiBlueprint.ts: 3d3b461d1cfec888f894f6b9cd587a92bf80c08b70e888c2b6b3ff4a8ba4ac29
+  apps/web/src/lib/sectionScope.ts: d2e03ed3674474d673afdc9af3964423f22a17982f9df99e22df71cde0b0070d
+  apps/web/src/lib/topicPlanning.ts: e213988fa46ce2b01c4abe4b41dc996041e0a2718599e8a4e8095a8eb5cf49d0
+  apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx: 69c9640696feb0696cb43315b9319a257dbbae65934d5b0c4deb03dcdfb05847
+  apps/web/src/pages/exam-paper/slotDiagnostics.ts: 724dc1edf355c87149ed7dfcaea2f842530d2efe8608f449f09fdea3fdd6ab86
+  apps/web/src/pages/exam-setup/ExamSetupFlowActions.ts: dafc3cafa0e7e3870935b56c53121a25d7814c32ddeb323a8989b8bd9d049d3d
+  apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx: 42dbefe23cafa5efd44ab2586269651086b90c8fabded64f0f7dc7a8f7199726
+  apps/web/src/pages/foolproof-setup/FoolproofSetupForm.tsx: b066b605d9a8a98d2f090772798c148a1a2f342923c90bf1759396aa8a9aacba
+  apps/web/src/pages/foolproof-setup/FoolproofSetupModel.ts: ba644ece190e9517c855a035493544e87b4dfb760057cc7b969778044d7d5b1f
+  apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts: f652cf2ab23235c0501cccb3661b447a4dd9bbf1f03eb4660245043b2a3f5ec3
+  apps/web/src/pages/foolproof-setup/useFoolproofSetupScope.ts: 89cdddbdb26c86b77a0078d51132b6adca48e16eef351b024aa24fa162ae731b
+  apps/web/src/pages/foolproof-setup/usePlanner.ts: 04a2f5c256d27306f534c2bded1a4a7baa4c23f562294f7994503835d107e599
+  apps/web/src/pages/job-progress/AgentActivityConsole.tsx: 0c2210adda6600c2a088a936258464e888ff10a07ff8fe66d407c812f1b9bb81
+  apps/web/src/pages/job-progress/JobProgressSlots.tsx: fd01495148a33acaa520a76e704b5fd46b857d9f576e9abdef2bcf18808c05fd
+  apps/web/src/pages/job-progress/activityPresentation.ts: 78b4c4280b64e60cd3d0549ef440d248f5d38ccd7dca8574d1b8f8fd6e70d74b
+  apps/web/src/types/planning.ts: cf11031511029e94943c6ecf4566a2a80a259f4c6f35d339f211e8fac5256711
+  apps/web/src/types/spec.ts: 483f50ad195ea3143024648efe8a39cfb3401169a7bca75f9ab84396aca558bd
+  apps/web/tsconfig.json: 9b872d6547472a629c9cce415bead4fce21160229840d25eb435ccc03987fe6b
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  configs/template-topic-labels.json: bf3e3825a81e07b634f92d46c5a2349f1902f00c488257710c614f1e62202ba4
+  contracts/blueprint-design.schema.json: 6469abbb50e9e3ae0cef7e8082eb228c888af5a797a3b6c3cda2c0b93f67b312
+  contracts/candidate.schema.json: 0ad8273511bc8bdb844276435991eeb161af32a759e25d32a08590ec80a66cfd
+  contracts/exam-spec.schema.json: 01fbc48ad9d37c0b88689e8ceb87eaea5218bce8b4e7c4dc7f8e3b1dadfa6ca6
+  contracts/openapi.yaml: 1622c5d7d3ab96837f1ff497b8a9c96918d2e74d983e9b5e51449d99abb3f59c
+  contracts/planning-api.yaml: 1cd0983ffe58b2f082a818eea6409eeb09570fc3768d597f3847c222c9c6a9dc
+  contracts/question-review.schema.json: 11c4600f35296bfc33cde95c88170497e5ddb9c54d844fac1fb712dd6bcae9f0
+  docs/decisions/DEV-022-planner-agent.md: e152e8a4601f6795432b5bde5f61099527b74b0d9da2e47e6a0e308c01135410
+  docs/decisions/README.md: 2c69beadede7a942988f7e98871d02be17f5e08ec1eb0a1394dc7f5b8ee1b928
+  docs/local-development.md: 375c6e03723955ad321a185198089e24546beb330ebc9c641b57886e493fa8b0
+  docs/planner-agent.md: f4c9d35d3dec05ec0e52edf20ca5a4b59cb32ddae333b5064db2052e4f23f63f
+  infra/workflow-acceptance/compose.yaml: a9c3e4676a0e1e1b88d4c2297b0ee5247f129a4d4b102dff1ec70c73df68f77f
+  services/api/planning_repository.py: 7c462f161b59d1ded0b3be68a242328122f0d6908bc98b158dafe72769bcfb1a
+  services/api/routes/exam_setup_routes.py: 7cdab6165c641c2074f8ce4583cacfde32f22746368c4b29708c36245266b2d5
+  services/api/routes/exams.py: 2ec4e8b96ee3066a8e7252cdcd534ded90fe71f5dd1fa560070bb7cc472483d5
+  services/api/routes/planning_routes.py: b963527ee84786c7fe35d9b2a4f9931aff9b2d115dccb10086ce243bb8d65bf1
+  services/blueprint/__init__.py: 89ebf12e0fbf8912943a4dbc06ee872a6b2ceb8e17be68a3a19d2ed04322060a
+  services/blueprint/allocator.py: 2349d421725d718f837a77e59c31fbd451c9247b280e1fc5de96566a9606d177
+  services/blueprint/generator.py: 33f59e2dd5c8555745c323887e8745cbddb5c35435bf3f05ffd88522ab66ce03
+  services/blueprint/planner.py: cf2dc63c16c419f2eb13637c05c11ec4f5bf86ba8510a237b6ad3cec1fef214f
+  services/blueprint/rules.py: 7b1a1e2109fa06636c4cc4343b8690695815d06f869673dc437dd54d3d9cb984
+  services/blueprint/schema.py: 4c18d0c0c6b6316adf268962384c4471b70237c7c86f2f67e7bfec579ad49100
+  services/blueprint/slot_builder.py: 3b3cf9e967270a1f2986b8a9520e728a9d22c448c244628efe7833692c52590a
+  services/blueprint/topic_scope.py: 5cd7f64fa9c2c73d37540ef7030f37d104b34016ba54c0dcb0920e984e7f2aae
+  services/exam/blueprint_service.py: bcd0882fde4da70eead097ca262271b8506a6db44b91ba58427aa390b1e0aa66
+  services/exam/planning_service.py: 8267cb0f6fd8710e1c14ee14f1727e1bbacb1caa477a9f742e74e60ec5b5cf1c
+  services/exam/question_generation.py: 9633d6c6a0a5865fb8642f6347997db2bc5e4fc2b171ac7d5ae528663e2da075
+  services/exam/question_review.py: 78eecf67fe685eee0f8233d650cfd865afd6a2f4a9898e0b97d58bb70b95e464
+  services/exam/template_parser_sections.py: 7eb38067720258372cda9c0c6d9b8f091e6e0a6ca39b76cddb1746037326bed6
+  services/validators/candidate.py: c9a586adc8f3598ce2f0bce749dd6d1cda627b6b02db5490797c80cd9ea41f4d
+  services/validators/diversity.py: c92cd7d4e23b5a4578e3e4fdbe05dc328598ae84647f7b6d7acce981ef65a241
+  services/worker/failures.py: 04d47e48a41443a35ca5693aa13da0f06f9dbd50df552c4c8472ea0f7398b96c
+  services/worker/jobs.py: 893fa795ed9b182fe8b4311452a23fa4afc78d95b5b93543ee0868976b4c229c
+  services/worker/planning.py: abdf691a00c300c950061a76684c8784a75515152bfea6916d969b1824443a90
+  skills/exam-planner/SKILL.md: e25b4ab14888052e45c18aee261e3d73127d7a8e610f6e485df4316b11687c81
+  skills/question-author/SKILL.md: d1761db9a02a22f4c001558474bbf05ee575eccfefe5ca9f783ad4d2ba5bba5f
+  skills/question-reviewer/SKILL.md: d25a2e14b365858080615c7d60216da949bb599702533797fcd8208f1a26e2b4
+  tests/frontend_topic_planning.test.mjs: e5e0f4700d4b30fbb03518360aaec818a001422196ab439d36da0529cfe88809
+  tests/integration/test_planner_postgres.py: 62dd9fcad525f64c7287bb49e73d87385c9f087d3166edd9b02c2c0e8a254f98
+  tests/test_blueprint_engine.py: e5b9612195a6c7d443ed338cfb66875b169eb470fe773733bc7aec4af27ea4cc
+  tests/test_bug_memory.py: 371ed22cfc71c3ac5c18ba8d1901f8be65f858a2a649a79db185ee41bfbf81a6
+  tests/test_generation_pipeline.py: b743d00edc289f65fe14beb94d62addb13e70da2ad13106c658eeb400079643a
+  tests/test_planner_agent.py: 6908b6eb396190f4337d19567cfff0d97a2ddb7d77a6fbb7aba93f498acf4ec4
+  tests/test_topic_diversity.py: 0523c76b2bd42295ff4c7ac70963652d859b011b631f4c5a979ff59e5321b038
+  tools/bug_workflow.py: 3b7a909a941de23b70950902688a168f198422b8661842090829eafa277d3ae3
+  tools/deepseek_json_contract.py: 7e1bba0f381a61d0ce74684d6bfaacabb253195a74f92188415cff2f663c1594
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+bug_ids:
+- BUG-20260928-001

@@ -1,0 +1,31 @@
+schema_version: 1
+id: BUG-20260924-008
+title: 真实模板样本搬迁后用例静默返回
+status: FIXED
+module: tests
+updated_at: '2026-09-24'
+task_ids:
+- DEV-03
+keywords:
+- DOCX
+- 样本
+- 静默跳过
+- return
+- 路径
+symptom: 样本路径不存在时用例直接return，测试数量看似通过却未执行实际断言。
+reproduction:
+- 核对模板样本从根目录移动到 uploads/source-docx 后的用例路径。
+root_cause: 用例绑定旧路径且缺样本时未明确失败；默认套件也不应擅自读取用户试卷。
+resolution: 更新路径，改为明确授权后手动调用的check方法；缺文件时失败，自动套件使用合成材料。
+affected_files:
+- tests/template_parser_cases_2.py
+regression:
+- .venv/bin/python -m unittest tests.test_template_parser -q
+- 真实用户DOCX检查保持NOT_RUN，需要明确授权。
+verified_at: '2026-09-24'
+verification: 历史离线/页面范围通过，完整边界见证据
+evidence_refs:
+- acceptance-runs/maintenance/dev-03-code-structure-20260924-001/sol-review.md
+events:
+- 2026-09-24：从DEV-03实际验收回填；按登记范围修复。
+source_hashes: {}

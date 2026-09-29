@@ -1,0 +1,51 @@
+schema_version: 1
+task_id: M2-03
+session_id: astra-closeout-20260922-003
+created_at: '2026-09-22T12:18:11+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths: []
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 14981
+summary: 受信检查及版本证据绑定完成本轮实现
+next_action: 可信数学AST和完整学科规则未完成，题目正确性和阶段验收不签PASS。
+completed:
+- 移除模型答案修补；确定性FAIL不再盲解计费；内容与盲解证据分别绑定；无可信数学求解保持REVIEW。
+- 最终页面显示服务端REVIEW并禁用尚未实现的版本化换题；最终构建和真实结果回读通过。
+pending:
+- 可信数学AST和完整学科规则未完成，题目正确性和阶段验收不签PASS。
+decisions:
+- 任务保持IN_PROGRESS，开发实现/离线通过/真实单题执行/教学正确性分开。
+- 仅验收专属数据库与容器，本轮已停止付费服务；未提交或推送。
+failed_approaches:
+- 非法JSON、评分表FAIL与读取超时保留原报告；未通过调整答案或放宽检查获取通过。
+evidence_refs:
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+- acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+- acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/frontend-final-004/report.md
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/browser-check.json
+scope_patterns:
+- apps/web/src/pages/ExamPaperWorkbench.tsx
+- configs/business-policy.example.yaml
+- contracts/validation-record.schema.json
+- reference_code/publish_gate.py
+- services/validators/evidence.py
+- services/validators/math_ast.py
+- services/validators/scoring.py
+- services/validators/structure.py
+files:
+  '[missing-pattern] services/validators/evidence.py': MISSING
+  '[missing-pattern] services/validators/math_ast.py': MISSING
+  '[missing-pattern] services/validators/scoring.py': MISSING
+  '[missing-pattern] services/validators/structure.py': MISSING
+  apps/web/src/pages/ExamPaperWorkbench.tsx: 48ae5ebbcc69dc8a622e845c0690c4d5a455928d6197509825a3344b821e308e
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  contracts/validation-record.schema.json: 98a1786aa9e8bd45076bf4d91ad65de49e89cb9358a7b660ba20d9d2b0c2cc93
+  reference_code/publish_gate.py: 13b0eb7723a482ce67b7da57e3e16265c406c81dd0dca0daf2f66924115a8b1c
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

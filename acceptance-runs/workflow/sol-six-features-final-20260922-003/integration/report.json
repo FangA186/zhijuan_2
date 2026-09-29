@@ -1,0 +1,12 @@
+{
+  "tests_run": 7,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expected_failures": 0,
+  "unexpected_successes": 0,
+  "status": "PASS",
+  "report_kind": "isolated-postgresql-regression-v1",
+  "environment": "dedicated PostgreSQL18 localhost55432; isolated workflow_regression schema; no Hermes credentials/worker",
+  "command": "unittest discover -s tests/integration -v"
+}

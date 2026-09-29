@@ -1,0 +1,57 @@
+schema_version: 1
+task_id: M1-05
+session_id: template-scoring-20260922-001
+created_at: '2026-09-22T14:53:16+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - services/api/routes/exams.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15044
+summary: 导入模板逐题分值正确保存并预览；明确确认按钮禁用原因
+next_action: 真实生成需继续接好队列和隔离网关；此报告只证明规格保存/蓝图预览及分值完整。
+completed:
+- 逐题分值统一计算与规范分组保存，原23题150分及解答12/14分序列保留。
+- 整书89项范围完整保留，分组遵守已有契约上限；矛盾分值仍阻断。
+- 6项Node、16项Python和构建通过，实际模板到专属数据库蓝图及常用入口回读通过。
+- 按钮旁显示真实生成尚未接入；没有虚假启用或模型调用。
+pending:
+- 真实命题服务尚未配置，确认并开始按钮按实情禁用。
+decisions:
+- 不放宽分值校验、不改批准Schema；不改变用户选定题目分值。
+failed_approaches:
+- 原前端忽略item_scores并且API将其丢弃，造成140/150误差。
+- 热更新后的异步loadSpec覆盖已有编辑；增加状态保护并恢复已知教材范围。
+evidence_refs:
+- acceptance-runs/workflow/template-scoring-20260922-001/report.md
+- acceptance-runs/workflow/template-scoring-20260922-001/pipeline.json
+- acceptance-runs/workflow/template-scoring-20260922-001/browser-readback.json
+scope_patterns:
+- acceptance/fixtures/minimum-primary.json
+- apps/web/src/lib/api.ts
+- apps/web/src/lib/scoring.ts
+- apps/web/src/pages/ExamSetup.tsx
+- apps/web/src/pages/FoolproofSetup.tsx
+- contracts/exam-spec.schema.json
+- contracts/openapi.yaml
+- services/api/routes/exams.py
+- services/api/routes/jobs.py
+- services/api/routes/plans.py
+- tests/frontend_scoring.test.mjs
+files:
+  '[missing-pattern] services/api/routes/jobs.py': MISSING
+  '[missing-pattern] services/api/routes/plans.py': MISSING
+  acceptance/fixtures/minimum-primary.json: df1f1f2f25606cc1eb4812852913d64c7f67240ce857efcb8d6020ac755b8aa1
+  apps/web/src/lib/api.ts: f003a893ff9e2db592ef1b1aa58470aa7529a088babe4eb381293c55472e8e25
+  apps/web/src/lib/scoring.ts: 6753a148d1e497392556c75f01a1444f0cbc7eb81b883ed61490e16c2fe75f0f
+  apps/web/src/pages/ExamSetup.tsx: 06f008893a706c4518c37e34d4a120146d995558a03093a34a154d9821be04b4
+  apps/web/src/pages/FoolproofSetup.tsx: 72c192bfb20009ee682a8d477461d84fd08ae7c19673eca8daa1f5ad4639069e
+  contracts/exam-spec.schema.json: 65bc37d85770e54a60c88fa1d445edc330369d7ac905addcbe56f24aec3ac0e8
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  services/api/routes/exams.py: f4f619f5da669fe2f43bed6f45879f30238f8fc638428577bb8f8dda6c7aed87
+  tests/frontend_scoring.test.mjs: 7414976faf6b888299e0711af47a89093f895f7f4b43bd68d9e00bba24b4bb8a
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

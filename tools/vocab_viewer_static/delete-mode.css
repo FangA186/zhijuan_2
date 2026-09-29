@@ -1,0 +1,32 @@
+    /* 删除模式切换按钮高亮样式 */
+    .btn-delete-mode {
+      background: rgba(239, 68, 68, 0.18);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      font-weight: 700;
+      padding: 6px 16px;
+    }
+    .btn-delete-mode:hover {
+      background: rgba(239, 68, 68, 0.3);
+      color: #fff;
+    }
+    .btn-delete-mode.active {
+      background: #ef4444;
+      color: #fff;
+      border-color: #dc2626;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+    }
+
+    .toggle-trash {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #cbd5e1;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+

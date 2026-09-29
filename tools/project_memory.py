@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from tools.memory_lib import (ROOT, RecordError, atomic_replace, context_markdown, create_handoff,
                               git_snapshot, impact, relative_name, safe_path, status_markdown,
                               validate_memory, write_new)
+from tools.memory_finish import finish_check
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -35,6 +36,9 @@ def main(argv: list[str] | None = None) -> int:
     handoff.add_argument('--summary', required=True)
     handoff.add_argument('--next', dest='next_action', required=True)
     handoff.add_argument('--evidence', action='append', default=[])
+    finish = subs.add_parser('finish', help='read-only task completion record gate')
+    finish.add_argument('--task', required=True)
+    finish.add_argument('--path', action='append', default=[], help='also check a relevant path absent from Git scope')
     args = parser.parse_args(argv)
     root = args.root.resolve()
     try:
@@ -66,6 +70,10 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == 'handoff':
             p = create_handoff(root, args.task, args.session, args.summary, args.next_action, args.evidence)
             print('Created '+p.relative_to(root).as_posix()+'. Fill evidence-based completion/blocked details; no task auto-approved.')
+        elif args.command == 'finish':
+            result = finish_check(root, args.task, args.path)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            return 0 if result['status'] == 'PASS' else 1
         return 0
     except (OSError, ValueError, KeyError, TypeError) as e:
         print(f'ERROR: {e}', file=sys.stderr)

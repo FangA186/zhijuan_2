@@ -1,0 +1,79 @@
+schema_version: 1
+task_id: M2-07
+session_id: controlled-diagrams-20260924-001
+created_at: '2026-09-24T02:53:03+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - apps/web/src/components/ExportModal.tsx
+  - apps/web/src/lib/api.ts
+  - apps/web/src/lib/math.tsx
+  - apps/web/src/lib/runtimeReasons.ts
+  - apps/web/src/lib/scoring.ts
+  - apps/web/src/lib/sectionScope.ts
+  - apps/web/src/lib/stageYear.ts
+  - apps/web/src/pages/ExamPaperWorkbench.tsx
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - services/api/routes/exams.py
+  - tests/frontend_diagram_asset.test.mjs
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15110
+summary: 本地页面图形读取和缺图提示完成，含图旧导出按缺能力阻断
+next_action: 建设正式含图PDF及Word产物预检并做浏览器和文件验收
+completed:
+- 当前试卷公开引用的受控SVG由只读接口返回，未引用、私有引用或不可信文件返回404。
+- 前端按合法asset_id显示图片，旧ID或加载失败显式显示缺图；含图旧打印/PDF和.doc下载阻断，JSON保留引用。
+- 前端专项3项和生产构建通过；后端接口/资产回归纳入本轮41项离线测试。
+pending:
+- 真实浏览器与API连接、正式含图PDF/Word产物预检、租户授权与生产存储待完成；M2-07整体保持IN_PROGRESS。
+- 昨日已保存的题目不会自动补图或重新生成。
+decisions:
+- 采用docs/decisions/DEV-012-controlled-diagram-assets.md批准的受控绘图；导出能力未具备时不提供看似完整的含图文件。
+failed_approaches:
+- 旧.doc导出仅拼文本，遇图会静默遗漏；本轮先阻断含图使用，留待正式渲染管线替代。
+evidence_refs:
+- acceptance-runs/workflow/controlled-diagrams-20260924-001/report.json
+scope_patterns:
+- apps/web/src/components/ExportModal.tsx
+- apps/web/src/lib/api.ts
+- apps/web/src/lib/math.tsx
+- apps/web/src/lib/runtimeReasons.ts
+- apps/web/src/lib/scoring.ts
+- apps/web/src/lib/sectionScope.ts
+- apps/web/src/lib/stageYear.ts
+- apps/web/src/pages/ExamPaperWorkbench.tsx
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- contracts/openapi.yaml
+- docs/03_接口与开发契约.md
+- services/api/routes/exams.py
+- services/renderer/pdf.py
+- services/renderer/preflight.py
+- services/renderer/projection.py
+- services/renderer/templates/exam.html
+- tests/frontend_diagram_asset.test.mjs
+files:
+  '[missing-pattern] services/renderer/pdf.py': MISSING
+  '[missing-pattern] services/renderer/preflight.py': MISSING
+  '[missing-pattern] services/renderer/projection.py': MISSING
+  '[missing-pattern] services/renderer/templates/exam.html': MISSING
+  apps/web/src/components/ExportModal.tsx: 058070c5c5dbab18de67ebc841ed6037fff263780fdabc565f2ae343821d79dd
+  apps/web/src/lib/api.ts: a05144506bda4e3854f1667d50128ddc0c53dd19066c2bb8d7b441393e75749a
+  apps/web/src/lib/math.tsx: 3f39c2f460e8488aa02e9e64d423ad65469c8311481b8207008b44b60e9c1028
+  apps/web/src/lib/runtimeReasons.ts: d83e2d530f4ecabe3a7b2959a4715e8c80113a77d98a3dba2c2b6888814f16eb
+  apps/web/src/lib/scoring.ts: 6753a148d1e497392556c75f01a1444f0cbc7eb81b883ed61490e16c2fe75f0f
+  apps/web/src/lib/sectionScope.ts: 58bff745afb759efaa2ca0edbdf1485354b323bca58d40caf89ddfbf19151c12
+  apps/web/src/lib/stageYear.ts: e2dbc6996763b550c08243828d575a94d9e5520f802c04d087e96f9ed329ef41
+  apps/web/src/pages/ExamPaperWorkbench.tsx: 788d9f9b2829ccd8d7c8e17524b6b74091e3923adb64c463f81231e2d09185d5
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  docs/03_接口与开发契约.md: b2f7da0bd0c9f327b60a3f5d646544fea302d850dfc31ea7e438cafc41799663
+  services/api/routes/exams.py: a0a50be4d34a7cb043fd0f1678767baa5e14ef92b65ceb67e4d268ba6c326386
+  tests/frontend_diagram_asset.test.mjs: a8c66a003dcc89df205230f26b957911d31dc02be0fd18eddece24ba312d6608
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

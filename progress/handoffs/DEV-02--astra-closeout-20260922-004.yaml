@@ -1,0 +1,59 @@
+schema_version: 1
+task_id: DEV-02
+session_id: astra-closeout-20260922-004
+created_at: '2026-09-22T12:24:43+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - AGENTS.md
+  - progress/features.yaml
+  - progress/handoffs/README.md
+  - progress/work.yaml
+  - tests/test_project_memory.py
+  - tests/test_project_overview.py
+  - tools/memory_finish.py
+  - tools/memory_lib.py
+  - tools/project_memory.py
+  - tools/project_overview.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 14993
+summary: 开发记忆门禁与跨时区接续记录完成最终复核
+next_action: 后续每次实质开发更新对应交接、任务证据与摘要，再运行finish；阶段签收另行核对。
+completed:
+- 实现只读finish收尾门禁，按任务核对改动、最新交接指纹、任务/功能/证据和派生摘要。
+- 产品DONE要求当前范围的独立应用验收字段和指纹；不自动编造事实或证明审核身份。
+- 修复北京时间与UTC交接被字符串错误排序，CLI和看板共享按实际时间排序；54项记忆与8项看板用例通过。
+- AGENTS、任务卡、对应账本和交接均更新；全量离线216项及7检查组通过。
+pending:
+- 远程分支保护和审核身份签名未启用；后续执行者仍须据实写记录。
+decisions:
+- 开发记忆工具范围DONE；六项产品任务保持IN_PROGRESS，真实单题执行不等于教学正确性。
+failed_approaches:
+- 第一次最终finish误取早期+08:00交接，报告保留在closeout.json；修复实际时序排序后重新验证，不修改历史时间。
+evidence_refs:
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/offline-final-004/report.json
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+- acceptance-runs/maintenance/memory-time-order-20260922-001/verification.yaml
+scope_patterns:
+- AGENTS.md
+- progress/handoffs/README.md
+- tests/test_project_memory.py
+- tests/test_project_overview.py
+- tools/memory_finish.py
+- tools/memory_lib.py
+- tools/project_memory.py
+- tools/project_overview.py
+files:
+  AGENTS.md: 3d176f38f7754bf1c53d5be94c8b89a1cad13cb7040b90d5bf5c3dd878c4e18d
+  progress/handoffs/README.md: 20fc3719110ada5c3710b99d3f86fd8e2fd887cc68e88ef76412d400806028c2
+  tests/test_project_memory.py: f6d9bc9909e95b34d799e2b43590156993449c102475ea0646763c1b090cb2b8
+  tests/test_project_overview.py: a33deea992aba53ea208d0eb3d3444bdb57f8b26dd2dce91fa393fe146aa6754
+  tools/memory_finish.py: cae0a0a3d72703b72ac9b20052291fa234fde07be385137645906a0a5ba0290c
+  tools/memory_lib.py: 0b70be6a67d42ad18adaaacdad6bb5a3219c5f23530f3f1eb7b6632c3add936b
+  tools/project_memory.py: d9313deb843fa47a4b482836035694d3a3cc70dcf57e4e8886ea22ac5c90f9d6
+  tools/project_overview.py: 5071e4e69a193366e1e2a1c56be097332a7fd1eabee1a7f919dd4832d22d1872
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

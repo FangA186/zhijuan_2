@@ -1,0 +1,34 @@
+{
+  "schema_version": "application-acceptance-v1",
+  "task_id": "M1-03",
+  "status": "PARTIAL",
+  "environment": "existing local IAB/Vite/FastAPI + isolated offline unit tests",
+  "command": "See report.md",
+  "source_files": {
+    "tools/raw_api_capture.py": "ab2b76a54d692fce436c1945a7f30e5d6705c6f63e8de3dcd5946826d965c90a",
+    "tools/raw_api_console.py": "6093b926fbe0c167bc59485d05c72a04c8ead5db0f6282a3d9ffd08388054797",
+    "tools/raw_api_server.py": "6e93f67401f1f7dd580ae343ed663c73c404dbda9d9cd20d6f519b816d4b2f3c",
+    "tools/live_budget_proxy.py": "923133f0aedc185482b754091e7c60585b071d4da1490362bbbd6f8925c18028",
+    "tools/live_budget_stream.py": "75a94a40726db9f606a510fbad50eac54d9c0175df03483d1fe3859e14f11823",
+    "tools/deepseek_json_contract.py": "bce20f7aca9f792b555dd6aa64b96953a1352b081fc7162dab2264d70c2b6dc7",
+    "infra/workflow-acceptance/compose.yaml": "3a565eb3b824bf0d4b7ec21bbdfda983b270b2b5cc523269c55b393563daf13e",
+    "services/api/routes/raw_api_routes.py": "2204f203961ff7f5b446bc4517f114c44800fd5d07e3320bddeeedaffae37c7a",
+    "services/hermes_adapter/http_runner.py": "c353aef2b3db06188985f50a6a48f407974fb0cca8d0f088e39b57edce51e4dd",
+    "apps/web/public/raw-api.html": "ea49df172662948642a7fcc91f5b10eafbc6a059b6db4ef53589c6e212e53976",
+    "apps/web/public/raw-api.css": "2cd07ba8e9e1291508140c15d1b2237fc59f49704a985122bbbf52faad0dba59",
+    "apps/web/public/raw-api-core.js": "e15af2b7f2ff3334945f0fe9fb3104c628013e7cf0b0ccf53f8496174831f8fb",
+    "apps/web/public/raw-api-viewer.js": "cadcb424ee4c1868695ffa79ecd65fded80abced7e5493db20011ba4e1710040",
+    "apps/web/src/pages/job-progress/AgentActivityConsole.tsx": "d605d9921e51aa189a8092405faaa6aa09e0c496b736e2b928c1d3802123b037",
+    "tests/test_raw_api_capture.py": "aa4c28729a9bc2e8c5dd5ff4ee4ab4cc87bb3c5927b2d6da00bca500e4f2b253",
+    "tests/test_raw_api_routes.py": "e3c10dc0d55112486b0aae9c88d99f9c51af1a53f0cd6ad72daf43ee00d8578b",
+    "tests/frontend_raw_api.test.mjs": "d367afe478ac9d3bcbf4dacd618b2264d0b7ca5971178d2467fd66d989c1b663",
+    "docs/raw-api-console.md": "fed74990d2f1911c92aa9bf29a4bd7b7feb843a7c245ae4514f7d6767a88b62c",
+    "docs/decisions/DEV-020-raw-provider-diagnostics.md": "6437dfe1dbbe8659ba50d61f590556eed36d559ab73fbbe0a2933a3f01f913eb"
+  },
+  "not_run": [
+    "user-controlled backend reload",
+    "new paid API call",
+    "thinking end-to-end",
+    "generic multi-round tool execution"
+  ]
+}

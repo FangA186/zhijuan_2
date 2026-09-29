@@ -1,0 +1,49 @@
+schema_version: 1
+task_id: M1-02
+session_id: docker-stop-20260922-001
+created_at: '2026-09-22T14:11:01+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - database/003_generation_jobs.sql
+  - database/004_generation_exam_state.sql
+  - services/api/repositories.py
+  - services/api/store.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15030
+summary: 按用户要求停止本项目PostgreSQL和RabbitMQ容器，保留全部数据
+next_action: 本项目Docker服务为用户主动停机；后续需使用草稿/生成服务时先核对用户是否希望重新启动，勿自动当异常重启。
+completed:
+- 已停止本项目两个剩余运行容器；命题/盲解/限额代理此前已停止。
+- 保留容器、卷、zhijuan_local草稿库、验收库和费用账本；没有删除数据。
+pending:
+- 工作台数据库和生成任务暂时不可用，项目资料页仍能访问。
+- 原有zygf-gitea、zygf-postgres仍运行，退出整个Docker会一并影响它们。
+decisions:
+- 用户为降低内存主动关闭本项目Docker服务；不更改功能实现状态。
+failed_approaches: []
+evidence_refs:
+- acceptance-runs/maintenance/docker-stop-20260922-001/report.json
+scope_patterns:
+- database/001_schema_draft.sql
+- database/002_v13_required_changes.md
+- database/003_generation_jobs.sql
+- database/004_generation_exam_state.sql
+- migrations/versions/0001_core.py
+- services/api/repositories.py
+- services/api/store.py
+- tests/integration/test_persistence.py
+files:
+  '[missing-pattern] migrations/versions/0001_core.py': MISSING
+  '[missing-pattern] tests/integration/test_persistence.py': MISSING
+  database/001_schema_draft.sql: 8050ed224b1b20d55829b76d81d10368642a6e259022168e0962ec06525b1292
+  database/002_v13_required_changes.md: cfd0212b423c2ade31d151ddcab66e1739222763ab118655203685046ee58dd3
+  database/003_generation_jobs.sql: 8a6fc194f822506a0c7eaeab6f75ccaa41823e8d1d07e9037ac26c8410b697e6
+  database/004_generation_exam_state.sql: 75cd089575c28752d67f4e198a57a79ada7f0a626c3bfea09c526aabf6785337
+  services/api/repositories.py: cf2de67ea8ec85995d622399d0cfc6937765015e2de24bbf0756bd01cafe8048
+  services/api/store.py: b062258f202588e464fb7ad48c2041608ef7e52c8fece7a73f242df422fd8a97
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

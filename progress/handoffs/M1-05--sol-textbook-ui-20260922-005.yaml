@@ -1,0 +1,25 @@
+schema_version: 1
+task_id: M1-05
+session_id: sol-textbook-ui-20260922-005
+created_at: '2026-09-22'
+summary: 修复高中教材无年级维度时被拒、无教材数学规格被错配初中语文教材、学段教材切换后学科代码与名称错配。
+completed:
+- 两个配置页提供原生年级下拉；小学1-6、初高中1-3，标签与stage_year同步。
+- 教材没有年级维度时沿用同学段已选年级；切到新学段则明确显示1年级并需重新确认范围。
+- 未选material_id显示未选择教材，不再注入默认教材ID；教材章节选择器接收空materialId。
+- 学段切换保留当前学科，清除旧教材；教材选取从学科标签得到批准风格的小写canonical subject_code。
+- 范围确认在年级、教材、学段变更后失效。
+- node纯函数用例2项通过，前端构建通过。
+pending:
+- 主验收稍后在浏览器检查高中教材、三学段年级选择与教材列表实况。
+decisions:
+- 不从必修第一册等册次推断高一年级；无年级标注时使用教师当前已选年级，教师可通过原生下拉修正。
+failed_approaches:
+- 先前遇到无年级教材直接alert并拒绝，阻断常见高中教材；现允许按已选年级处理。
+- 先前无material_id时注入默认初中语文教材，可能污染数学规格；现保留未选状态。
+evidence_refs:
+- acceptance-runs/m1-05/sol-textbook-ui-20260922-005/stage-year-test.log
+- acceptance-runs/m1-05/sol-textbook-ui-20260922-005/frontend-build.log
+- acceptance-runs/m1-05/sol-textbook-ui-20260922-005/diff-check.log
+next_action: 主验收稍后在浏览器检查高中教材、三学段年级选择与教材列表实况。
+metadata_correction: 补齐 next_action（优先引用原 pending）；不改写历史完成结论。

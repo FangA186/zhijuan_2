@@ -1,0 +1,48 @@
+schema_version: 1
+task_id: M1-04
+session_id: local-uncapped-20260924-001
+created_at: '2026-09-24T03:38:18+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15125
+summary: 本地命题受理移除按卷预算预检并保留确认、幂等与就绪门禁
+next_action: 如需新一轮生成，另行确认旧PARTIAL_FAILED作业的版本化恢复路径和教学审核
+completed:
+- 本地命题受理不再按整卷题数查询预算或拒绝；蓝图版本、幂等回放、运行就绪与事务围栏保留。
+- 92项针对性离线检查通过；运行态代理重启后/readyz为READY，旧账65次且无新模型调用。
+pending:
+- 相同已确认蓝图仍回放昨日PARTIAL_FAILED作业；新一轮生成需要版本化恢复方案，未自行创建任务。
+- 产品任务和真实教学验收仍未完成。
+decisions:
+- 用户明确选择移除实际请求/金额限额，见docs/decisions/DEV-013-local-uncapped-generation.md。
+failed_approaches:
+- 原启动提示只删除文案会保留后端和代理拦截，因此同时移除两层实际封顶。
+evidence_refs:
+- acceptance-runs/workflow/local-uncapped-20260924-001/report.json
+scope_patterns:
+- configs/business-policy.example.yaml
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- infra/compose.yaml
+- services/worker/celery_app.py
+- services/worker/leases.py
+- services/worker/outbox.py
+- services/worker/tasks.py
+files:
+  '[missing-pattern] services/worker/celery_app.py': MISSING
+  '[missing-pattern] services/worker/leases.py': MISSING
+  '[missing-pattern] services/worker/outbox.py': MISSING
+  '[missing-pattern] services/worker/tasks.py': MISSING
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  infra/compose.yaml: 649b54742085b24ef3b6fc01c62b0756d208f58e9402b8e87048e0863fc1b38a
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

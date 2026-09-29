@@ -1,0 +1,26 @@
+    /* 图片工作区 */
+    .images-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      padding-bottom: 90px;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 60%;
+      color: #64748b;
+      text-align: center;
+      gap: 12px;
+    }
+    .empty-icon { font-size: 48px; }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 18px;
+    }
+

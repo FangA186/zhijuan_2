@@ -1,0 +1,33 @@
+schema_version: 1
+id: BUG-20260924-006
+title: 长公式把手机试卷页整体撑宽
+status: FIXED
+module: frontend
+updated_at: '2026-09-24'
+task_ids:
+- DEV-03
+keywords:
+- KaTeX
+- 横向溢出
+- 手机
+- scrollWidth
+- flex
+symptom: 645像素视口下试卷整页宽度达到814，部分内容横向越界。
+reproduction:
+- 打开已有长公式解答题；比较documentElement.scrollWidth与innerWidth。
+root_cause: flex子项默认最小宽度受长公式影响；公式没有局部滚动容器。
+resolution: 题干与选项使用 min-w-0 和局部 overflow-x-auto，打印态 overflow-visible。
+affected_files:
+- apps/web/src/pages/exam-paper/ExamPaperSolution.tsx
+- apps/web/src/pages/exam-paper/ExamPaperSingleChoice.tsx
+- apps/web/src/pages/exam-paper/ExamPaperMultipleChoice.tsx
+- apps/web/src/pages/exam-paper/ExamPaperFillBlank.tsx
+regression:
+- 真实浏览器当前草稿645/388 CSS像素复测；其它题型极端公式与打印尚未实测。
+verified_at: '2026-09-24'
+verification: 历史离线/页面范围通过，完整边界见证据
+evidence_refs:
+- acceptance-runs/maintenance/dev-03-code-structure-20260924-001/browser-check.md
+events:
+- 2026-09-24：从DEV-03实际验收回填；按登记范围修复。
+source_hashes: {}

@@ -31,6 +31,8 @@ export interface ScoreUnit {
 }
 
 export interface AnswerItem {
+  scoring_mode?: 'additive' | 'exclusive';
+  partial_score_x100?: number;
   target_local_id: string;
   answer_text: string;
   selected_option_ids?: string[];

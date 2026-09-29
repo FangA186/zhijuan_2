@@ -1,0 +1,69 @@
+schema_version: 1
+task_id: M1-05
+session_id: scope-switch-20260924-001
+created_at: '2026-09-24T12:02:15+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - services/api/routes/exams.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15465
+summary: 修复学段教材切换确认藏在页底，改用原生弹窗并完成桌面窄屏回归
+next_action: 继续M1-05完整规格持久化验收；本次不代签MIN-02
+completed:
+- 将学段与教材共用旧范围确认从页底移至原生模态弹窗，增加取消与Escape。
+- 实际Chrome命题教师三学段、教材选择、取消、桌面与390像素窄屏回归通过；只读接口200，控制台无error。
+- 前端构建、四项Node回归和200行门禁通过。
+pending:
+- M1-05完整持久化与MIN-02验收仍未完成；本次未运行计费生成、发布及审核教师业务。
+decisions:
+- 复用原有clear/keep和范围失效逻辑，原生dialog提供模态及焦点边界，不增加依赖。
+failed_approaches:
+- 旧确认区top=3061px，视口708px，导致点击无可见反馈。
+- 自动化role=evaluate原生dialog定位超时；改用AX实际按钮完成。
+- 初次新增Node测试缺localStorage环境；补隔离内存存储后通过，未改业务规则。
+evidence_refs:
+- acceptance-runs/m1-05/scope-switch-20260924-001/report.md
+- acceptance-runs/m1-05/scope-switch-20260924-001/change-impact.md
+- acceptance-runs/m1-05/scope-switch-20260924-001/tests.log
+- acceptance-runs/m1-05/scope-switch-20260924-001/build.log
+- acceptance-runs/m1-05/scope-switch-20260924-001/network.json
+- acceptance-runs/m1-05/scope-switch-20260924-001/console-errors.json
+- acceptance-runs/m1-05/scope-switch-20260924-001/desktop.png
+- acceptance-runs/m1-05/scope-switch-20260924-001/mobile.png
+scope_patterns:
+- acceptance/fixtures/minimum-primary.json
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- contracts/exam-spec.schema.json
+- contracts/openapi.yaml
+- services/api/routes/exams.py
+- services/api/routes/jobs.py
+- services/api/routes/plans.py
+files:
+  '[missing-pattern] services/api/routes/jobs.py': MISSING
+  '[missing-pattern] services/api/routes/plans.py': MISSING
+  acceptance/fixtures/minimum-primary.json: df1f1f2f25606cc1eb4812852913d64c7f67240ce857efcb8d6020ac755b8aa1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  contracts/exam-spec.schema.json: 65bc37d85770e54a60c88fa1d445edc330369d7ac905addcbe56f24aec3ac0e8
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  services/api/routes/exams.py: 8b3ffe5d52ecb5daabe673d71e21fa029d4d4a812dea4ae4a47b42101ee0a701
+  apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx: acd53cb4ba455dc561860f4c96bfc1d4f68e495d9aaa43c29144e75fb546fadf
+  apps/web/src/pages/foolproof-setup/FoolproofSetupModals.tsx: 6b5c8ab19477fce5e6963df09a637c7edc038b60a544d73801359f29f8c6e950
+  apps/web/src/pages/foolproof-setup/FoolproofSetupModel.ts: f822338fb628a7ba2a953dd8c8969ddabbfee9ac12c63ef26b6620441f7816de
+  apps/web/src/pages/foolproof-setup/ScopeSwitchDialog.tsx: 700388bb51d689fe6817b1a1ea2f6c1e9b4bf0ba9c526f48d1e7095e02f06cfd
+  tests/frontend_scope_switch.test.mjs: 7afa796ce33b37af6f24c74f603e6aca9ca27ed5da43d165ba319379a3236953
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+this_change_paths:
+- apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx
+- apps/web/src/pages/foolproof-setup/FoolproofSetupModals.tsx
+- apps/web/src/pages/foolproof-setup/FoolproofSetupModel.ts
+- apps/web/src/pages/foolproof-setup/ScopeSwitchDialog.tsx
+- tests/frontend_scope_switch.test.mjs

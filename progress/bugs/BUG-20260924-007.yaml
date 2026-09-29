@@ -1,0 +1,32 @@
+schema_version: 1
+id: BUG-20260924-007
+title: 交接门禁不能表示删除文件及识别同名目录重现
+status: FIXED
+module: devtools
+updated_at: '2026-09-24'
+task_ids:
+- DEV-03
+keywords:
+- finish
+- DELETED
+- ScoreBadge
+- 删除
+- 快照
+symptom: 有意删除文件被视为交接未覆盖；初版墓碑对同名目录重现判定不严。
+reproduction:
+- 临时Git仓库删除任务文件，创建交接，再分别恢复文件或同名目录。
+root_cause: 交接只保存存在文件的哈希；非文件被错误等同于不存在。
+resolution: Git任务范围的缺失路径记DELETED；仅完全不存在有效，文件/目录重新出现均判过期。
+affected_files:
+- tools/memory_context.py
+- tools/memory_finish.py
+regression:
+- .venv/bin/python -m unittest tests.project_memory_cases_3.MemoryCases3Tests.test_finish_tracks_deleted_file_without_faking_a_hash
+  -q
+verified_at: '2026-09-24'
+verification: 历史离线/页面范围通过，完整边界见证据
+evidence_refs:
+- acceptance-runs/maintenance/dev-03-code-structure-20260924-001/offline-final-6/report.json
+events:
+- 2026-09-24：从DEV-03实际验收回填；按登记范围修复。
+source_hashes: {}

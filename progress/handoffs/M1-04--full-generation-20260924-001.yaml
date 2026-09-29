@@ -1,0 +1,80 @@
+schema_version: 1
+task_id: M1-04
+session_id: full-generation-20260924-001
+created_at: '2026-09-24T12:44:14+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15569
+summary: 授权整卷真实测试：14题待复核9题失败，逐题错误和6题数学分歧复算已记录
+next_action: 按错误清单修JSON生成及比较缺口，后续设计有界单题重生成
+completed:
+- 用户明确授权真实整卷一轮；23题处理完成，14题REVIEW_REQUIRED、9题FAIL。
+- 逐题记录安全错误/阶段；8题JSON语法错、1题盲解5步骤超过上限；六道比对分歧已独立复算，报告注明证据限制。
+- 420项离线、20项诊断相关、19项前端测试和构建/200行门禁通过。实际桌面窄屏进度与14题74分师生预览验证。
+pending:
+- 整卷质量未通过，不作产品签收；需修作者JSON、错误参考答案、盲解错误及等价比较误报。
+- 自动多次生成尚未实现，已记录后续约束；未进行第二轮、发布或导出。
+decisions:
+- 只记录安全诊断，不透传模型文本/密钥/私有推理；不放宽检查；未知调用结果仍先对账。
+- 第9题旧通用失败经同一已完成调用只读复核；确切原因另存报告，未改写原任务。
+failed_approaches:
+- 旧日志不绑定题号，无法定位；本次补failure和slot_id。
+- 首次通用诊断覆盖不到盲解步骤限制；只读回查得5步，再补固定错误映射。
+evidence_refs:
+- acceptance-runs/m1-04/full-generation-20260924-001/report.md
+- acceptance-runs/m1-04/full-generation-20260924-001/errors.md
+- acceptance-runs/m1-04/full-generation-20260924-001/math-review.md
+- acceptance-runs/m1-04/full-generation-20260924-001/json-errors.json
+- acceptance-runs/m1-04/full-generation-20260924-001/q09-readonly-diagnosis.json
+- acceptance-runs/m1-04/full-generation-20260924-001/per-question.json
+- acceptance-runs/m1-04/full-generation-20260924-001/usage-summary.json
+- acceptance-runs/m1-04/full-generation-20260924-001/diagnostics-tests.log
+- acceptance-runs/m1-04/full-generation-20260924-001/offline.json
+- acceptance-runs/m1-04/full-generation-20260924-001/frontend.log
+- acceptance-runs/m1-04/full-generation-20260924-001/build.log
+- acceptance-runs/m1-04/full-generation-20260924-001/lines.log
+- acceptance-runs/m1-04/full-generation-20260924-001/change-impact.md
+scope_patterns:
+- configs/business-policy.example.yaml
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- infra/compose.yaml
+- services/worker/celery_app.py
+- services/worker/leases.py
+- services/worker/outbox.py
+- services/worker/tasks.py
+files:
+  '[missing-pattern] services/worker/celery_app.py': MISSING
+  '[missing-pattern] services/worker/leases.py': MISSING
+  '[missing-pattern] services/worker/outbox.py': MISSING
+  '[missing-pattern] services/worker/tasks.py': MISSING
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  infra/compose.yaml: 649b54742085b24ef3b6fc01c62b0756d208f58e9402b8e87048e0863fc1b38a
+  services/worker/jobs.py: 19a64a8029df1fbccedd7f60f6b3d1c71c972e7acc8990976546412bb2e3617e
+  services/worker/failures.py: cd9269293b425b962a49dab601f9ba03eda911d70ff1e0dbc3cf87d1b45de129
+  services/exam/question_service.py: 160a53e5856007a5d8815d3948bbc02d376576f2958a9ed51615e2d17f6b3b9a
+  services/hermes_adapter/schema_validator.py: 41548f7290da43dfcc13f14477c00cc7c83afca849a31169cc59ecd67c518706
+  services/hermes_adapter/http_adapter.py: d7953683d827c6347ca5199f6baa99c5535bdc08dcaabd460f3604a9924e2d84
+  apps/web/src/pages/exam-paper/slotDiagnostics.ts: 9c168efbd499e9a92286f937864750fc5688a1e9b7dc5922d892f2535689865d
+  apps/web/src/pages/exam-paper/useSlotDiagnostics.ts: 61efec7e3b5981e4e91782ecb1e4e2e38d6e5e5713f2e52c782f708080261a4e
+  tests/test_slot_failure_diagnostics.py: d4469d26a0b527221c668d5fedd3dbdb245d719dfa3665e069a2cc78ab85f582
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+this_change_paths:
+- services/worker/jobs.py
+- services/worker/failures.py
+- services/exam/question_service.py
+- services/hermes_adapter/schema_validator.py
+- services/hermes_adapter/http_adapter.py
+- apps/web/src/pages/exam-paper/slotDiagnostics.ts
+- apps/web/src/pages/exam-paper/useSlotDiagnostics.ts
+- tests/test_slot_failure_diagnostics.py

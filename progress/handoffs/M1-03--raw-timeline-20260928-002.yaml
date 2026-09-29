@@ -1,0 +1,74 @@
+schema_version: 1
+task_id: M1-03
+session_id: raw-timeline-20260928-002
+created_at: '2026-09-28T14:02:55+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - contracts/exam-spec.schema.json
+  - contracts/question-review.schema.json
+  - services/hermes_adapter/http_adapter.py
+  - services/hermes_adapter/status_map.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15861
+summary: 原始数据默认连续展示全部调用，核实thinking当前关闭
+next_action: 用户待当前任务结束后自行启用thinking并发起新请求
+completed:
+- 去掉下拉列表，原始数据按到达顺序全量展示，解析区保留各调用身份。
+- 统计已捕获请求thinking模式，明确旧请求不随配置变化。
+- 5项Node、构建和实际IAB桌面/窄栏检查通过。
+pending:
+- 用户自行启用thinking后验证新响应，现有请求全部disabled。
+decisions:
+- 只改展示，不发模型请求或启停服务。
+failed_approaches:
+- 旧默认逐请求并自动跟随切换，不符合用户整套记录阅读方式。
+- 工具setChecked未成功，键盘Space验证正常。
+evidence_refs:
+- acceptance-runs/m1-03/raw-timeline-20260928-002/report.md
+- acceptance-runs/m1-03/raw-timeline-20260928-002/change-impact.md
+- acceptance-runs/m1-03/raw-timeline-20260928-002/tests.log
+- acceptance-runs/m1-03/raw-timeline-20260928-002/build.log
+- acceptance-runs/m1-03/raw-timeline-20260928-002/lines.log
+- acceptance-runs/m1-03/raw-timeline-20260928-002/desktop.png
+- acceptance-runs/m1-03/raw-timeline-20260928-002/narrow.png
+scope_patterns:
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- contracts/exam-spec.schema.json
+- contracts/question-review.schema.json
+- execution/templates/hermes-capability-probe.yaml
+- reference_code/adapter_contract.py
+- services/hermes_adapter/http_adapter.py
+- services/hermes_adapter/runtime_factory.py
+- services/hermes_adapter/status_map.py
+files:
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 0ad8273511bc8bdb844276435991eeb161af32a759e25d32a08590ec80a66cfd
+  contracts/exam-spec.schema.json: 01fbc48ad9d37c0b88689e8ceb87eaea5218bce8b4e7c4dc7f8e3b1dadfa6ca6
+  contracts/question-review.schema.json: 11c4600f35296bfc33cde95c88170497e5ddb9c54d844fac1fb712dd6bcae9f0
+  execution/templates/hermes-capability-probe.yaml: 672622b5822e538458a699d934b03c101676a15259f7cc8faf6a07651f8fed0e
+  reference_code/adapter_contract.py: d944c5313a36f2cc89c5b4d79c62e741bf9834e7c5a430f4479a3b6d63a35819
+  services/hermes_adapter/http_adapter.py: 086e5290ed7d2fffea74267429cb2d71852ecca04541c21a0b336e363b420d0e
+  services/hermes_adapter/runtime_factory.py: d0b029f7b0f6817ae23174a48c047a8450aea2bfd7d91f13ed6be965c34a5a8d
+  services/hermes_adapter/status_map.py: a212b5b1ae3bbd01447755b06e28e7d7565d3cf2e7874d126afcc194828b3bec
+  apps/web/public/raw-api-core.js: 954399bb781366739098b6e89e8d556c5110c119ed6a83b892e37ab66d1f0348
+  apps/web/public/raw-api-viewer.js: 949faea1ebfda9688a83ac844a45c271c124fc214e258704b239726f607ad44e
+  apps/web/public/raw-api.html: 5f27df42253bf5afe4a60af42d9f8b9fdd57946ffa4f051a2934b7712769ae2e
+  apps/web/public/raw-api.css: d24982e3b6d5a8af5990bd27589342086f34644d5aac6f280464b8ba87f6d333
+  tests/frontend_raw_api.test.mjs: d2f8f9b9e9b8d3677d1cd09f594baab2339a2c4e177aab9f5445214faecf33b5
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+bug_ids:
+- BUG-20260925-002
+this_change_paths:
+- apps/web/public/raw-api-core.js
+- apps/web/public/raw-api-viewer.js
+- apps/web/public/raw-api.html
+- apps/web/public/raw-api.css
+- tests/frontend_raw_api.test.mjs

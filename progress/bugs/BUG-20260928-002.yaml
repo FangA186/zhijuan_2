@@ -1,0 +1,34 @@
+schema_version: 1
+id: BUG-20260928-002
+title: Bug检索遇到无时间戳的历史交接崩溃
+status: FIXED
+module: developer-tools
+updated_at: '2026-09-28'
+task_ids:
+- M2-01
+keywords:
+- created_at
+- KeyError
+- bug_memory
+- 历史交接
+symptom: Bug检索遇到无时间戳的历史交接崩溃
+reproduction:
+- 在handoffs同时放入缺created_at与有时间的同任务记录
+- 调用previous_session或bug_memory search，旧实现KeyError
+root_cause: previous_session直接下标读取created_at，旧交接缺字段导致KeyError。
+resolution: 复用现有handoff_time，未知时间按既有规则排序，不改写历史时间。
+affected_files:
+- tools/bug_workflow.py
+- tests/test_bug_memory.py
+regression:
+- sh acceptance-runs/m2-01/topic-diversity-20260928-001/regression.sh
+verified_at: '2026-09-28T15:18:42.421984+00:00'
+verification: OFFLINE_PASS；90项套件包含无时间戳历史交接回归
+evidence_refs:
+- acceptance-runs/m2-01/topic-diversity-20260928-001/report.md
+- acceptance-runs/m2-01/topic-diversity-20260928-001/tests.log
+events:
+- 2026-09-28 修前检索见M2-01回执；核对当前实现后修复并离线回归
+source_hashes:
+  tools/bug_workflow.py: 3b7a909a941de23b70950902688a168f198422b8661842090829eafa277d3ae3
+  tests/test_bug_memory.py: 371ed22cfc71c3ac5c18ba8d1901f8be65f858a2a649a79db185ee41bfbf81a6

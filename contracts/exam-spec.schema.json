@@ -294,6 +294,12 @@
           }
         }
       }
+    },
+    "multiple_choice_partial_score_x100": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100000,
+      "description": "教师指定：少选且无错选得分；未配置为0。全对按题分、错选或空答0分。"
     }
   },
   "required": [

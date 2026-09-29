@@ -1,0 +1,7 @@
+# DEV-010: loopback-only publication of the read-only budget status endpoint
+# for the daily local runtime. The upstream model-exit path stays on the
+# compose network; every proxy route remains Bearer-token gated.
+services:
+  budget-proxy:
+    ports:
+      - "127.0.0.1:8650:8650"

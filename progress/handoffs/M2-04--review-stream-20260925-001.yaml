@@ -1,0 +1,155 @@
+schema_version: 1
+task_id: M2-04
+session_id: review-stream-20260925-001
+created_at: '2026-09-24T17:29:24+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - contracts/exam-spec.schema.json
+  - contracts/question-review.schema.json
+  - skills/question-author/SKILL.md
+  - skills/question-reviewer/SKILL.md
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15788
+summary: 接入审核有限修订与原生模型输出流；真实模型及容器重载待完成
+next_action: 恢复现有部署凭据后重载生成容器，授权后进行真实小样本验收
+completed:
+- 接入审核与最多两轮原子登记修订，新版本重新盲解/检查。
+- 串通原生provider/Hermes事件与本机教师活动流，完整多行输出/JSON详情/筛选/跟随。
+- 104项离线、2项Node、构建、200行门禁通过；真实页面与模拟SSE桌面/390窄屏验证。
+- 通过可用Notion连接同步两条Bug并回读，已登记同步指纹。
+pending:
+- 生成容器Compose配置缺上游凭据，未重载；Worker未重启，等待用户原启动配置路径。
+- 真实模型/真实PostgreSQL并发与完整产品验收未测。
+decisions:
+- DEV-019；无付费调用、无生产迁移、无提交推送。
+failed_approaches:
+- 初始只接Hermes事件发现预算代理/profile禁用stream及solver-entry不允许events，已同时修正源码。
+- 旧2角色单测mock缺审核返回，补全新角色契约并保留不合格/隔离断言。
+- 浏览器提示条窄屏8px溢出已修复复验。
+- Docker Compose配置阶段缺凭据；未尝试读取/输出密钥或新建账本。
+evidence_refs:
+- acceptance-runs/m2-04/review-stream-20260925-001/report.md
+- acceptance-runs/m2-04/review-stream-20260925-001/change-impact.md
+- acceptance-runs/m2-04/review-stream-20260925-001/report.json
+- acceptance-runs/m2-04/review-stream-20260925-001/tests.log
+- acceptance-runs/m2-04/review-stream-20260925-001/frontend-tests.log
+- acceptance-runs/m2-04/review-stream-20260925-001/build.log
+- acceptance-runs/m2-04/review-stream-20260925-001/lines.log
+- acceptance-runs/m2-04/review-stream-20260925-001/network.json
+- acceptance-runs/m2-04/review-stream-20260925-001/console.json
+- acceptance-runs/m2-04/review-stream-20260925-001/desktop.png
+- acceptance-runs/m2-04/review-stream-20260925-001/mobile.png
+- acceptance-runs/m2-04/review-stream-20260925-001/fixture-desktop.png
+- acceptance-runs/m2-04/review-stream-20260925-001/fixture-mobile.png
+scope_patterns:
+- configs/business-policy.example.yaml
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- contracts/exam-spec.schema.json
+- contracts/question-review.schema.json
+- services/api/domain/repair_policy.py
+- services/worker/repair_tasks.py
+- skills/question-author/SKILL.md
+- skills/question-reviewer/SKILL.md
+files:
+  '[missing-pattern] services/api/domain/repair_policy.py': MISSING
+  '[missing-pattern] services/worker/repair_tasks.py': MISSING
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 0ad8273511bc8bdb844276435991eeb161af32a759e25d32a08590ec80a66cfd
+  contracts/exam-spec.schema.json: 01fbc48ad9d37c0b88689e8ceb87eaea5218bce8b4e7c4dc7f8e3b1dadfa6ca6
+  contracts/question-review.schema.json: f33938bb7515fe9d1a3f3f88ddae76a162d1b0e1a765f2384e53564ec04e8b71
+  skills/question-author/SKILL.md: 6af0aed7c963e0c138e7b3e9010ebea525c2ab550593ad2ed04baeddf0180057
+  skills/question-reviewer/SKILL.md: 23d7a9281450ce60f1162fa883318175e5b5673e8a3ecc74742bcb8a5f0d497b
+  services/hermes_adapter/http_adapter.py: 325e7468c698448c288ae65a65c584acc4570674676f70da836c240c2b2bacc7
+  services/hermes_adapter/run_stream.py: 9c7f7a62e12d316874fc3815eed6ce8f88d28e76e645c3f3a2864c8520a7dd24
+  services/hermes_adapter/isolation_gateway.py: 758d5bfd3aac967a712b3494e59ed915dc66a157ad52134c8ca4b820e2d80ae3
+  services/exam/question_service.py: cbfa552601896ecd1fbde3e938d497ccf456d6131263e295c4acced095f1e157
+  services/exam/generation_context.py: b20d11eb1a20f4e722130ff07527bf9c38b4d20f37ce94ae3b714efeb2467d79
+  services/exam/question_generation.py: a8e18e412722cc013b689f3768065c662f72b2bfbff97de3c70343584ca5cdad
+  services/exam/question_review.py: 76f19d951524bfeee4c7a5c9094e290c0527e314a3c98c0118e52d1d1c3ab9bf
+  services/exam/job_service.py: 79e18e91882fe838775022aa9ad2fa4a6bedc73df71d5f56f65adda529d6f387
+  services/api/job_repository_execution.py: b9377c28e9fd35cb154d58d9a160bc2cc4991c89f983018580f61c86abf0b22c
+  services/api/job_run_events.py: 00f0fab3bf215bd62c074e81b3906d404cb14b362c9edaac7066060033417ba4
+  services/api/routes/exams.py: 9469f98f71881bb808044cdb82f55d5f95d735e6facf3321f79373f2b4576ff3
+  services/api/routes/exam_job_routes.py: 373cc05229670ae7c2294f8e37276fbd3b276e0eae48107d940ca3100ba46b5a
+  services/api/routes/exam_activity_routes.py: 9eb2fc256de71daececcfe6320cc67a7e59dff9e573c4c417c7270fa0520548c
+  services/worker/jobs.py: a476e8246c5ce4d488473160ef6683f703ee77072d823518bb4d9da6704af75e
+  services/worker/failures.py: a809b7882539f509b1a3cbc050bc8a3c46d9bc5c1ad29a4dbaf6d871d74d52e1
+  tools/live_budget_proxy.py: 42197c3bcbf739939581834f228b3b7c8328b053f477d3a2950ff840a2af8391
+  tools/live_budget_stream.py: 2baa9b2fb6475e94b0d21fc5e67c514b0363d3e4daefd46b9c27af79b542d1df
+  tools/deepseek_json_contract.py: ad6eb11001ea0c03ed7fc0fb841fea334048dd911d29f3064424d12ece27c262
+  infra/workflow-acceptance/profile.yaml: ea50c8a18cc1a07898c06ffdd9c27f5db24e2b2ceb8639c1c6c35310bcaf9322
+  infra/workflow-acceptance/compose.yaml: b2dc0eb7c2dad59bf48984f4d369e7e16e96e845dcdad6c136112a04f2642b0a
+  apps/web/src/types/job.ts: cbbf679730e35acb58ab08fa4acb8075bc573acebf05d2598aa10cd8350b7e2d
+  apps/web/src/lib/apiGeneration.ts: 5ddadd15624d020bfbb52c957b29983618e29e2b1d0a999f641786086f847575
+  apps/web/src/pages/job-progress/AgentActivityConsole.tsx: e59f7720eeba39512666fb917cd6382bbc179f99df43896b21e2d3aa31a7f5b9
+  apps/web/src/pages/job-progress/JobProgressLogs.tsx: 873f252674ba734de2b38012c9907214b42b4df1d9072cb5685a09efdb6b7abd
+  apps/web/src/pages/job-progress/useJobProgressStream.ts: df66610212d8c26fc50c8df888e95b50dbeb88741c3fd0288c3ed6df1ccd6008
+  apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx: 946f2ebd9ebac89a2d70b5f4396ade0303407c55ac927de66fa03cad4944f3d6
+  apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx: 7393a0e3dc35841d7ff8268043470eae4fcfaab1384d3c585f3a5779892686a7
+  apps/web/src/pages/exam-paper/useExamPaperStream.ts: 7e2b7c9f47b8e12156eed2b01ea7197a8ab19955d781e316668543b53ad0c51a
+  apps/web/src/pages/exam-paper/slotDiagnostics.ts: 14f668dcad5b6e94ff81874ddaaff1617d900a4df30efa2651c13b7257baffec
+  tests/test_review_workflow.py: 96f2d6562a6374b2179e0f4e6d54dcda18e534f2d82b19537c995138659490ea
+  tests/test_activity_stream.py: 6fe28d5faecdf30a691f84923b93055c76d04c961faefa7f22bfb8c6e67492ab
+  tests/test_native_stream_transport.py: 904b06b50bc4d20c22a172c39f7d054ded157f3ab001bae6d69c27ef4d7b1e81
+  tests/hermes_adapter_cases_1.py: d985be8e08a31d4b6f0b9efd1b7a879b3371072610462c760ce6ba88d99d8a28
+  tests/hermes_adapter_cases_2.py: acb66653b4f2cafcb620b1ba8e08c8df8a066da5ed6f448069c758c4986803f8
+  tests/test_workflow_safety_closeout.py: 4e5a33f502719ca6f324c733f705e7269393ead99cabeae183fce3861824d94b
+  tests/test_diagram_assets.py: 51ccc63a31933eec2ab7e66c37d474ff49e6420c61d354f9f44703c13b3c8e9a
+  tests/browser/review_activity_fixture.py: 2d773bf1b50b6d23ed444514bc0e68fa172f9510ce9f244ac51ac4cf2f9fbb8a
+  docs/decisions/DEV-019-review-stream.md: 118968e72c0fe686c46ea6d4cfbd1b60c9fbfdf256acdf389318c0cf6e31a0ea
+  apps/web/src/pages/exam-paper/WorkbenchProgressSummary.tsx: d430512201b2233de8ec90bcecfef814d7cec6667730657225bf3428b05a973b
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+bug_ids:
+- BUG-20260925-001
+- BUG-20260925-002
+this_change_paths:
+- services/hermes_adapter/http_adapter.py
+- services/hermes_adapter/run_stream.py
+- services/hermes_adapter/isolation_gateway.py
+- services/exam/question_service.py
+- services/exam/generation_context.py
+- services/exam/question_generation.py
+- services/exam/question_review.py
+- services/exam/job_service.py
+- services/api/job_repository_execution.py
+- services/api/job_run_events.py
+- services/api/routes/exams.py
+- services/api/routes/exam_job_routes.py
+- services/api/routes/exam_activity_routes.py
+- services/worker/jobs.py
+- services/worker/failures.py
+- skills/question-reviewer/SKILL.md
+- contracts/question-review.schema.json
+- tools/live_budget_proxy.py
+- tools/live_budget_stream.py
+- tools/deepseek_json_contract.py
+- infra/workflow-acceptance/profile.yaml
+- infra/workflow-acceptance/compose.yaml
+- apps/web/src/types/job.ts
+- apps/web/src/lib/apiGeneration.ts
+- apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+- apps/web/src/pages/job-progress/JobProgressLogs.tsx
+- apps/web/src/pages/job-progress/useJobProgressStream.ts
+- apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx
+- apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx
+- apps/web/src/pages/exam-paper/useExamPaperStream.ts
+- apps/web/src/pages/exam-paper/slotDiagnostics.ts
+- tests/test_review_workflow.py
+- tests/test_activity_stream.py
+- tests/test_native_stream_transport.py
+- tests/hermes_adapter_cases_1.py
+- tests/hermes_adapter_cases_2.py
+- tests/test_workflow_safety_closeout.py
+- tests/test_diagram_assets.py
+- tests/browser/review_activity_fixture.py
+- docs/decisions/DEV-019-review-stream.md
+- apps/web/src/pages/exam-paper/WorkbenchProgressSummary.tsx

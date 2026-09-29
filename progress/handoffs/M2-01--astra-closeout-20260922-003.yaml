@@ -1,0 +1,71 @@
+schema_version: 1
+task_id: M2-01
+session_id: astra-closeout-20260922-003
+created_at: '2026-09-22T12:18:11+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - services/blueprint/__init__.py
+  - services/blueprint/allocator.py
+  - services/blueprint/generator.py
+  - services/blueprint/rules.py
+  - services/blueprint/schema.py
+  - services/blueprint/slot_builder.py
+  - services/exam/blueprint_service.py
+  - skills/question-author/SKILL.md
+  - tests/test_blueprint_engine.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 14970
+summary: 确定性蓝图和冻结题槽完成本轮实现
+next_action: 真实多题质量回归、共享材料及有限修订未完成。
+completed:
+- 精确分值、难度配比、范围子集、稳定题槽与确认哈希；新旧方案不混用。
+pending:
+- 真实多题质量回归、共享材料及有限修订未完成。
+decisions:
+- 任务保持IN_PROGRESS，开发实现/离线通过/真实单题执行/教学正确性分开。
+- 仅验收专属数据库与容器，本轮已停止付费服务；未提交或推送。
+failed_approaches:
+- 最终复核发现同规格重拟计划会复用旧结果；已加事务与查询版本围栏，保留失败复现。
+evidence_refs:
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+- acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+- acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+scope_patterns:
+- acceptance/fixtures/minimum-primary.json
+- apps/web/src/pages/PlanReview.tsx
+- contracts/openapi.yaml
+- services/api/domain/plans.py
+- services/blueprint/__init__.py
+- services/blueprint/allocator.py
+- services/blueprint/generator.py
+- services/blueprint/rules.py
+- services/blueprint/schema.py
+- services/blueprint/slot_builder.py
+- services/exam/blueprint_service.py
+- services/worker/plan_tasks.py
+- skills/exam-planner/SKILL.md
+- skills/question-author/SKILL.md
+- tests/test_blueprint_engine.py
+files:
+  '[missing-pattern] apps/web/src/pages/PlanReview.tsx': MISSING
+  '[missing-pattern] services/api/domain/plans.py': MISSING
+  '[missing-pattern] services/worker/plan_tasks.py': MISSING
+  acceptance/fixtures/minimum-primary.json: df1f1f2f25606cc1eb4812852913d64c7f67240ce857efcb8d6020ac755b8aa1
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  services/blueprint/__init__.py: 89ebf12e0fbf8912943a4dbc06ee872a6b2ceb8e17be68a3a19d2ed04322060a
+  services/blueprint/allocator.py: 2349d421725d718f837a77e59c31fbd451c9247b280e1fc5de96566a9606d177
+  services/blueprint/generator.py: 0a0d9142f5029af516b7b9a67092407cb3e9078ffff0e546ef461c56d78bb053
+  services/blueprint/rules.py: 7b1a1e2109fa06636c4cc4343b8690695815d06f869673dc437dd54d3d9cb984
+  services/blueprint/schema.py: 4c18d0c0c6b6316adf268962384c4471b70237c7c86f2f67e7bfec579ad49100
+  services/blueprint/slot_builder.py: 3b3cf9e967270a1f2986b8a9520e728a9d22c448c244628efe7833692c52590a
+  services/exam/blueprint_service.py: 357b76da45b9a42006bf0a00294de5c4f3ae76fd4633e941d5b426acf15ccd2b
+  skills/exam-planner/SKILL.md: 9b3d3aae9a7decf196a37c2810fdba3a97348272b34e0a5c09976a5bd7553e82
+  skills/question-author/SKILL.md: e828604e1f5a2a44759ca3d663632792b92201860fde07ddb720c133d58c2501
+  tests/test_blueprint_engine.py: e5b9612195a6c7d443ed338cfb66875b169eb470fe773733bc7aec4af27ea4cc
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

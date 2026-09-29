@@ -1,6 +1,6 @@
 # 质量检查：先看范围，不能只看绿灯
 
-suites.yaml 登记 6 个当前可运行离线组和 6 个尚未实现的应用/真实调用组。`all-offline` 明确只运行前者。测试目录的 10 项应用回归保护是行为要求，不是已有 E2E 实现。把应用功能写出来时，需要逐项补 actual_test_paths、实际命令与环境，并接入独立应用 CI；不能只改一个状态标签。
+suites.yaml 登记 9 个当前可运行离线组和 6 个尚未实现的应用/真实调用组。`all-offline` 明确只运行前者。测试目录的 10 项应用回归保护是行为要求，不是已有 E2E 实现。把应用功能写出来时，需要逐项补 actual_test_paths、实际命令与环境，并接入独立应用 CI；不能只改一个状态标签。
 
 run_quality_checks.py 只执行 catalog 中明确登记的离线 Python 命令，禁止 shell 插值；这不是 Python 代码沙箱，必须审查所运行的仓库代码。它检查非零退出、超时、单元报告缺失、零测试/skip/expected failure；这些均不计 PASS。
 
@@ -8,7 +8,7 @@ run_quality_checks.py 只执行 catalog 中明确登记的离线 Python 命令�
 
 ## 启用 GitHub CI
 
-把本包内容合并至 Git 仓库根，使 `.github/workflows/ci.yml` 位于真实仓库根。用独立测试 PR 执行，确认 `offline` 的报告中真实运行了 6 个组，并下载证据。Actions 和依赖安装需要网络；本次没有在远程执行。
+把本包内容合并至 Git 仓库根，使 `.github/workflows/ci.yml` 位于真实仓库根。用独立测试 PR 执行，确认 `offline` 的报告中真实运行了 9 个组，并下载证据。Actions 和依赖安装需要网络；本次没有在远程执行。
 
 在仓库保护规则中，将 **知卷离线检查 / required-checks** 设为必需检查（以首次运行实际显示名为准），要求 PR 审查，并对新增提交使旧审查失效。配置实际 CODEOWNERS，不能把示例里的空人名当已启用。限制修改 workflow、quality、契约与权限代码的自审权限。
 
@@ -19,3 +19,7 @@ run_quality_checks.py 只执行 catalog 中明确登记的离线 Python 命令�
 ## 版本与可重复性
 
 requirements-ci.lock 锁定本次离线依赖实际版本（不是生产依赖或全平台兼容保证）。Actions 使用已核查源码的固定 SHA。升级前在受控 PR 重跑并审查；候选版本不是永远安全或最新版本。CI 使用 Python 3.12；本地运行的实际 Python 版本记录在 report.json，不混为已实测同环境。
+
+## 应用集成测试分组
+
+`tests/integration/` 是需要显式专属 PostgreSQL 环境的测试，单独执行，不能把缺数据库的跳过计为通过。`all-offline` 只发现 `tests/` 根下的测试；两组分别保留报告。具体运行边界见 [集成测试说明](../tests/integration/README.md)。

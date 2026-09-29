@@ -1,0 +1,50 @@
+schema_version: 1
+task_id: M1-02
+session_id: docker-restore-20260922-001
+created_at: '2026-09-22T14:36:52+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - database/003_generation_jobs.sql
+  - database/004_generation_exam_state.sql
+  - services/api/repositories.py
+  - services/api/store.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15032
+summary: 纠正停机判断：恢复知卷必要PostgreSQL，降低内存不能影响当前使用
+next_action: 数据库必须保持可用；只有不影响草稿/预览或其他已用功能的闲置服务可以停止。后续停服务前核对调用依赖。
+completed:
+- 按用户澄清恢复zhijuan-workflow-20260922-pg，草稿和蓝图API均200，原11题100分计划保留。
+- 当前Chrome页面无读取失败，预览内容保留；未刷新或改写用户输入。
+pending:
+- 真实命题服务配置仍属此前未完成项，状态未因本次恢复而升级。
+decisions:
+- 用户关闭Docker服务的前提是不影响现有使用；此前停止必要数据库是错误执行范围。
+- 本记录取代docker-stop-20260922-001中保持数据库停止的建议。RabbitMQ、命题/盲解和限额代理仍未用于当前草稿/预览，保持停止；不退出承载其他项目的Docker。
+failed_approaches:
+- 将降低内存误执行为停用当前工作台数据库，造成草稿存取不可用；现已恢复。
+evidence_refs:
+- acceptance-runs/maintenance/docker-restore-20260922-001/runtime.json
+scope_patterns:
+- database/001_schema_draft.sql
+- database/002_v13_required_changes.md
+- database/003_generation_jobs.sql
+- database/004_generation_exam_state.sql
+- migrations/versions/0001_core.py
+- services/api/repositories.py
+- services/api/store.py
+- tests/integration/test_persistence.py
+files:
+  '[missing-pattern] migrations/versions/0001_core.py': MISSING
+  '[missing-pattern] tests/integration/test_persistence.py': MISSING
+  database/001_schema_draft.sql: 8050ed224b1b20d55829b76d81d10368642a6e259022168e0962ec06525b1292
+  database/002_v13_required_changes.md: cfd0212b423c2ade31d151ddcab66e1739222763ab118655203685046ee58dd3
+  database/003_generation_jobs.sql: 8a6fc194f822506a0c7eaeab6f75ccaa41823e8d1d07e9037ac26c8410b697e6
+  database/004_generation_exam_state.sql: 75cd089575c28752d67f4e198a57a79ada7f0a626c3bfea09c526aabf6785337
+  services/api/repositories.py: cf2de67ea8ec85995d622399d0cfc6937765015e2de24bbf0756bd01cafe8048
+  services/api/store.py: b062258f202588e464fb7ad48c2041608ef7e52c8fece7a73f242df422fd8a97
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

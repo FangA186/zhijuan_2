@@ -1,22 +1,26 @@
 {
   "schema_version": 1,
   "repository": "https://github.com/NousResearch/hermes-agent.git",
-  "commit": "f5d192611032025d2757b07ad838921872126182",
-  "branch": "main",
+  "commit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+  "branch": null,
   "target_directory": "vendor/hermes-agent",
-  "locked_at": "2026-09-17T08:33:15Z",
+  "locked_at": "2026-09-24T15:00:36.348195+00:00",
   "license": {
     "type": "MIT",
     "sha256": "821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6",
     "copyright": "Copyright (c) 2025 Nous Research"
   },
   "hashes": {
-    "pyproject_toml_sha256": "eb0b8daac75c0c0e655282a1a836cb4c8a0bdc266e435a4d77e3295544ccf488",
-    "uv_lock_sha256": "811a21647251a3fd024a3e2f49c90ac0600c678e500cc08ed51db38c452a6c65"
+    "pyproject_toml_sha256": "6f969b9fdff95e7269ec808361e3ae8be5357036e6257e53a3306878cf8c41dd",
+    "uv_lock_sha256": "5b3798f326209475abca8ef7cbf7c9406f12e687c28c0b540dfe597466f48590"
   },
   "verification": {
     "git_clean": true,
     "detached_head": true,
-    "reviewed_by": "agent/ops"
-  }
+    "reviewed_by": "Codex upgrade verification; not product acceptance",
+    "runtime_version_verified": true
+  },
+  "ref": "v2026.9.24",
+  "version": "0.21.5",
+  "container_image_id": "sha256:25f3374666b543fa94810427215c04b1fd7d570d5216dc61d7574fe39a495bc6"
 }

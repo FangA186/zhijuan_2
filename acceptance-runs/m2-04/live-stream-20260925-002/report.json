@@ -1,0 +1,34 @@
+{
+  "schema_version": "application-acceptance-v1",
+  "task_id": "M2-04",
+  "status": "PARTIAL",
+  "environment": "macOS Chrome + actual local queue/PostgreSQL/Hermes/DeepSeek",
+  "command": "See report.md",
+  "offline_tests": 107,
+  "node_tests": 5,
+  "live_workflow": "PASS for bounded one-slot pipeline, not mathematical acceptance",
+  "source_files": {
+    "apps/web/src/pages/job-progress/AgentActivityConsole.tsx": "09ed6d2827877f494e804d9f4a7885394d22dcce01cf47c69704a9281b305cbb",
+    "apps/web/src/pages/job-progress/activityPresentation.ts": "063c12748a38458b979c4ec7f2f23aeeb8bc4823976f04d2dec4e1f36b1eacf4",
+    "apps/web/src/types/job.ts": "5432fb7b94ba5ae744f5ce009dcfdd582de96f095a588b8b47079464e7959069",
+    "services/api/routes/exam_activity_routes.py": "67daa1cc5f7a75242fb3f4be55f73a1d109f59c62884a650b33c17da62d7602d",
+    "services/hermes_adapter/run_stream.py": "271ed9830cb6934d0bbc98bc0edfec5ececf2a66eb7cf59e6a14681291ad8f85",
+    "services/hermes_adapter/http_adapter.py": "b2534e9c7b94b19dc44a1026712abd6d9c07a781c300259fd2c3a1265967ccb1",
+    "services/hermes_adapter/isolation_gateway.py": "ed0af0b8a3590e97d615ca31cc06f3ee646e54434cc78bcebf0b823f72ae0c9e",
+    "tools/live_budget_stream.py": "2b837a85d48c7474b08f4b6a1bf08c3b3950948ec10e97f4c3b099caafacbed5",
+    "tools/live_budget_proxy.py": "4e012d024a5c4c7174cd7bd22f34b9dc197bf45695f0cb60c17356c8c6656711",
+    "tools/live_budget_status.py": "c601a12e80c116e8b4d6074ae542d099a150b1f79b1afb48b426b84ef1b872f4",
+    "tools/live_review_probe.py": "42eaf9e688a32948f9bef2b6104915bdad1daafd732fccdd7029aec32de83cc3",
+    "contracts/question-review.schema.json": "11c4600f35296bfc33cde95c88170497e5ddb9c54d844fac1fb712dd6bcae9f0",
+    "tests/frontend_activity_presentation.test.mjs": "22d82f876d79ffc11b2687fddc7a0aec0d87c39ac25f8ff5ef92324393844c72",
+    "tests/test_activity_stream.py": "6c374bb6f6a25f6d12dd17dbc2c7a253c5d818f759f0989495677d71ba6679ce",
+    "tests/test_native_stream_transport.py": "223270a7babff6226282f3391d4035df0239a7944c51dadd015e6ba8d8781ce7",
+    "docs/decisions/DEV-019-review-stream.md": "9e4ddfdfe02d247fba4fe0015e5fbe7bbb307c8391b69e4c8522ffbd2e3da19e"
+  },
+  "not_run": [
+    "full-paper acceptance",
+    "multi-grade teaching quality",
+    "production tenant auth",
+    "crash/concurrency stress"
+  ]
+}

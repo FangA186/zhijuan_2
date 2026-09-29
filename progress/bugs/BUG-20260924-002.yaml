@@ -1,0 +1,34 @@
+schema_version: 1
+id: BUG-20260924-002
+title: Python 模块拆分漏导入导致运行时错误
+status: FIXED
+module: backend
+updated_at: '2026-09-24'
+task_ids:
+- DEV-03
+keywords:
+- NameError
+- json
+- datetime
+- timezone
+- urlopen_fn
+- 拆分
+symptom: 发布快照、任务替换或健康探测在运行时遇到未定义名称。
+reproduction:
+- 纯内存调用发布 mixin、仓储 replace、注入 HTTP 探测响应。
+root_cause: 拆分后新模块不共享旧模块的全局导入；api_health 使用了未声明的 urlopen_fn。
+resolution: 补全 json、datetime/timezone；api_health 显式接受并传递可注入传输函数。
+affected_files:
+- services/api/store_publication.py
+- services/api/job_repository_reads.py
+- tools/local_runtime_probes.py
+regression:
+- .venv/bin/python -m unittest tests.test_split_imports tests.test_store_publication
+  -q
+verified_at: '2026-09-24'
+verification: 历史离线/页面范围通过，完整边界见证据
+evidence_refs:
+- acceptance-runs/maintenance/dev-03-code-structure-20260924-001/offline-final-6/report.json
+events:
+- 2026-09-24：从DEV-03实际验收回填；按登记范围修复。
+source_hashes: {}

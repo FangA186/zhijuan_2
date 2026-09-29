@@ -1,0 +1,31 @@
+schema_version: 1
+id: BUG-20260924-003
+title: 词汇图片路径前缀校验允许目录越界
+status: FIXED
+module: devtools
+updated_at: '2026-09-24'
+task_ids:
+- DEV-03
+keywords:
+- 目录穿越
+- startswith
+- symlink
+- 删除
+- 恢复
+symptom: 同名前缀兄弟目录或外链可能绕过读图和文件操作限制。
+reproduction:
+- 在临时目录构造 ../教材单词图片2/example.jpg 与外部软链接。
+root_cause: 字符串 startswith 不是目录边界校验；恢复路径未统一校验。
+resolution: 使用 resolve/is_relative_to 约束读、删、恢复和枚举；空恢复列表不再触发全量恢复。
+affected_files:
+- tools/vocab_viewer_paths.py
+- tools/vocab_viewer_operations.py
+regression:
+- .venv/bin/python -m unittest tests.test_vocab_viewer_paths -q
+verified_at: '2026-09-24'
+verification: 历史离线/页面范围通过，完整边界见证据
+evidence_refs:
+- acceptance-runs/maintenance/dev-03-code-structure-20260924-001/offline-final-6/report.json
+events:
+- 2026-09-24：从DEV-03实际验收回填；按登记范围修复。
+source_hashes: {}

@@ -1,0 +1,71 @@
+{
+  "database_url": "https://app.notion.com/p/17d2f4a6209345f38337c1e0d5b4cb2f",
+  "data_source_id": "f3c8bff7-9608-47a4-8a3c-6084d22e8677",
+  "pages": {
+    "BUG-20260924-001": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a8194896bcb24cc603712?pvs=204",
+      "content_hash": "6b1423ade526bb74af8a81605c50e32a11303529cadfdb7e3663289c2ba6e84d",
+      "synced_at": "2026-09-24T12:14:22+00:00"
+    },
+    "BUG-20260924-002": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a81cf9e97e1eb6836ad06?pvs=204",
+      "content_hash": "c1cdd04b59667e5d609057f07b3147106f11f7b4e73b013021de638a60de7994",
+      "synced_at": "2026-09-24T12:14:22+00:00"
+    },
+    "BUG-20260924-003": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a817e811afde5a0de7a6d?pvs=204",
+      "content_hash": "111929dc24d4a5a0d994c450a703fa9d54531b0b494ff01cbf9f7adeb46eccaa",
+      "synced_at": "2026-09-24T12:14:22+00:00"
+    },
+    "BUG-20260924-004": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a8121ae64ed57b707e06c?pvs=204",
+      "content_hash": "646e9d00a6ef2c817a1e24dbd0f6fed0c5c075b441d42a7093911be7c7b2dcc6",
+      "synced_at": "2026-09-24T12:14:22+00:00"
+    },
+    "BUG-20260924-005": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a8188bd19d5feaf26b0e8?pvs=204",
+      "content_hash": "d7b30562075e31e352b773bffac765d503c82268bd346602145fc9727b2d102c",
+      "synced_at": "2026-09-24T12:14:22+00:00"
+    },
+    "BUG-20260924-006": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a818aa51bc459d99d3bbd?pvs=204",
+      "content_hash": "5260f83e520988237a4c696077bb77fc7be0ed849e78a8e7d8c9b710a1e405a1",
+      "synced_at": "2026-09-24T12:14:23+00:00"
+    },
+    "BUG-20260924-007": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a8108a410d40006929366?pvs=204",
+      "content_hash": "bc18f250ed16f0930da06b60a34bbdc85dcd3af097877883d172c9f77dc8362a",
+      "synced_at": "2026-09-24T12:14:23+00:00"
+    },
+    "BUG-20260924-008": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a81ba8fd2fb52b2a0755d?pvs=204",
+      "content_hash": "9ab8de15350ce61b51f61a3ae36392f1f44c7bba6b1b264fcfeb07b7c56bdd32",
+      "synced_at": "2026-09-24T12:14:23+00:00"
+    },
+    "BUG-20260924-009": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a8122896dd3a2384a48bf?pvs=204",
+      "content_hash": "116691ba6212135383775b33dcb40dfac74e3d1ae6e7d288954d8979ca1c6fae",
+      "synced_at": "2026-09-24T12:14:23+00:00"
+    },
+    "BUG-20260925-001": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a812d8f61e80d1e90ddf6",
+      "content_hash": "45076c08492755b078ea676e3f35cc7b79f19b57189720339bdd5bfd670e4c69",
+      "synced_at": "2026-09-24T18:24:18+00:00"
+    },
+    "BUG-20260925-002": {
+      "url": "https://app.notion.com/p/3e5a7a41f60a8145b6a8d5bc230b3f68",
+      "content_hash": "8b48273b4dc004ff5c5360b3bbcf7953433684cd689866c259ad545f8d85d5ad",
+      "synced_at": "2026-09-28T14:03:32+00:00"
+    },
+    "BUG-20260928-001": {
+      "url": "https://app.notion.com/p/3e9a7a41f60a818ea69bcf078415892c",
+      "content_hash": "722bb3b987e713fee80d3a2c93e5689eca258f83ada76edb5a3340c024c22360",
+      "synced_at": "2026-09-28T16:04:45+00:00"
+    },
+    "BUG-20260928-002": {
+      "url": "https://app.notion.com/p/3e9a7a41f60a8180a10ed7663af1b3e0",
+      "content_hash": "570f1e025ac49056a18b4021387643d4041447183267c0a9be6744f71802f5ab",
+      "synced_at": "2026-09-28T15:20:59+00:00"
+    }
+  }
+}

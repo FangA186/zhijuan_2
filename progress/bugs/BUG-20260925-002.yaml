@@ -1,0 +1,114 @@
+schema_version: 1
+id: BUG-20260925-002
+title: 任务面板缺失实际模型输出流和底层事件
+status: FIXED
+module: streaming
+updated_at: '2026-09-28'
+task_ids:
+- M2-04
+- M1-03
+keywords:
+- 审核
+- 修订
+- 流式
+- HERMES_FAILED
+symptom: 黑窗口仅显示状态及少量截断日志。
+reproduction:
+- 用户提供失败任务页面；源码核对重现缺失路径。
+- 离线事件与候选夹具验证，不触发计费。
+root_cause: 适配器未订阅native events，代理/profile关闭流式，solver网关未允许events，UI截断记录。
+resolution: 贯通strict provider SSE、Hermes events、私有持久快照与本机教师SSE；完整多行输出及JSON详情，排除私有推理。
+affected_files:
+- contracts/question-review.schema.json
+- tools/live_budget_proxy.py
+- tools/live_budget_stream.py
+- tools/deepseek_json_contract.py
+- infra/workflow-acceptance/profile.yaml
+- infra/workflow-acceptance/compose.yaml
+- apps/web/src/types/job.ts
+- apps/web/src/lib/apiGeneration.ts
+- apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+- apps/web/src/pages/job-progress/JobProgressLogs.tsx
+- apps/web/src/pages/job-progress/useJobProgressStream.ts
+- apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx
+- apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx
+- apps/web/src/pages/exam-paper/useExamPaperStream.ts
+- apps/web/src/pages/exam-paper/slotDiagnostics.ts
+- apps/web/src/pages/job-progress/activityPresentation.ts
+- services/api/routes/exam_activity_routes.py
+- services/hermes_adapter/run_stream.py
+- services/hermes_adapter/http_adapter.py
+- services/hermes_adapter/isolation_gateway.py
+- tools/live_budget_status.py
+- tools/live_review_probe.py
+- tests/frontend_activity_presentation.test.mjs
+- tests/test_activity_stream.py
+- tests/test_native_stream_transport.py
+- tools/raw_api_capture.py
+- tools/raw_api_console.py
+- tools/raw_api_server.py
+- services/api/routes/raw_api_routes.py
+- services/hermes_adapter/http_runner.py
+- apps/web/public/raw-api.html
+- apps/web/public/raw-api.css
+- apps/web/public/raw-api-core.js
+- apps/web/public/raw-api-viewer.js
+- tests/test_raw_api_capture.py
+- tests/test_raw_api_routes.py
+- tests/frontend_raw_api.test.mjs
+- docs/raw-api-console.md
+- docs/decisions/DEV-020-raw-provider-diagnostics.md
+regression:
+- .venv/bin/python -m unittest tests.test_review_workflow tests.test_activity_stream
+  tests.test_native_stream_transport
+- npm run build --prefix apps/web
+verified_at: '2026-09-28'
+verification: 本轮原始流全量视图5项Node、构建、行数门禁与实际浏览器验证；后端/思考开启未改动，历史验证见各报告。
+evidence_refs:
+- acceptance-runs/m2-04/review-stream-20260925-001/tests.log
+- acceptance-runs/m2-04/review-stream-20260925-001/report.md
+- acceptance-runs/m2-04/live-stream-20260925-002/report.md
+- acceptance-runs/m2-04/live-stream-20260925-002/live-evidence.json
+- acceptance-runs/m1-03/raw-api-20260928-001/report.md
+- acceptance-runs/m1-03/raw-timeline-20260928-002/report.md
+events:
+- 2026-09-25：代码修复并离线/局部浏览器验证；生成容器重载及真实模型验证待完成。
+- 2026-09-25：用户实际重跑仍无输出，重新核查；旧Worker/容器未重载，原任务activity=0，运行态问题复发。
+- 2026-09-25：复用现有Docker配置完成重载，三次独立真实单题测试；最终9角色调用、两轮修订和56条真实事件，浏览器正文可见。
+- 2026-09-28：完成转换器前原始响应独立页，修正Hermes结果被误标为DeepSeek上游，保留近期8000集成；本轮不启后台或调用模型。
+- 2026-09-28：用户要求一套记录展示全部调用，去除逐请求下拉框并保持原始交错顺序；只读确认运行代理thinking为disabled，未重启服务。
+source_hashes:
+  tools/live_budget_proxy.py: 923133f0aedc185482b754091e7c60585b071d4da1490362bbbd6f8925c18028
+  tools/live_budget_stream.py: 75a94a40726db9f606a510fbad50eac54d9c0175df03483d1fe3859e14f11823
+  tools/deepseek_json_contract.py: bce20f7aca9f792b555dd6aa64b96953a1352b081fc7162dab2264d70c2b6dc7
+  apps/web/src/types/job.ts: 5432fb7b94ba5ae744f5ce009dcfdd582de96f095a588b8b47079464e7959069
+  apps/web/src/lib/apiGeneration.ts: 5ddadd15624d020bfbb52c957b29983618e29e2b1d0a999f641786086f847575
+  apps/web/src/pages/job-progress/AgentActivityConsole.tsx: d605d9921e51aa189a8092405faaa6aa09e0c496b736e2b928c1d3802123b037
+  apps/web/src/pages/job-progress/JobProgressLogs.tsx: 873f252674ba734de2b38012c9907214b42b4df1d9072cb5685a09efdb6b7abd
+  apps/web/src/pages/job-progress/useJobProgressStream.ts: df66610212d8c26fc50c8df888e95b50dbeb88741c3fd0288c3ed6df1ccd6008
+  apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx: 946f2ebd9ebac89a2d70b5f4396ade0303407c55ac927de66fa03cad4944f3d6
+  apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx: 7393a0e3dc35841d7ff8268043470eae4fcfaab1384d3c585f3a5779892686a7
+  apps/web/src/pages/exam-paper/useExamPaperStream.ts: 7e2b7c9f47b8e12156eed2b01ea7197a8ab19955d781e316668543b53ad0c51a
+  apps/web/src/pages/exam-paper/slotDiagnostics.ts: 14f668dcad5b6e94ff81874ddaaff1617d900a4df30efa2651c13b7257baffec
+  apps/web/src/pages/job-progress/activityPresentation.ts: 063c12748a38458b979c4ec7f2f23aeeb8bc4823976f04d2dec4e1f36b1eacf4
+  services/api/routes/exam_activity_routes.py: 67daa1cc5f7a75242fb3f4be55f73a1d109f59c62884a650b33c17da62d7602d
+  services/hermes_adapter/run_stream.py: 271ed9830cb6934d0bbc98bc0edfec5ececf2a66eb7cf59e6a14681291ad8f85
+  services/hermes_adapter/http_adapter.py: b2534e9c7b94b19dc44a1026712abd6d9c07a781c300259fd2c3a1265967ccb1
+  services/hermes_adapter/isolation_gateway.py: ed0af0b8a3590e97d615ca31cc06f3ee646e54434cc78bcebf0b823f72ae0c9e
+  tools/live_budget_status.py: c601a12e80c116e8b4d6074ae542d099a150b1f79b1afb48b426b84ef1b872f4
+  tools/live_review_probe.py: 42eaf9e688a32948f9bef2b6104915bdad1daafd732fccdd7029aec32de83cc3
+  tests/frontend_activity_presentation.test.mjs: 22d82f876d79ffc11b2687fddc7a0aec0d87c39ac25f8ff5ef92324393844c72
+  tests/test_activity_stream.py: 6c374bb6f6a25f6d12dd17dbc2c7a253c5d818f759f0989495677d71ba6679ce
+  tests/test_native_stream_transport.py: 223270a7babff6226282f3391d4035df0239a7944c51dadd015e6ba8d8781ce7
+  tools/raw_api_capture.py: ab2b76a54d692fce436c1945a7f30e5d6705c6f63e8de3dcd5946826d965c90a
+  tools/raw_api_console.py: 6093b926fbe0c167bc59485d05c72a04c8ead5db0f6282a3d9ffd08388054797
+  tools/raw_api_server.py: 6e93f67401f1f7dd580ae343ed663c73c404dbda9d9cd20d6f519b816d4b2f3c
+  services/api/routes/raw_api_routes.py: 2204f203961ff7f5b446bc4517f114c44800fd5d07e3320bddeeedaffae37c7a
+  services/hermes_adapter/http_runner.py: c353aef2b3db06188985f50a6a48f407974fb0cca8d0f088e39b57edce51e4dd
+  apps/web/public/raw-api.html: 5f27df42253bf5afe4a60af42d9f8b9fdd57946ffa4f051a2934b7712769ae2e
+  apps/web/public/raw-api.css: d24982e3b6d5a8af5990bd27589342086f34644d5aac6f280464b8ba87f6d333
+  apps/web/public/raw-api-core.js: 954399bb781366739098b6e89e8d556c5110c119ed6a83b892e37ab66d1f0348
+  apps/web/public/raw-api-viewer.js: 949faea1ebfda9688a83ac844a45c271c124fc214e258704b239726f607ad44e
+  tests/test_raw_api_capture.py: aa4c28729a9bc2e8c5dd5ff4ee4ab4cc87bb3c5927b2d6da00bca500e4f2b253
+  tests/test_raw_api_routes.py: e3c10dc0d55112486b0aae9c88d99f9c51af1a53f0cd6ad72daf43ee00d8578b
+  tests/frontend_raw_api.test.mjs: d2f8f9b9e9b8d3677d1cd09f594baab2339a2c4e177aab9f5445214faecf33b5

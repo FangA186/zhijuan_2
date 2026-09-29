@@ -1,0 +1,154 @@
+schema_version: 1
+task_id: M1-05
+session_id: scoring-modes-20260924-001
+created_at: '2026-09-24T16:27:55+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - contracts/exam-spec.schema.json
+  - services/api/routes/exams.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15761
+summary: 少选分配置、canonical保存、规格冻结与4/2/0真实回归完成
+next_action: 保留教师配置，不由模型自行确定少选分
+completed:
+- 区分exclusive互斥档位与additive累加采分点；允许4/2/0档位但不放宽旧rubric正数限制。
+- 教师少选分经前端canonical、后端schema、冻结spec保存；非法部分分被阻止，刷新仍为200。
+- 答案与评分说明共用结构化选项来源，增加边界明确的声明冲突FAIL；不自动从自由文本推断答案。
+- 历史第11/13题独立v2草稿修订，结构/评分/一致性PASS、真实隔离盲解一致，最终REVIEW，未覆盖历史。
+- 438后端离线、14评分定向、23前端用例、构建和200行门禁通过；实际桌面窄屏教师卷/导出预览通过。
+- 两次真实生成分别保留0分试验和最终200分值单位试验；最终23槽处理19 REVIEW/4其他FAIL，评分档位不再相加。
+pending:
+- 历史修订草稿DRAFT_NOT_APPLIED，持久化题目版本化编辑API尚未接通；未替换旧卷或审批。
+- 本轮4道其他模型字段/答案数量失败继续拦截；未实现一般多次重生成。
+- 真实PDF/Word输出、旧编辑页独立浏览器入口和完整学生身份权限验收未测。
+decisions:
+- DEV-018：教师/模板配置评分，模型不可自行改变；checker_version=6，评分变更使hash变化。
+- 互斥规则仅适用于选择/判断题；主观题仍按正数采分点累加。
+- 新增私有评分字段禁止进入盲解输入及公开投影，不放宽数学证明或审批。
+failed_approaches:
+- 原schema把4/2/0互斥档位当累加并拒绝0分，原页面写死5分。
+- 首次浏览器检测出API字段白名单遗漏导致保存2分变0分；保留失败试验并补方法级往返测试。
+- 旧测试按数组索引认定ASSET检查位置，新增检查后改为按check_code核对，不删检查。
+- 成卷滚动工具栏覆盖顶栏坐标，回页顶后验证配置导航，不把自动化定位失败当评分故障。
+evidence_refs:
+- acceptance-runs/m2-03/scoring-modes-20260924-001/report.md
+- acceptance-runs/m2-03/scoring-modes-20260924-001/change-impact.md
+- acceptance-runs/m2-03/scoring-modes-20260924-001/repairs.md
+- acceptance-runs/m2-03/scoring-modes-20260924-001/repair-checks.json
+- acceptance-runs/m2-03/scoring-modes-20260924-001/repair-blind-checks.json
+- acceptance-runs/m2-03/scoring-modes-20260924-001/q11-repair-draft.json
+- acceptance-runs/m2-03/scoring-modes-20260924-001/q13-repair-draft.json
+- acceptance-runs/m2-03/scoring-modes-20260924-001/offline-final.json
+- acceptance-runs/m2-03/scoring-modes-20260924-001/scoring-tests.log
+- acceptance-runs/m2-03/scoring-modes-20260924-001/frontend-tests.log
+- acceptance-runs/m2-03/scoring-modes-20260924-001/build.log
+- acceptance-runs/m2-03/scoring-modes-20260924-001/lines.log
+- acceptance-runs/m2-03/scoring-modes-20260924-001/private-field-rejection.json
+- acceptance-runs/m2-03/scoring-modes-20260924-001/recheck-current.json
+- acceptance-runs/m2-03/scoring-modes-20260924-001/scoring-results.json
+- acceptance-runs/m2-03/scoring-modes-20260924-001/config-desktop.png
+- acceptance-runs/m2-03/scoring-modes-20260924-001/config-mobile.png
+- acceptance-runs/m2-03/scoring-modes-20260924-001/teacher-scoring-desktop.png
+- acceptance-runs/m2-03/scoring-modes-20260924-001/teacher-scoring-mobile.png
+- acceptance-runs/m2-03/scoring-modes-20260924-001/export-scoring.png
+scope_patterns:
+- acceptance/fixtures/minimum-primary.json
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- contracts/exam-spec.schema.json
+- contracts/openapi.yaml
+- services/api/routes/exams.py
+- services/api/routes/jobs.py
+- services/api/routes/plans.py
+files:
+  '[missing-pattern] services/api/routes/jobs.py': MISSING
+  '[missing-pattern] services/api/routes/plans.py': MISSING
+  acceptance/fixtures/minimum-primary.json: df1f1f2f25606cc1eb4812852913d64c7f67240ce857efcb8d6020ac755b8aa1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 0ad8273511bc8bdb844276435991eeb161af32a759e25d32a08590ec80a66cfd
+  contracts/exam-spec.schema.json: 01fbc48ad9d37c0b88689e8ceb87eaea5218bce8b4e7c4dc7f8e3b1dadfa6ca6
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  services/api/routes/exams.py: 8b3ffe5d52ecb5daabe673d71e21fa029d4d4a812dea4ae4a47b42101ee0a701
+  services/validators/scoring.py: b766ebc9005f4f74a69a9fa79df61f03b19f6c5ece0155ff69d164ddf5b95563
+  services/validators/candidate.py: 9a1276d71dfaf698e9622ac1a637ac35f073ffe11b017d46091269b7a326632f
+  services/exam/spec_validation.py: dde67bc99cf9751a7d9eefbde2b97c064ff0ed569cc33e2ab76ed02959829f02
+  services/exam/spec_service.py: 8b079361c7e70256a2b93b497a2703a70f47d506068e54b31acaa24e3403e433
+  services/exam/question_service.py: a03d2b9f6e224c7de63da8d8f2978d5f09de0e3a07f17a845125c00be6d82061
+  services/hermes_adapter/blind_runtime.py: 60fce4dad1fb8c372c709ad0f61e3861e58aa3ec2f337bd4a76404cacc72143d
+  services/hermes_adapter/isolation_gateway.py: be732605776e9a9e7598518348c54621f7a8bf0dce08dd19db3675d41530bd27
+  skills/question-author/SKILL.md: 6af0aed7c963e0c138e7b3e9010ebea525c2ab550593ad2ed04baeddf0180057
+  apps/web/src/lib/answerScoring.ts: bbf98401d67885fb30d86e50233f66af01aa22c0cd9934ab25a145fce19f391e
+  apps/web/src/lib/sectionScope.ts: 469d3020e4133cd5292a01fa1da119a2a1ec7631bbf3f2ed5bd10274b93e2fd0
+  apps/web/src/lib/apiBase.ts: ca7f5d55c7019a9ca7547a6299ae859a76f7657ae1bb4a94a5201b3a3bc17454
+  apps/web/src/types/spec.ts: dbf76cb9368e4cefb23a2a89d575001b41bb1a54201d5479a0b2392858fe129d
+  apps/web/src/types/candidate.ts: b2edb708b259e47eec0a7ac6c6623d969d41fa0f4387f88cd01a193d937f26bb
+  apps/web/src/components/AnswerScoring.tsx: 5542f20cf8e496077d3c23d8012376ea755a0341073c6af8dc342f3e1143fb09
+  apps/web/src/components/MultipleChoiceScoringField.tsx: 2d4e2536680874cad988f3aa22ab44a4681aad4cc0070cb50cbbb79fd883df40
+  apps/web/src/components/ExportPreview.tsx: 11a01191eac0f198f1aeac2d2a450ee29f0288f54a3556ae8f259875a367a82c
+  apps/web/src/components/exportSupport.ts: be80b21d9862fb250e93dc16e562dcccebda1b1c2742efa8ee9c0182177c4aa5
+  apps/web/src/pages/exam-editor/ExamEditorEvidence.tsx: 929521a58f55140936df26880286a330a0ce1e090cb95c314149c476a3c90c50
+  apps/web/src/pages/ExamPaperWorkbench.tsx: a38b23ff843fa077b610b14807c299d422db14510f0954d41e9d372de9f6f17f
+  apps/web/src/pages/exam-paper/ExamPaperSectionProps.ts: b053d3243e68ee501d556988a33d59516af5e91a673aae3d38521e26f537d9ce
+  apps/web/src/pages/exam-paper/ExamPaperSingleChoice.tsx: f51cb3abf8b7e5dba67b8d129866475efdc40c1173d128a6e54baeda74f260c3
+  apps/web/src/pages/exam-paper/ExamPaperMultipleChoice.tsx: 43a3aee9e86b276a88827a5b048450047c4f87ec4b3c6121d3b96fac2836d0ce
+  apps/web/src/pages/exam-paper/ExamPaperFillBlank.tsx: be326b3e7848035aab6616e288d4639691ad96bf324cb9bbce8e4e17a55930df
+  apps/web/src/pages/exam-paper/ExamPaperSolution.tsx: 645df11848720b0ef96cd5403c02a252455ace15aa683afc4bb2e5892194257f
+  apps/web/src/pages/exam-paper/slotDiagnostics.ts: d5407fad0bb827719ae5bf0457938af71b621cf160ca8036070b25e9386418f8
+  apps/web/src/pages/foolproof-setup/useFoolproofSetupBase.ts: 5c9a64e26601ef63adccadb6720c648f66a1a5e24ecd65cbc315ec96d53a8ce0
+  apps/web/src/pages/foolproof-setup/FoolproofSetupBasics.tsx: 1de418b906e4171ec6340a0d8a10e2e27b130be61f866a0bb7f1e23d0cc3ec20
+  apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts: a35f20a8aa8d53d41a057bfecfddb589097f4602b3306c2a9d43b2b59016ae4d
+  apps/web/src/pages/exam-setup/ExamSetupSectionsEditor.tsx: 818dfb30452b4fb4c9889a598be95625133ef8aaf691609ac3b57448695941a1
+  apps/web/src/pages/exam-setup/ExamSetupFlowActions.ts: 637d3b61f7848b6fbd66542b9acf50bb1e4c5faf76e0942b1779b2f610801b3b
+  tests/test_scoring_modes.py: b9c5e2dff8cf2b04681f569cc7e4d99a624611d191215bdf21293ca272371d33
+  tests/test_validators.py: 3b0c92d9e4f31113297304557141000f144e42f5acc422f2dcb936c7170d74a7
+  tests/frontend_answer_scoring.test.mjs: 0907f7124a135c39a6678e113fe36bca4466b8cf69c9274dd8057aac15363625
+  tests/frontend_spec_roundtrip.test.mjs: cc8689889ea83231cd5ea00c5aa9acb0dd43ec4470281bdcfa0d868819f85aed
+  docs/decisions/DEV-018-scoring-modes.md: d83222e7fd5ff297f6558045433f74b59ab1ac24db65650731d06d506eac36aa
+  docs/decisions/README.md: 43752b81c9a1e4f5f58119c60070bb9fef0bc2e76a4dcf3f8d4521c6a0cdb514
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+this_change_paths:
+- contracts/candidate.schema.json
+- contracts/exam-spec.schema.json
+- services/validators/scoring.py
+- services/validators/candidate.py
+- services/exam/spec_validation.py
+- services/exam/spec_service.py
+- services/exam/question_service.py
+- services/hermes_adapter/blind_runtime.py
+- services/hermes_adapter/isolation_gateway.py
+- skills/question-author/SKILL.md
+- apps/web/src/lib/answerScoring.ts
+- apps/web/src/lib/sectionScope.ts
+- apps/web/src/lib/apiBase.ts
+- apps/web/src/types/spec.ts
+- apps/web/src/types/candidate.ts
+- apps/web/src/components/AnswerScoring.tsx
+- apps/web/src/components/MultipleChoiceScoringField.tsx
+- apps/web/src/components/ExportPreview.tsx
+- apps/web/src/components/exportSupport.ts
+- apps/web/src/pages/exam-editor/ExamEditorEvidence.tsx
+- apps/web/src/pages/ExamPaperWorkbench.tsx
+- apps/web/src/pages/exam-paper/ExamPaperSectionProps.ts
+- apps/web/src/pages/exam-paper/ExamPaperSingleChoice.tsx
+- apps/web/src/pages/exam-paper/ExamPaperMultipleChoice.tsx
+- apps/web/src/pages/exam-paper/ExamPaperFillBlank.tsx
+- apps/web/src/pages/exam-paper/ExamPaperSolution.tsx
+- apps/web/src/pages/exam-paper/slotDiagnostics.ts
+- apps/web/src/pages/foolproof-setup/useFoolproofSetupBase.ts
+- apps/web/src/pages/foolproof-setup/FoolproofSetupBasics.tsx
+- apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts
+- apps/web/src/pages/exam-setup/ExamSetupSectionsEditor.tsx
+- apps/web/src/pages/exam-setup/ExamSetupFlowActions.ts
+- tests/test_scoring_modes.py
+- tests/test_validators.py
+- tests/frontend_answer_scoring.test.mjs
+- tests/frontend_spec_roundtrip.test.mjs
+- docs/decisions/DEV-018-scoring-modes.md
+- docs/decisions/README.md

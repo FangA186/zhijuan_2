@@ -1,0 +1,20 @@
+model:
+  provider: deepseek
+  default: deepseek-flash
+  streaming: true
+platform_toolsets:
+  api_server: []
+toolsets: []
+agent:
+  max_turns: 1
+  api_max_retries: 0
+  auto_recovery_cycles: 0
+memory:
+  memory_enabled: false
+  user_profile_enabled: false
+skills:
+  write_approval: true
+auxiliary:
+  title_generation:
+    enabled: false
+    model_upgrade_enabled: false

@@ -4,7 +4,7 @@ features:
 - id: FEAT-SPEC
   title: 三学段配置与规格
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M0-01
   - M1-05
@@ -14,7 +14,31 @@ features:
   - contracts/openapi.yaml
   - services/api/routes/exams.py
   - apps/web/src/pages/ExamSetup.tsx
-  implementation_paths: []
+  - apps/web/src/pages/FoolproofSetup.tsx
+  - apps/web/src/components/ChineseScopeConfig.tsx
+  - apps/web/src/components/EnglishScopeConfig.tsx
+  - apps/web/src/components/ExamTemplateModal.tsx
+  - services/exam/spec_service.py
+  - services/exam/template_parser.py
+  - services/curriculum/**
+  - services/api/routes/curriculum.py
+  - services/exam/spec_validation.py
+  - apps/web/src/lib/stageYear.ts
+  - tests/test_spec_service.py
+  - tests/frontend_stage_year.test.mjs
+  implementation_paths:
+  - apps/web/src/pages/FoolproofSetup.tsx
+  - apps/web/src/components/ChineseScopeConfig.tsx
+  - apps/web/src/components/EnglishScopeConfig.tsx
+  - apps/web/src/components/ExamTemplateModal.tsx
+  - services/exam/spec_service.py
+  - services/exam/template_parser.py
+  - services/curriculum
+  - services/api/routes/curriculum.py
+  - services/exam/spec_validation.py
+  - apps/web/src/lib/stageYear.ts
+  - tests/test_spec_service.py
+  - tests/frontend_stage_year.test.mjs
   invariants:
   - 总分矛盾在模型调用前拒绝
   - 三个学段不静默删减
@@ -24,7 +48,9 @@ features:
   - APP-E2E
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 已实现批准规格校验、学段内年级、整数分值精确配平、范围重新确认、规范字段/教材UI sidecar分离及If-Match。
+  - 已通过三个学段规格/蓝图API及浏览器教材年级检查；完整能力注册表、角色权限和所有课程组合尚未验收。
+  - 模板上传当前只做可核对的规则结构提取，原文分值冲突显式提示；旧AI深度识别直连已禁用，Hermes模板任务尚未实现。
 - id: FEAT-AUTH
   title: 身份、租户与权限
   kind: PRODUCT
@@ -49,7 +75,7 @@ features:
 - id: FEAT-PERSIST
   title: 持久化与版本存储
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M1-02
   requires: []
@@ -57,7 +83,14 @@ features:
   - migrations/**
   - database/**
   - services/api/repositories.py
-  implementation_paths: []
+  - services/api/store.py
+  - database/003_generation_jobs.sql
+  - database/004_generation_exam_state.sql
+  implementation_paths:
+  - services/api/store.py
+  - services/api/repositories.py
+  - database/003_generation_jobs.sql
+  - database/004_generation_exam_state.sql
   invariants:
   - 任务和 outbox 原子写入
   - 数据在重启后可恢复
@@ -65,11 +98,12 @@ features:
   - APP-INTEGRATION
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 已增加配置显式DATABASE_URL时的本地单试卷草稿、任务与结果PostgreSQL持久化，并验证重启回读。
+  - 仅current本地草稿；正式租户/RLS、用户与审计全表迁移、Alembic流程仍未完成，不能部署为多租户生产服务。
 - id: FEAT-ADAPTER
   title: Hermes 与 DeepSeek 真实接入
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M0-04
   - M0-05
@@ -82,7 +116,41 @@ features:
   - configs/hermes-reviewed-fragment.yaml
   - configs/deepseek.env.example
   - reference_code/adapter_contract.py
-  implementation_paths: []
+  - services/hermes_adapter/adapter.py
+  - services/hermes_adapter/http_adapter.py
+  - services/hermes_adapter/status_map.py
+  - tools/live_budget_proxy.py
+  - infra/workflow-acceptance/compose.yaml
+  - infra/workflow-acceptance/profile.yaml
+  - tests/test_hermes_runs_transport.py
+  - tests/test_live_budget_proxy.py
+  - tools/raw_api_capture.py
+  - tools/raw_api_console.py
+  - tools/raw_api_server.py
+  - tools/live_budget_stream.py
+  - tools/deepseek_json_contract.py
+  - services/api/routes/raw_api_routes.py
+  - services/hermes_adapter/http_runner.py
+  - apps/web/public/raw-api.html
+  - apps/web/public/raw-api.css
+  - apps/web/public/raw-api-core.js
+  - apps/web/public/raw-api-viewer.js
+  - apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+  - tests/test_raw_api_capture.py
+  - tests/test_raw_api_routes.py
+  - tests/frontend_raw_api.test.mjs
+  - docs/raw-api-console.md
+  - docs/decisions/DEV-020-raw-provider-diagnostics.md
+  implementation_paths:
+  - services/hermes_adapter
+  - services/hermes_adapter/adapter.py
+  - services/hermes_adapter/http_adapter.py
+  - services/hermes_adapter/status_map.py
+  - tools/live_budget_proxy.py
+  - infra/workflow-acceptance/compose.yaml
+  - infra/workflow-acceptance/profile.yaml
+  - tests/test_hermes_runs_transport.py
+  - tests/test_live_budget_proxy.py
   invariants:
   - 不旁路 Hermes
   - 无密钥明确失败
@@ -92,11 +160,14 @@ features:
   - LIVE-QUALITY
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 正式执行入口已移除DeepSeek旁路，使用固定Hermes原生Runs；真实author/solver调用已执行。
+  - 已拦截非法JSON、身份不匹配、partial与未知响应；恢复后的取消/回调故障由无网络回归验证，未额外付费重跑。
+  - 当前本地代理经用户明确选择取消累计请求/金额上限，保留鉴权与调用记录；这是本地偏离生产预算基线，不能当作生产预算系统或部署批准。
+  - 原始响应诊断页与thinking可选配置已实现，65项离线协议/访问边界验证；本轮用户要求自行启后台，真实thinking未运行。
 - id: FEAT-JOBS
   title: 异步任务、取消与恢复
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M1-04
   - M1-08
@@ -109,7 +180,23 @@ features:
   - services/api/routes/jobs.py
   - services/api/audit.py
   - configs/business-policy.example.yaml
-  implementation_paths: []
+  - services/exam/job_service.py
+  - services/api/routes/exams.py
+  - apps/web/src/pages/ExamPaperWorkbench.tsx
+  - services/worker/jobs.py
+  - services/api/repositories.py
+  - database/003_generation_jobs.sql
+  - tests/test_generation_pipeline.py
+  - tests/integration/test_generation_job_postgres.py
+  implementation_paths:
+  - services/exam/job_service.py
+  - services/api/routes/exams.py
+  - apps/web/src/pages/ExamPaperWorkbench.tsx
+  - services/worker/jobs.py
+  - services/api/repositories.py
+  - database/003_generation_jobs.sql
+  - tests/test_generation_pipeline.py
+  - tests/integration/test_generation_job_postgres.py
   invariants:
   - 重投不重复写入
   - 取消后不再派发
@@ -120,11 +207,14 @@ features:
   - APP-E2E
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 已实现显式排队、持久outbox、RabbitMQ/Celery执行、原子结果提交、取消/版本栅栏、真实运行引用和未知用量处理；GET/SSE不触发生成。
+  - 真实单题完整队列链路已通过，检查结论保持REVIEW；并发/取消/旧版本拒写已在专属PostgreSQL验证。
+  - RECONCILING停止自动重发，尚未提供完整自动对账恢复与生产多租户/预算调度；单机worker关闭了旧Rabbit临时控制队列。
+  - 当前本地受理不再按整卷题数预检预算，代理不设累计上限；真实出卷可能产生费用，未做新一轮付费调用或产品验收。
 - id: FEAT-PLAN
   title: 蓝图与多题原创生成
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M2-01
   requires:
@@ -135,7 +225,73 @@ features:
   - services/worker/plan_tasks.py
   - skills/exam-planner/**
   - skills/question-author/**
-  implementation_paths: []
+  - services/blueprint/**
+  - services/exam/blueprint_service.py
+  - services/blueprint/generator.py
+  - services/blueprint/allocator.py
+  - services/blueprint/rules.py
+  - tests/test_blueprint_engine.py
+  - configs/template-topic-labels.json
+  - apps/web/tsconfig.json
+  - services/exam/template_parser_sections.py
+  - apps/web/src/components/examReferenceTemplates.ts
+  - apps/web/src/lib/topicPlanning.ts
+  - apps/web/src/lib/sectionScope.ts
+  - apps/web/src/pages/foolproof-setup/useFoolproofSetupScope.ts
+  - apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts
+  - apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx
+  - services/blueprint/topic_scope.py
+  - services/validators/diversity.py
+  - services/validators/candidate.py
+  - services/exam/question_generation.py
+  - services/exam/question_review.py
+  - services/worker/jobs.py
+  - services/worker/failures.py
+  - skills/question-author/SKILL.md
+  - skills/question-reviewer/SKILL.md
+  - tests/test_topic_diversity.py
+  - tests/frontend_topic_planning.test.mjs
+  - tests/test_generation_pipeline.py
+  - tools/bug_workflow.py
+  - tests/test_bug_memory.py
+  - apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx
+  - apps/web/src/pages/job-progress/JobProgressSlots.tsx
+  - apps/web/src/pages/exam-paper/slotDiagnostics.ts
+  - services/blueprint/planner.py
+  - services/api/planning_repository.py
+  - services/exam/planning_service.py
+  - services/worker/planning.py
+  - services/api/routes/planning_routes.py
+  - services/api/routes/exams.py
+  - services/api/routes/exam_setup_routes.py
+  - tools/deepseek_json_contract.py
+  - contracts/blueprint-design.schema.json
+  - contracts/planning-api.yaml
+  - contracts/openapi.yaml
+  - skills/exam-planner/SKILL.md
+  - infra/workflow-acceptance/compose.yaml
+  - apps/web/src/lib/apiBlueprint.ts
+  - apps/web/src/types/planning.ts
+  - apps/web/src/types/spec.ts
+  - apps/web/src/pages/foolproof-setup/usePlanner.ts
+  - apps/web/src/pages/foolproof-setup/FoolproofSetupModel.ts
+  - apps/web/src/pages/foolproof-setup/FoolproofSetupForm.tsx
+  - apps/web/src/pages/exam-setup/ExamSetupFlowActions.ts
+  - apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+  - apps/web/src/pages/job-progress/activityPresentation.ts
+  - tests/test_planner_agent.py
+  - tests/integration/test_planner_postgres.py
+  - docs/planner-agent.md
+  - docs/decisions/DEV-022-planner-agent.md
+  - docs/decisions/README.md
+  - docs/local-development.md
+  implementation_paths:
+  - services/blueprint
+  - services/exam/blueprint_service.py
+  - services/blueprint/generator.py
+  - services/blueprint/allocator.py
+  - services/blueprint/rules.py
+  - tests/test_blueprint_engine.py
   invariants:
   - 确认后按槽位目标生成
   - 不能为凑数静默降低要求
@@ -144,11 +300,14 @@ features:
   - LIVE-QUALITY
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 已实现严格范围/精确分值校验、稳定题槽、难度配额、规格冻结、plan_hash与版本确认；页面必须先确认真实蓝图再启动。
+  - 共用材料依赖图与全卷多题教学质量仍待验收；不得把单题烟测当G-MIN/G-FULL。
+  - 2026-09-28：具体考点与同卷重复保护离线通过；生产全链路和真实整卷多样性仍未验收。
+  - 2026-09-29：Hermes规划角色、持久任务、校验、前端输出与命题交接已接通；隔离数据库/浏览器通过，真实模型教学质量待验收。
 - id: FEAT-BLIND
   title: 独立盲解与输入隔离
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M2-02
   requires:
@@ -160,7 +319,18 @@ features:
   - contracts/public-question.schema.json
   - contracts/blind-input.schema.json
   - skills/blind-solver/**
-  implementation_paths: []
+  - services/hermes_adapter/comparator.py
+  - services/hermes_adapter/isolation_gateway.py
+  - infra/hermes-solver/compose.yaml
+  - infra/hermes-solver/Dockerfile
+  - tests/test_blind_isolation.py
+  implementation_paths:
+  - services/hermes_adapter/blind_runtime.py
+  - services/hermes_adapter/comparator.py
+  - services/hermes_adapter/isolation_gateway.py
+  - infra/hermes-solver/compose.yaml
+  - infra/hermes-solver/Dockerfile
+  - tests/test_blind_isolation.py
   invariants:
   - 参考答案不能通过文件、历史或工具被访问
   - 同模型标记 SAME_MODEL
@@ -169,11 +339,12 @@ features:
   - LIVE-QUALITY
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 已实现递归私有字段拒绝、独立Hermes HOME/工作目录/状态卷、只读盲解Skill、空工具集和Runs窄入口；容器canary访问拒绝已实测。
+  - 真实初中/高中盲解已执行，标记SAME_MODEL；共有材料解析和更广泛对抗/跨租户用例尚未完成。
 - id: FEAT-CHECK
   title: 检查器与可信证据
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M2-03
   - M3-01
@@ -184,7 +355,27 @@ features:
   - contracts/validation-record.schema.json
   - skills/question-reviewer/**
   - configs/curriculum-profiles.yaml
-  implementation_paths: []
+  - services/hermes_adapter/schema_validator.py
+  - services/hermes_adapter/comparator.py
+  - services/exam/question_service.py
+  - services/validators/candidate.py
+  - services/diagram_assets.py
+  - tests/test_validators.py
+  - tests/test_candidate_integrity.py
+  - tests/test_diagram_assets.py
+  - tests/test_diagram_asset_gate.py
+  - tests/test_workflow_safety_closeout.py
+  implementation_paths:
+  - services/hermes_adapter/schema_validator.py
+  - services/hermes_adapter/comparator.py
+  - services/exam/question_service.py
+  - services/validators/candidate.py
+  - services/diagram_assets.py
+  - tests/test_validators.py
+  - tests/test_candidate_integrity.py
+  - tests/test_diagram_assets.py
+  - tests/test_diagram_asset_gate.py
+  - tests/test_workflow_safety_closeout.py
   invariants:
   - 工具不支持或超时返回 REVIEW
   - 不采信 Agent 自报 verified
@@ -194,11 +385,13 @@ features:
   - LIVE-QUALITY
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 已实现不篡改模型输出的结构校验、选项/答案/评分求和/题槽检查、版本内容哈希及独立盲解证据哈希；失败在盲解收费前拦截。
+  - 小学真实输出出现过非法JSON和评分错误，均保留失败记录；数学语义缺乏受信AST证明，仍为REVIEW，不能自动发布。
+  - 本地算筹图仅支持1～5的结构化SVG；新增资产完整性FAIL门禁，图片可读不代表题目教学正确；尚未做真实模型回归。
 - id: FEAT-REPAIR
   title: 有限修订
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M2-04
   requires:
@@ -208,7 +401,68 @@ features:
   watch_paths:
   - services/worker/repair_tasks.py
   - services/api/domain/repair_policy.py
-  implementation_paths: []
+  - services/hermes_adapter/http_adapter.py
+  - services/hermes_adapter/run_stream.py
+  - services/hermes_adapter/isolation_gateway.py
+  - services/exam/question_service.py
+  - services/exam/generation_context.py
+  - services/exam/question_generation.py
+  - services/exam/question_review.py
+  - services/exam/job_service.py
+  - services/api/job_repository_execution.py
+  - services/api/job_run_events.py
+  - services/api/routes/exams.py
+  - services/api/routes/exam_job_routes.py
+  - services/api/routes/exam_activity_routes.py
+  - services/worker/jobs.py
+  - services/worker/failures.py
+  - skills/question-reviewer/SKILL.md
+  - contracts/question-review.schema.json
+  - tools/live_budget_proxy.py
+  - tools/live_budget_stream.py
+  - tools/deepseek_json_contract.py
+  - infra/workflow-acceptance/profile.yaml
+  - infra/workflow-acceptance/compose.yaml
+  - apps/web/src/types/job.ts
+  - apps/web/src/lib/apiGeneration.ts
+  - apps/web/src/pages/job-progress/AgentActivityConsole.tsx
+  - apps/web/src/pages/job-progress/JobProgressLogs.tsx
+  - apps/web/src/pages/job-progress/useJobProgressStream.ts
+  - apps/web/src/pages/exam-paper/WorkbenchGenerationActivity.tsx
+  - apps/web/src/pages/exam-paper/WorkbenchProgressView.tsx
+  - apps/web/src/pages/exam-paper/useExamPaperStream.ts
+  - apps/web/src/pages/exam-paper/slotDiagnostics.ts
+  - tests/test_review_workflow.py
+  - tests/test_activity_stream.py
+  - tests/test_native_stream_transport.py
+  - tests/hermes_adapter_cases_1.py
+  - tests/hermes_adapter_cases_2.py
+  - tests/test_workflow_safety_closeout.py
+  - tests/test_diagram_assets.py
+  - tests/browser/review_activity_fixture.py
+  - docs/decisions/DEV-019-review-stream.md
+  - apps/web/src/pages/exam-paper/WorkbenchProgressSummary.tsx
+  - apps/web/src/pages/job-progress/activityPresentation.ts
+  - tools/live_budget_status.py
+  - tools/live_review_probe.py
+  - tests/frontend_activity_presentation.test.mjs
+  implementation_paths:
+  - services/hermes_adapter/http_adapter.py
+  - services/hermes_adapter/run_stream.py
+  - services/hermes_adapter/isolation_gateway.py
+  - services/exam/question_service.py
+  - services/exam/generation_context.py
+  - services/exam/question_generation.py
+  - services/exam/question_review.py
+  - services/exam/job_service.py
+  - services/api/job_repository_execution.py
+  - services/api/job_run_events.py
+  - services/api/routes/exams.py
+  - services/api/routes/exam_job_routes.py
+  - services/api/routes/exam_activity_routes.py
+  - services/worker/jobs.py
+  - services/worker/failures.py
+  - skills/question-reviewer/SKILL.md
   invariants:
   - 最多批准轮数
   - 修订后重新验证
@@ -218,11 +472,12 @@ features:
   - LIVE-QUALITY
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 已完成真实三角色、最多两轮版本化修订、隔离盲解与输出流局部验证，后台已重载。
+  - 最终样本仍REVIEW_REQUIRED；实际数学与整卷/三学段教学质量未签收；并发崩溃恢复和生产身份边界仍待验证。
 - id: FEAT-REGEN
   title: 编辑与单题重新生成
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M2-05
   requires:
@@ -233,7 +488,14 @@ features:
   - apps/web/src/pages/ExamEditor.tsx
   - services/api/domain/revisions.py
   - services/worker/regenerate.py
-  implementation_paths: []
+  - services/exam/question_service.py
+  - services/api/store.py
+  - apps/web/src/pages/ExamPaperWorkbench.tsx
+  implementation_paths:
+  - services/exam/question_service.py
+  - services/api/store.py
+  - apps/web/src/pages/ExamPaperWorkbench.tsx
+  - apps/web/src/pages/ExamEditor.tsx
   invariants:
   - 只替换选定槽位
   - 旧检查和审批失效
@@ -243,11 +505,12 @@ features:
   - APP-E2E
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 单题编辑/重生成的旧同步计费与降级路径已阻断；持久化结果必须通过M2-05版本队列实现后才重新开放。
+  - 原编辑页面和草稿代码保留，不能声称版本并发/旧证据失效闭环已完成。
 - id: FEAT-REVIEW
   title: 保存、复核与历史
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M2-06
   requires:
@@ -257,7 +520,14 @@ features:
   - services/api/domain/draft_review.py
   - services/api/routes/history.py
   - apps/web/src/pages/Review.tsx
-  implementation_paths: []
+  - services/api/store.py
+  - services/api/routes/exams.py
+  - apps/web/src/pages/History.tsx
+  implementation_paths:
+  - services/api/store.py
+  - services/api/routes/exams.py
+  - apps/web/src/pages/Review.tsx
+  - apps/web/src/pages/History.tsx
   invariants:
   - FAIL 不可一键忽略
   - REVIEW 人工裁决不篡改原结果
@@ -266,11 +536,11 @@ features:
   - APP-E2E
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 已有内存裁决、历史列表及旧复核页面；历史含样例，旧页面未挂载当前主入口，缺持久化与权限验收。
 - id: FEAT-EXPORT
   title: 学生卷 PDF 与 JSON
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M2-07
   requires:
@@ -280,7 +550,19 @@ features:
   - services/renderer/**
   - contracts/candidate.schema.json
   - apps/web/src/lib/**
-  implementation_paths: []
+  - apps/web/src/components/ExportModal.tsx
+  - apps/web/src/lib/projection.ts
+  - apps/web/src/lib/math.tsx
+  - services/api/routes/exams.py
+  - tests/frontend_diagram_asset.test.mjs
+  - apps/web/src/pages/ExamPaperWorkbench.tsx
+  implementation_paths:
+  - apps/web/src/components/ExportModal.tsx
+  - apps/web/src/lib/projection.ts
+  - apps/web/src/pages/ExamPaperWorkbench.tsx
+  - apps/web/src/lib/math.tsx
+  - services/api/routes/exams.py
+  - tests/frontend_diagram_asset.test.mjs
   invariants:
   - 公开投影不含私有答案
   - 同版本生成学生和教师文件
@@ -290,11 +572,12 @@ features:
   - APP-SECURITY
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 已有 JSON 和浏览器打印入口；未实现独立 Playwright PDF 管线及真实产物检查。
+  - 本地预览可读取受控算筹SVG，缺图显式提示；含图浏览器打印/PDF及旧.doc导出暂时阻断，不能声称正式含图产物已完成。
 - id: FEAT-PUBLISH
   title: 审核发布与撤回
   kind: PRODUCT
-  implementation: NOT_STARTED
+  implementation: IN_PROGRESS
   task_ids:
   - M3-03
   requires:
@@ -305,7 +588,11 @@ features:
   - services/api/domain/review.py
   - services/api/routes/publications.py
   - skills/exam-reviewer/**
-  implementation_paths: []
+  - services/api/store.py
+  - services/api/routes/exams.py
+  implementation_paths:
+  - services/api/store.py
+  - services/api/routes/exams.py
   invariants:
   - 发布绑定 content_hash 和 render_hash
   - Agent 无发布权限
@@ -316,7 +603,8 @@ features:
   - APP-E2E
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
+  - 正式发布API明确返回501，防止查询PostgreSQL新题却发布旧内存草稿或伪造render_hash。
+  - M3-03版本审批、真实导出哈希、角色权限与撤回仍待实现。
 - id: FEAT-DOCX
   title: 可编辑 Word 导出
   kind: PRODUCT
@@ -337,14 +625,57 @@ features:
   - APP-RENDER
   last_evidence: null
   limitations:
-  - 尚无产品运行或教学质量验收证据。
-- id: FEAT-DEV-MEMORY
-  title: 跨会话记录与离线质量工具
+  - 现有导出是 HTML 包装的 .doc，不是可编辑 DOCX；独立 DOCX/公式管线尚未实现。
+- id: FEAT-DEV-STRUCTURE
+  title: 可维护代码结构与 200 行离线门禁
   kind: DEVTOOL
   implementation: IMPLEMENTED
-  task_ids: []
+  task_ids:
+  - DEV-03
   requires: []
   watch_paths:
+  - AGENTS.md
+  - README.md
+  - apps/web/src/**
+  - services/**
+  - tools/**
+  - tests/**
+  - quality/**
+  - docs/project-map.md
+  - docs/archive/v1.4-bundle/**
+  - progress/file-guide.yaml
+  - spider_smartedu.py
+  implementation_paths:
+  - AGENTS.md
+  - tools/check_code_lines.py
+  - quality/suites.yaml
+  invariants:
+  - 自有可维护代码单文件不超过 200 物理行，生成物、第三方源码及已执行迁移除外
+  - 拆分保留实际入口、交互、权限和已有未提交修改
+  - 行数、构建和离线检查不替代真实页面及产品验收
+  required_suites:
+  - code-line-limit
+  - baseline-unit
+  - project-overview-tests
+  last_evidence: acceptance-runs/maintenance/dev-03-code-structure-20260924-001/offline-final-6/report.json
+  limitations:
+  - 200 行检查、代码拆分与目录整理已实施；离线通过仅证明本次源码和检查范围，不代替各产品功能、极端排版或真实生成验收。
+- id: FEAT-DEV-MEMORY
+  title: 跨会话记录、项目看板与离线质量工具
+  kind: DEVTOOL
+  implementation: IMPLEMENTED
+  task_ids:
+  - DEV-01
+  - DEV-02
+  - DEV-04
+  requires: []
+  watch_paths:
+  - tools/bug_*.py
+  - tools/memory_*.py
+  - tests/test_bug_memory.py
+  - tests/project_memory_*.py
+  - progress/bugs/**
+  - apps/web/src/pages/project-overview/**
   - tools/project_memory.py
   - tools/memory_lib.py
   - tools/run_quality_checks.py
@@ -353,20 +684,51 @@ features:
   - quality/*.yaml
   - progress/policy.yaml
   - progress/schemas/*.json
+  - tools/project_overview.py
+  - tests/test_project_overview.py
+  - progress/file-guide.yaml
+  - apps/web/projectOverviewPlugin.ts
+  - apps/web/src/pages/ProjectOverview.tsx
+  - apps/web/src/pages/ProjectOverview.css
+  - apps/web/src/main.tsx
+  - apps/web/src/vite-env.d.ts
+  - apps/web/src/components/Header.tsx
+  - apps/web/vite.config.ts
+  - tools/memory_finish.py
+  - progress/handoffs/README.md
   implementation_paths:
+  - tools/bug_memory.py
+  - progress/bugs/README.md
+  - apps/web/src/pages/project-overview/BugPanel.tsx
   - tools/project_memory.py
   - tools/memory_lib.py
   - tools/run_quality_checks.py
   - tools/run_unittests.py
   - tests/test_project_memory.py
+  - tools/project_overview.py
+  - tests/test_project_overview.py
+  - progress/file-guide.yaml
+  - apps/web/projectOverviewPlugin.ts
+  - apps/web/src/pages/ProjectOverview.tsx
+  - apps/web/src/pages/ProjectOverview.css
+  - apps/web/src/main.tsx
+  - apps/web/src/vite-env.d.ts
+  - apps/web/src/components/Header.tsx
+  - apps/web/vite.config.ts
+  - tools/memory_finish.py
+  - progress/handoffs/README.md
   invariants:
   - 不读取密钥或原始 diff 内容
   - 不伪造当前应用状态
   - 证据范围改变后不沿用旧通过
   - 跳过或未执行测试不算通过
   required_suites:
+  - bug-memory-tests
   - memory-tests
   - memory-check
-  last_evidence: acceptance-runs/devtools/run-hermes-004/report.json
+  - project-overview-tests
+  last_evidence: acceptance-runs/devtools/bug-memory-20260924-001/offline-final/report.json
   limitations:
-  - 仅支持基于登记路径和依赖的辅助影响分析，不是完整语义依赖分析；未激活远程 CI/分支保护。
+  - finish按任务核对变更、最新交接指纹、任务/功能/证据和摘要；它不自动编写事实、不代替人工或独立应用验收，也尚未启用远程分支保护。
+  - 看板只在本地开发服务开放；历史检查点不等于正式功能发布版本，目录未登记项仍标为推断。
+  - Bug门禁检查已声明的修复任务，不能识别全部自然语言意图或认证操作者；Notion回读映射是流程回执，不是后台同步服务。

@@ -7,11 +7,11 @@ interface StageNavProps {
 }
 
 const STAGES = [
-  { id: 1, title: '规格与蓝图配置', desc: '学段学科与槽位分配', icon: Settings },
-  { id: 2, title: '命题任务监控', desc: 'Hermes 异步流与成本', icon: Cpu },
-  { id: 3, title: '三栏编辑工作台', desc: 'KaTeX渲染与独立盲解核对', icon: Edit3 },
-  { id: 4, title: '质量审核门禁', desc: '硬错误拦截与人工裁决', icon: CheckCircle2 },
-  { id: 5, title: '试卷历史与导出', desc: '公开投影学生卷与全解', icon: FileDown },
+  { id: 1, title: '试卷设计', desc: '教材章节与题型题量', icon: Settings },
+  { id: 2, title: 'AI 智能出题', desc: '原创出题与双重验算', icon: Cpu },
+  { id: 3, title: '试卷排版修改', desc: '题目图文核对与微调', icon: Edit3 },
+  { id: 4, title: '智能质检定稿', desc: '科学性检验与教师终审', icon: CheckCircle2 },
+  { id: 5, title: '试卷下载打印', desc: '学生卷与教师全解版', icon: FileDown },
 ];
 
 export const StageNav: React.FC<StageNavProps> = ({ currentStage, onStageChange }) => {

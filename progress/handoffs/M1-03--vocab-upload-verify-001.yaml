@@ -1,0 +1,32 @@
+schema_version: 1
+task_id: M1-03
+session_id: vocab-upload-verify-001
+created_at: '2026-09-21T17:40:00+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - apps/web/src/components/EnglishScopeConfig.tsx
+  hidden_path_count: 0
+  notice: 仅本次会话实际修改的文件；方案其余文件为先前会话未提交现状。
+summary: 原版教材词汇表手动上传/更改功能已完成并按方案验收：后端 Base64 上传接口、前端类型与 API、EnglishScopeConfig 交互均已落地。期间修复一个真实缺陷：active_vocab_images 为 null 时前端崩溃。
+next_action: 等待真实浏览器文件上传 E2E（IAB 不支持 filechooser，需人工或支持上传的浏览器环境），以及用户验收。
+completed:
+- "POST /v1/curriculum/vocab/upload 与 GET custom-images 上传/读取接口：4 项单元测试通过，并已对运行中服务做真实上传/回读验证"
+- "前端 types/spec.ts 扩展 active_vocab_images / is_vocab_customized；api.ts 的 uploadVocabImage / getVocabImageUrl"
+- "EnglishScopeConfig.tsx 完整交互：批量上传、多选、逐页移除、恢复原版默认、Lightbox 画廊预览、空态引导"
+pending:
+- "浏览器内真实选择本地图片文件上传（IAB 的 filechooser 能力不支持，需人工或替换浏览器验证）"
+- "验收反馈与 Redmine/需求状态更新（按项目规范由用户确认）"
+decisions:
+- "Base64 JSON 上传协议按方案执行（零 python-multipart 依赖），魔数白名单校验 JPEG/PNG/WEBP，15MB 上限"
+failed_approaches:
+- "无"
+evidence_refs:
+- tests/test_vocab_upload.py
+- tests/test_curriculum_vocab.py
+- tests/test_curriculum_domain.py
+bug_fixed:
+- "缺陷：english_config.active_vocab_images 为 null 时（旧规格或后端序列化），EnglishScopeConfig 将 activeImages 置 null，渲染时 .length 抛 TypeError 触发表单 ErrorBoundary。修复：判空改为 != null 统一兼容 null/undefined。"

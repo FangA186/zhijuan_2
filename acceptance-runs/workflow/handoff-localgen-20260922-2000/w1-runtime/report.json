@@ -1,0 +1,33 @@
+{
+  "report_kind": "local-runtime-wiring-v1",
+  "deliverables": [
+    "tools/local_runtime.py (doctor / start-generation / stop-generation, fail-closed)",
+    "configs/local-runtime.env.example",
+    "tools/offline_gate.sh",
+    "docs/decisions/DEV-005-local-runtime-tool.md",
+    "database/005_local_runtime_heartbeats.sql applied to zhijuan_local (additive metadata table, after test-schema validation and daily-DB backup)",
+    ".env runtime keys appended silently (CELERY_BROKER_URL->vhost zhijuan-local, ZHIJUAN_RUNTIME_ID, HERMES_API_BASE_URL/KEY, HERMES_SOLVER_API_BASE_URL/KEY, ZHIJUAN_BUDGET_PROXY_TOKEN, ZHIJUAN_BUDGET_INTERNAL_URL); values never printed; ZHIJUAN_DEEPSEEK_MODEL_ID already present and consistent across author/solver/app (deepseek-flash)"
+  ],
+  "doctor_fixes_applied_by_main_agent": [
+    "AMQP handshake check accepted RabbitMQ 4's connection.start frame (reply[7:9]==class 10) in broker_check and _wait_amqp_ready; previously only an AMQP echo was accepted, producing a false BROKER_UNAVAILABLE",
+    "heartbeat_check inserts repo root into sys.path before importing services.api.runtime_heartbeats (ModuleNotFoundError when run as python tools/local_runtime.py)"
+  ],
+  "verification_sequence": [
+    "doctor: database OK (zhijuan_local, 6 tables), broker OK, api OK; worker/dispatcher/author/solver/budget FAIL with precise reason codes and next actions; ready=False fail-closed",
+    "start-generation: started 1 worker + 1 scheduler with Python-injected env; worker connected to vhost zhijuan-local (celery ready in .runtime/logs/worker.log); BOTH wrote fresh heartbeats into zhijuan_local.runtime_heartbeats with model_id + gateway fingerprints; readiness stayed false (author/solver stopped, budget proxy not host-reachable) -> tool recycled ONLY its two newly started processes (ownership verified); PG/Vite/API and all other containers untouched (O04/O05 evidence)",
+    "readyz on restored API returns C1 contract: database ok, broker ok, worker/dispatcher/author/solver/budget fail with reasons; ready=false"
+  ],
+  "incident": {
+    "what": "The user's daily API process (uvicorn --reload on 8000) was found dead mid-session (port 8000 refused; no uvicorn process). Cause unknown; not traced to any command in this session (no process-killing commands were issued).",
+    "action": "Restarted detached with the original launch shape (.venv/bin/uvicorn services.api.main:app --host 127.0.0.1 --port 8000 --reload, logs .runtime/logs/api.log). Health verified; the restart also loaded the new runtime env keys (generation.checks now all true).",
+    "user_draft": "safe in zhijuan_local (no jobs were active; generation_jobs empty)"
+  },
+  "open_decisions_for_user": [
+    "Budget proxy /internal/budget is only reachable inside the docker network (no host port published). Daily readiness and the accept-chain budget gate therefore stay fail-closed (BUDGET_UNAVAILABLE). Options: publish a loopback-only binding (requires recreating the proxy container; write a decision first), or serve budget status another way. Needs user approval; not done by this session.",
+    "author/solver/solver-entry/budget-proxy containers remain stopped (verified acceptance stack). start-generation will go green only after: budget status reachable + these gateways started."
+  ],
+  "not_run": [
+    "stop-generation with an active RUNNING job (no active job existed); refuse path is unit-tested",
+    "full green start-generation (blocked by the budget reachability decision above)"
+  ]
+}

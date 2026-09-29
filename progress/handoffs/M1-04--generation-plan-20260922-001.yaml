@@ -1,0 +1,51 @@
+schema_version: 1
+task_id: M1-04
+session_id: generation-plan-20260922-001
+created_at: '2026-09-22T15:22:18+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths: []
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15050
+summary: 应用户要求形成日常真实命题详细实施计划与89项验收矩阵；仅计划，未实施
+next_action: 接手AI先读两份计划并按W0-W6执行；真实23题验收受预算门控，不能停必要PG或仅解除按钮disabled。
+completed:
+- 核对常用8000：DB已配置，队列/author/solver未配置；当前23题150分计划尚未确认。
+- 核对旧费用账本16/20次、保守预留16元；完整23题至少46次上游请求不能按旧限额直接执行。
+- 编写378行实施计划、312行测试计划，覆盖89个具名验收用例和逐模块实现/迁移/回滚/交付要求。
+- 核对文档内部链接、代码围栏及git diff --check通过；没有执行新增功能、模型调用或服务启停。
+pending:
+- 按计划实现日常接线、真实就绪、预算预检与完整前端任务恢复。
+- 先修正文档列出的页头旧信息、跨学段旧范围、预设题数等已知缺口；不能宣称计划已落地。
+decisions:
+- 用户本次明确只要求详细计划，留给其他AI实施；不创建新并行任务或更改现有功能状态。
+- 将此前停PG的错误及用户“不影响使用”约束写入必要门禁。
+failed_approaches:
+- 此前仅独立验收链路通过而日常入口未接全；本计划要求最终从3000/8000验证。
+- 已有配置检查不能证明Worker存活；新计划要求真实心跳与依赖探测。
+evidence_refs:
+- docs/plans/2026-09-22-local-generation-implementation-plan.md
+- docs/plans/2026-09-22-local-generation-test-plan.md
+scope_patterns:
+- configs/business-policy.example.yaml
+- docs/plans/2026-09-22-local-generation-implementation-plan.md
+- docs/plans/2026-09-22-local-generation-test-plan.md
+- infra/compose.yaml
+- services/worker/celery_app.py
+- services/worker/leases.py
+- services/worker/outbox.py
+- services/worker/tasks.py
+files:
+  '[missing-pattern] services/worker/celery_app.py': MISSING
+  '[missing-pattern] services/worker/leases.py': MISSING
+  '[missing-pattern] services/worker/outbox.py': MISSING
+  '[missing-pattern] services/worker/tasks.py': MISSING
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  docs/plans/2026-09-22-local-generation-implementation-plan.md: 83cedd1d045a318a259ce06bf6d81fe56b15b63ee9989240bc48c13ad5c7541d
+  docs/plans/2026-09-22-local-generation-test-plan.md: 8b76f90cf3cb3ebc68b148447e2cb73dedc27ee9ff287449ea2097c842eeae85
+  infra/compose.yaml: 649b54742085b24ef3b6fc01c62b0756d208f58e9402b8e87048e0863fc1b38a
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

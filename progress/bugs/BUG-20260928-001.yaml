@@ -1,0 +1,79 @@
+schema_version: 1
+id: BUG-20260928-001
+title: 模板通用标签污染考点且同卷反复生成相同条件
+status: FIXED
+module: blueprint/generation
+updated_at: '2026-09-29'
+task_ids:
+- M2-01
+keywords:
+- 考点
+- 重复
+- 模板
+- 蓝图
+symptom: 模板通用标签污染考点且同卷反复生成相同条件
+reproduction:
+- 旧配置的题槽target_topic为基础概念辨析等通用标题
+- 多个题槽以相同复数方程命题；无同卷去重证据
+root_cause: 模板默认主题被并入教材范围，计划按每节重新轮换，命题没有同卷公开题干上下文。
+resolution: 模板移除通用标签；旧配置重新确认；跨题型分配具体考点，命题与审核接收同卷公开摘要；重复FAIL/相似REVIEW。
+affected_files:
+- configs/template-topic-labels.json
+- apps/web/tsconfig.json
+- services/exam/template_parser_sections.py
+- apps/web/src/components/examReferenceTemplates.ts
+- apps/web/src/lib/topicPlanning.ts
+- apps/web/src/lib/sectionScope.ts
+- apps/web/src/pages/foolproof-setup/useFoolproofSetupScope.ts
+- apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts
+- apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx
+- services/blueprint/topic_scope.py
+- services/blueprint/generator.py
+- services/validators/diversity.py
+- services/validators/candidate.py
+- services/exam/question_generation.py
+- services/exam/question_review.py
+- services/worker/jobs.py
+- services/worker/failures.py
+- skills/question-author/SKILL.md
+- skills/question-reviewer/SKILL.md
+- tests/test_topic_diversity.py
+- tests/frontend_topic_planning.test.mjs
+- tests/test_generation_pipeline.py
+- apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx
+- apps/web/src/pages/job-progress/JobProgressSlots.tsx
+- apps/web/src/pages/exam-paper/slotDiagnostics.ts
+regression:
+- sh acceptance-runs/m2-01/topic-diversity-20260928-001/regression.sh
+verified_at: '2026-09-28T15:18:42.421984+00:00'
+verification: OFFLINE_PASS；浏览器离线配置交互通过；真实整卷未验收
+evidence_refs:
+- acceptance-runs/m2-01/topic-diversity-20260928-001/report.md
+- acceptance-runs/m2-01/topic-diversity-20260928-001/tests.log
+- acceptance-runs/m2-01/planner-agent-20260929-001/report.md
+events:
+- 2026-09-28 修前检索见M2-01回执；核对当前实现后修复并离线回归
+- 2026-09-29 后续增强：显式Hermes规划Agent替代规则预览，整卷教学设计不再声称由轮换实现；旧模板污染修复仍有效。真实规划质量待验收。
+source_hashes:
+  apps/web/tsconfig.json: 9b872d6547472a629c9cce415bead4fce21160229840d25eb435ccc03987fe6b
+  services/exam/template_parser_sections.py: 7eb38067720258372cda9c0c6d9b8f091e6e0a6ca39b76cddb1746037326bed6
+  apps/web/src/components/examReferenceTemplates.ts: 60653c3f2446f06d2ca67c1bb57e8e51da470bd9d81313b70dd215e9207b86d8
+  apps/web/src/lib/topicPlanning.ts: e213988fa46ce2b01c4abe4b41dc996041e0a2718599e8a4e8095a8eb5cf49d0
+  apps/web/src/lib/sectionScope.ts: d2e03ed3674474d673afdc9af3964423f22a17982f9df99e22df71cde0b0070d
+  apps/web/src/pages/foolproof-setup/useFoolproofSetupScope.ts: 89cdddbdb26c86b77a0078d51132b6adca48e16eef351b024aa24fa162ae731b
+  apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts: fbcd8bea9fc3ddbcf0bed0e37f04d534783ab02dd1f17447a4a76d4d49ff09a2
+  apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx: b84909a6a5832bb1920362428d665a4f37c3a2995adc287917c303e4fa003e79
+  services/blueprint/topic_scope.py: 5cd7f64fa9c2c73d37540ef7030f37d104b34016ba54c0dcb0920e984e7f2aae
+  services/blueprint/generator.py: 33f59e2dd5c8555745c323887e8745cbddb5c35435bf3f05ffd88522ab66ce03
+  services/validators/diversity.py: c92cd7d4e23b5a4578e3e4fdbe05dc328598ae84647f7b6d7acce981ef65a241
+  services/validators/candidate.py: c9a586adc8f3598ce2f0bce749dd6d1cda627b6b02db5490797c80cd9ea41f4d
+  services/exam/question_generation.py: 9633d6c6a0a5865fb8642f6347997db2bc5e4fc2b171ac7d5ae528663e2da075
+  services/exam/question_review.py: 78eecf67fe685eee0f8233d650cfd865afd6a2f4a9898e0b97d58bb70b95e464
+  services/worker/jobs.py: 476368184a7da7dc98d406a98044ae769bd9be29a0b7c34bdc01d21da4d63b97
+  services/worker/failures.py: 04d47e48a41443a35ca5693aa13da0f06f9dbd50df552c4c8472ea0f7398b96c
+  tests/test_topic_diversity.py: 0523c76b2bd42295ff4c7ac70963652d859b011b631f4c5a979ff59e5321b038
+  tests/frontend_topic_planning.test.mjs: e5e0f4700d4b30fbb03518360aaec818a001422196ab439d36da0529cfe88809
+  tests/test_generation_pipeline.py: b743d00edc289f65fe14beb94d62addb13e70da2ad13106c658eeb400079643a
+  apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx: 69c9640696feb0696cb43315b9319a257dbbae65934d5b0c4deb03dcdfb05847
+  apps/web/src/pages/job-progress/JobProgressSlots.tsx: fd01495148a33acaa520a76e704b5fd46b857d9f576e9abdef2bcf18808c05fd
+  apps/web/src/pages/exam-paper/slotDiagnostics.ts: 724dc1edf355c87149ed7dfcaea2f842530d2efe8608f449f09fdea3fdd6ab86

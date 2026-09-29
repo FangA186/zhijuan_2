@@ -1,0 +1,143 @@
+schema_version: 1
+task_id: M2-01
+session_id: topic-diversity-20260928-001
+created_at: '2026-09-28T15:12:09+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - configs/template-topic-labels.json
+  - contracts/candidate.schema.json
+  - contracts/exam-spec.schema.json
+  - contracts/question-review.schema.json
+  - services/blueprint/__init__.py
+  - services/blueprint/allocator.py
+  - services/blueprint/generator.py
+  - services/blueprint/rules.py
+  - services/blueprint/schema.py
+  - services/blueprint/slot_builder.py
+  - services/blueprint/topic_scope.py
+  - services/exam/blueprint_service.py
+  - skills/question-author/SKILL.md
+  - tests/test_blueprint_engine.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15874
+summary: 具体考点分配、模板标签清理和同卷重复检查
+next_action: 用户重载服务后重新预览确认计划；真实模型多样性待新任务验收
+completed:
+- 模板结构与具体考点分离，旧配置重新确认，跨题型优先未用考点
+- 同卷公开摘要进入命题审核，盲解输入保持单题公开投影
+- 90项Python、7项Node、构建及桌面/窄屏离线浏览器交互通过
+pending:
+- 用户重载API/Worker与生产Skill后新预览确认
+- 真实整卷生成及完整APP-E2E未验收；旧22题136分未改写
+decisions:
+- docs/decisions/DEV-021-topic-diversity.md
+failed_approaches:
+- 真实8000读取超时且3000无法连接；未重启后台，改用独立3001离线页面
+- Chrome插件策略读取异常，内置浏览器完成离线交互
+evidence_refs:
+- acceptance-runs/m2-01/topic-diversity-20260928-001/report.md
+- acceptance-runs/m2-01/topic-diversity-20260928-001/tests.log
+- acceptance-runs/m2-01/topic-diversity-20260928-001/node-tests.log
+- acceptance-runs/m2-01/topic-diversity-20260928-001/build.log
+- acceptance-runs/m2-01/topic-diversity-20260928-001/desktop.png
+- acceptance-runs/m2-01/topic-diversity-20260928-001/narrow.png
+scope_patterns:
+- acceptance/fixtures/minimum-primary.json
+- apps/web/src/pages/PlanReview.tsx
+- configs/local-runtime.env.example
+- configs/template-topic-labels.json
+- contracts/candidate.schema.json
+- contracts/exam-spec.schema.json
+- contracts/openapi.yaml
+- contracts/question-review.schema.json
+- services/api/domain/plans.py
+- services/blueprint/__init__.py
+- services/blueprint/allocator.py
+- services/blueprint/generator.py
+- services/blueprint/rules.py
+- services/blueprint/schema.py
+- services/blueprint/slot_builder.py
+- services/blueprint/topic_scope.py
+- services/exam/blueprint_service.py
+- services/worker/plan_tasks.py
+- skills/exam-planner/SKILL.md
+- skills/question-author/SKILL.md
+- tests/test_blueprint_engine.py
+- apps/web/tsconfig.json
+- services/exam/template_parser_sections.py
+- apps/web/src/components/examReferenceTemplates.ts
+- apps/web/src/lib/topicPlanning.ts
+- apps/web/src/lib/sectionScope.ts
+- apps/web/src/pages/foolproof-setup/useFoolproofSetupScope.ts
+- apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts
+- apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx
+- services/validators/diversity.py
+- services/validators/candidate.py
+- services/exam/question_generation.py
+- services/exam/question_review.py
+- services/worker/jobs.py
+- services/worker/failures.py
+- skills/question-reviewer/SKILL.md
+- tests/test_topic_diversity.py
+- tests/frontend_topic_planning.test.mjs
+- tests/test_generation_pipeline.py
+- tools/bug_workflow.py
+- tests/test_bug_memory.py
+- apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx
+- apps/web/src/pages/job-progress/JobProgressSlots.tsx
+- apps/web/src/pages/exam-paper/slotDiagnostics.ts
+files:
+  '[missing-pattern] apps/web/src/pages/PlanReview.tsx': MISSING
+  '[missing-pattern] services/api/domain/plans.py': MISSING
+  '[missing-pattern] services/worker/plan_tasks.py': MISSING
+  acceptance/fixtures/minimum-primary.json: df1f1f2f25606cc1eb4812852913d64c7f67240ce857efcb8d6020ac755b8aa1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  configs/template-topic-labels.json: bf3e3825a81e07b634f92d46c5a2349f1902f00c488257710c614f1e62202ba4
+  contracts/candidate.schema.json: 0ad8273511bc8bdb844276435991eeb161af32a759e25d32a08590ec80a66cfd
+  contracts/exam-spec.schema.json: 01fbc48ad9d37c0b88689e8ceb87eaea5218bce8b4e7c4dc7f8e3b1dadfa6ca6
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  contracts/question-review.schema.json: 11c4600f35296bfc33cde95c88170497e5ddb9c54d844fac1fb712dd6bcae9f0
+  services/blueprint/__init__.py: 89ebf12e0fbf8912943a4dbc06ee872a6b2ceb8e17be68a3a19d2ed04322060a
+  services/blueprint/allocator.py: 2349d421725d718f837a77e59c31fbd451c9247b280e1fc5de96566a9606d177
+  services/blueprint/generator.py: 33f59e2dd5c8555745c323887e8745cbddb5c35435bf3f05ffd88522ab66ce03
+  services/blueprint/rules.py: 7b1a1e2109fa06636c4cc4343b8690695815d06f869673dc437dd54d3d9cb984
+  services/blueprint/schema.py: 4c18d0c0c6b6316adf268962384c4471b70237c7c86f2f67e7bfec579ad49100
+  services/blueprint/slot_builder.py: 3b3cf9e967270a1f2986b8a9520e728a9d22c448c244628efe7833692c52590a
+  services/blueprint/topic_scope.py: 5cd7f64fa9c2c73d37540ef7030f37d104b34016ba54c0dcb0920e984e7f2aae
+  services/exam/blueprint_service.py: 357b76da45b9a42006bf0a00294de5c4f3ae76fd4633e941d5b426acf15ccd2b
+  skills/exam-planner/SKILL.md: 9b3d3aae9a7decf196a37c2810fdba3a97348272b34e0a5c09976a5bd7553e82
+  skills/question-author/SKILL.md: d1761db9a02a22f4c001558474bbf05ee575eccfefe5ca9f783ad4d2ba5bba5f
+  tests/test_blueprint_engine.py: e5b9612195a6c7d443ed338cfb66875b169eb470fe773733bc7aec4af27ea4cc
+  apps/web/tsconfig.json: 9b872d6547472a629c9cce415bead4fce21160229840d25eb435ccc03987fe6b
+  services/exam/template_parser_sections.py: 7eb38067720258372cda9c0c6d9b8f091e6e0a6ca39b76cddb1746037326bed6
+  apps/web/src/components/examReferenceTemplates.ts: 60653c3f2446f06d2ca67c1bb57e8e51da470bd9d81313b70dd215e9207b86d8
+  apps/web/src/lib/topicPlanning.ts: e213988fa46ce2b01c4abe4b41dc996041e0a2718599e8a4e8095a8eb5cf49d0
+  apps/web/src/lib/sectionScope.ts: d2e03ed3674474d673afdc9af3964423f22a17982f9df99e22df71cde0b0070d
+  apps/web/src/pages/foolproof-setup/useFoolproofSetupScope.ts: 89cdddbdb26c86b77a0078d51132b6adca48e16eef351b024aa24fa162ae731b
+  apps/web/src/pages/foolproof-setup/useFoolproofSetupGeneration.ts: fbcd8bea9fc3ddbcf0bed0e37f04d534783ab02dd1f17447a4a76d4d49ff09a2
+  apps/web/src/pages/foolproof-setup/FoolproofSetupActions.tsx: b84909a6a5832bb1920362428d665a4f37c3a2995adc287917c303e4fa003e79
+  services/validators/diversity.py: c92cd7d4e23b5a4578e3e4fdbe05dc328598ae84647f7b6d7acce981ef65a241
+  services/validators/candidate.py: c9a586adc8f3598ce2f0bce749dd6d1cda627b6b02db5490797c80cd9ea41f4d
+  services/exam/question_generation.py: 9633d6c6a0a5865fb8642f6347997db2bc5e4fc2b171ac7d5ae528663e2da075
+  services/exam/question_review.py: 78eecf67fe685eee0f8233d650cfd865afd6a2f4a9898e0b97d58bb70b95e464
+  services/worker/jobs.py: 476368184a7da7dc98d406a98044ae769bd9be29a0b7c34bdc01d21da4d63b97
+  services/worker/failures.py: 04d47e48a41443a35ca5693aa13da0f06f9dbd50df552c4c8472ea0f7398b96c
+  skills/question-reviewer/SKILL.md: d25a2e14b365858080615c7d60216da949bb599702533797fcd8208f1a26e2b4
+  tests/test_topic_diversity.py: 0523c76b2bd42295ff4c7ac70963652d859b011b631f4c5a979ff59e5321b038
+  tests/frontend_topic_planning.test.mjs: e5e0f4700d4b30fbb03518360aaec818a001422196ab439d36da0529cfe88809
+  tests/test_generation_pipeline.py: b743d00edc289f65fe14beb94d62addb13e70da2ad13106c658eeb400079643a
+  tools/bug_workflow.py: 3b7a909a941de23b70950902688a168f198422b8661842090829eafa277d3ae3
+  tests/test_bug_memory.py: 371ed22cfc71c3ac5c18ba8d1901f8be65f858a2a649a79db185ee41bfbf81a6
+  apps/web/src/pages/exam-paper/WorkbenchProgressSlots.tsx: 69c9640696feb0696cb43315b9319a257dbbae65934d5b0c4deb03dcdfb05847
+  apps/web/src/pages/job-progress/JobProgressSlots.tsx: fd01495148a33acaa520a76e704b5fd46b857d9f576e9abdef2bcf18808c05fd
+  apps/web/src/pages/exam-paper/slotDiagnostics.ts: 724dc1edf355c87149ed7dfcaea2f842530d2efe8608f449f09fdea3fdd6ab86
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
+bug_ids:
+- BUG-20260928-001
+- BUG-20260928-002

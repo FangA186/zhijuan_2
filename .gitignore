@@ -18,6 +18,9 @@ smartedu_data/
 vendor/hermes-agent/
 .DS_Store
 
+# Local runtime PID/log directory created by tools/local_runtime.py
+.runtime/
+
 # Local textbook images and acceptance screenshots stay on disk, outside Git.
 /教材单词图片/**/*.[pP][nN][gG]
 /教材单词图片/**/*.[jJ][pP][gG]
@@ -28,3 +31,28 @@ vendor/hermes-agent/
 /acceptance-runs/**/*.[pP][nN][gG]
 /acceptance-runs/**/*.[jJ][pP][gG]
 /acceptance-runs/**/*.[jJ][pP][eE][gG]
+
+# Local teaching data, uploads and generated working files (not source code).
+/教材单词图片/
+/教材单词图片_非课程教学备份/
+/uploads/
+/.zcode/workflow-drafts/
+/tools/bin/mac_vision_ocr
+/tools/crawler/smartedu_preview.html
+
+# Keep acceptance reports and reproducible source scripts; leave run output local.
+/acceptance-runs/**/*
+!/acceptance-runs/**/
+!/acceptance-runs/**/*.md
+!/acceptance-runs/**/report.json
+!/acceptance-runs/**/summary.json
+!/acceptance-runs/**/usage-summary.json
+!/acceptance-runs/**/*.py
+!/acceptance-runs/**/*.sh
+/acceptance-runs/**/*.before.md
+# Preserve the existing CI and machine-local evidence exclusions.
+/acceptance-runs/ci/
+/acceptance-runs/devtools/local-*/
+
+# Database dumps and copied originals are runtime artifacts, never report source.
+/acceptance-runs/**/backup/

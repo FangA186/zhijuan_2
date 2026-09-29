@@ -1,0 +1,52 @@
+schema_version: 1
+task_id: M2-03
+session_id: controlled-diagrams-20260924-001
+created_at: '2026-09-24T02:53:02+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15119
+summary: 本地受控算筹SVG与资产完整性门禁离线通过，产品任务仍进行中
+next_action: 真实Hermes产出与教师图形复核，生产对象存储和版本化重生成后续处理
+completed:
+- 作者输出的受限算筹diagram参数由服务端生成SVG、签发内容哈希asset_id；作者伪造asset引用会拒绝。
+- 初检增加ASSET_INTEGRITY，缺图、篡改图、未归一化图进入FAIL且不触发盲解；检查器版本升至5。
+- 专项与相关契约/隔离/任务回归41项通过，前端专项3项及构建通过；本轮不调用模型、不写数据库。
+pending:
+- 真实Hermes按新Skill输出diagram的受控验收、教师核对图形与题义；旧slot_022须通过后续版本化修订单独处理。
+- 生产对象存储、租户鉴权、更多图形类型及正式导出预检仍未完成；M2-03整体任务保持IN_PROGRESS。
+decisions:
+- 用户选择受控绘图并排除GPT图像模型；细节见docs/decisions/DEV-012-controlled-diagram-assets.md。
+- 首批只接受算筹纵式1～5，图片存在不自动升级数学真实性REVIEW为PASS。
+failed_approaches:
+- 扩大回归首次加载本地.env后在导入阶段因PostgreSQL不可达失败；以ZHIJUAN_SKIP_DOTENV=1及移除DATABASE_URL重跑18项通过，未改测试断言来绕过。
+evidence_refs:
+- acceptance-runs/workflow/controlled-diagrams-20260924-001/report.json
+scope_patterns:
+- configs/business-policy.example.yaml
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- contracts/validation-record.schema.json
+- reference_code/publish_gate.py
+- services/validators/evidence.py
+- services/validators/math_ast.py
+- services/validators/scoring.py
+- services/validators/structure.py
+files:
+  '[missing-pattern] services/validators/evidence.py': MISSING
+  '[missing-pattern] services/validators/math_ast.py': MISSING
+  '[missing-pattern] services/validators/scoring.py': MISSING
+  '[missing-pattern] services/validators/structure.py': MISSING
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  contracts/validation-record.schema.json: 98a1786aa9e8bd45076bf4d91ad65de49e89cb9358a7b660ba20d9d2b0c2cc93
+  reference_code/publish_gate.py: 13b0eb7723a482ce67b7da57e3e16265c406c81dd0dca0daf2f66924115a8b1c
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

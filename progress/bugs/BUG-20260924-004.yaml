@@ -1,0 +1,32 @@
+schema_version: 1
+id: BUG-20260924-004
+title: 不均分模板配置汇总显示错误总分
+status: FIXED
+module: frontend
+updated_at: '2026-09-24'
+task_ids:
+- DEV-03
+keywords:
+- 分值
+- item_scores_x100
+- '150'
+- '140'
+- 模板
+symptom: 逐题分值校验通过，但配置页提示仍显示错误题型合计。
+reproduction:
+- 使用23题150分、解答题12/14分混合的已导入规格。
+root_cause: 汇总用 count * score_each_x100 忽略 item_scores_x100。
+resolution: 使用既有 calculateSectionsTotalX100，保持整数分值计算规则。
+affected_files:
+- apps/web/src/pages/foolproof-setup/FoolproofSetupForm.tsx
+- apps/web/src/lib/scoring.ts
+regression:
+- node --test tests/frontend_scoring.test.mjs
+- 浏览器确认题型合计150 / 试卷设定150。
+verified_at: '2026-09-24'
+verification: 历史离线/页面范围通过，完整边界见证据
+evidence_refs:
+- acceptance-runs/maintenance/dev-03-code-structure-20260924-001/browser-check.md
+events:
+- 2026-09-24：从DEV-03实际验收回填；按登记范围修复。
+source_hashes: {}

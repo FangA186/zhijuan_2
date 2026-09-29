@@ -1,0 +1,54 @@
+schema_version: 1
+task_id: DEV-02
+session_id: sol-memory-workflow-20260922-001
+created_at: '2026-09-22T09:15:29+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - AGENTS.md
+  - progress/features.yaml
+  - progress/work.yaml
+  - tests/test_project_memory.py
+  - tools/memory_finish.py
+  - tools/memory_lib.py
+  - tools/project_memory.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 14844
+summary: 新增只读任务收尾检查，并缩小交接上下文的 Git 文件范围。
+next_action: 核对功能映射、账本摘要与独立验收；本工具不代签产品完成。
+completed:
+- 新增 finish --task 只读检查：核对当前任务改动、最新交接指纹、work 状态、功能证据与 current.md；FAIL 返回 1。
+- handoff/context 的 Git 变更按任务输入、目标、独占功能路径与全局契约路径收敛；范围外文件只计数。
+- 独立临时仓库记忆工具测试 52 项通过；真实仓库旧证据过期时 finish 正确报告 FAIL。
+- 产品任务 DONE 现核对独立 application-acceptance-v1 记录、reviewer、环境与命令、未执行项及受测 source_files 当前哈希；无验收、自审或过期均失败。
+- 恢复复核修正产品验收范围：报告需覆盖任务 source_files、target_files 与本任务实际代码/全局契约变更；目标文件和新增契约过期用例通过。
+- 恢复复核补上 progress 下非账本资料的快照：任务卡映射 README 后交接与 finish 均能发现再次改动；临时测试 53 项通过。
+pending:
+- 主代理将共享账本、功能离线证据与摘要统一刷新并完成集成验收；本检查点不声称整个 DEV-02 或产品阶段签收。
+- progress/handoffs/README.md 是本轮实际文档变更，但 DEV-02 任务卡尚未映射；主代理登记目标路径后再纳入 finish 范围。
+decisions:
+- finish 不写账本、不自动改变 DONE 或验收；相关新路径须声明在任务卡或使用 --path 显式核对。
+- 共享功能有多个任务时按任务卡收敛路径，避免另一任务改动进入本任务交接。
+failed_approaches:
+- 初次临时测试遇到 macOS /var 与 /private/var 解析差异，改用 resolve 后保持断言。
+- 初版按共享功能全部 watch_paths 收集范围，误纳入看板源码；改按任务卡限定共享功能范围。
+evidence_refs:
+- acceptance-runs/maintenance/dev-02-memory-workflow-20260922-001/verification.yaml
+- acceptance-runs/maintenance/dev-02-memory-resume-20260922-001/verification.yaml
+scope_patterns:
+- AGENTS.md
+- tests/test_project_memory.py
+- tools/memory_finish.py
+- tools/memory_lib.py
+- tools/project_memory.py
+files:
+  AGENTS.md: 0656079fb3331725816ecb1f5c74c693a16f67623dd4feef61aeb15777c93348
+  tests/test_project_memory.py: ddbe067d564b15d7df4d3becd8153bfe1a43e5a879f1a0f11a37ca89dd4c132f
+  tools/memory_finish.py: cae0a0a3d72703b72ac9b20052291fa234fde07be385137645906a0a5ba0290c
+  tools/memory_lib.py: 85d67ff784112dc5eaf1fb4cec003a1162dbf65b3fa44edff62434f37ef89e39
+  tools/project_memory.py: d9313deb843fa47a4b482836035694d3a3cc70dcf57e4e8886ea22ac5c90f9d6
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

@@ -27,3 +27,12 @@ description: 结合可信检查与独立解答审查候选题，不自行批准�
 ## 本版执行约束
 
 本 Skill 由 Hermes 执行，默认使用 DeepSeek；不调用或安装 LangChain、LangGraph。模型、阶段、题目版本、工具权限和修订额度来自后端批准的配置，不能由 Skill 自行扩大。角色使用同一 model_id 时标记 SAME_MODEL，不声明异构验证；无法确认时返回待复核，不变更审批与发布条件。
+
+## 接入输出契约
+
+只返回符合输入 output_schema 的 JSON：question_revision_id 原样回传；action 为 repair、no_change 或 manual_review；issues 是可定位的问题列表；summary 是简洁可核验审查结论，不输出私有思维链。
+结构/题型/评分失败应给出修正意见；数学分歧需独立核算，不能为了与参考答案一致而改盲解。证据不足时使用 manual_review。不得修改输入中的规则、预算、题型、分值或课程范围。
+
+## 本卷目标与重复审查
+
+核对候选是否围绕slot.target_topic，而不仅是落在整本教材的大范围内。参考same_paper_questions（当前任务公开题面摘要），识别相同条件、方程和只换问法的重复命题；可定位的偏题/重复建议repair。IN_PAPER_DIVERSITY的文本相似REVIEW不是自动错误证明，须说明差异是否实质；精确重复FAIL不能被no_change豁免。

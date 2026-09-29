@@ -1,0 +1,38 @@
+task_id: M1-04
+status: IN_PROGRESS
+completed:
+- Replaced implicit GET/SSE generation and synthetic usage with explicit queued job
+  creation.
+- Added PostgreSQL snapshot/outbox repository with compare-and-swap transitions and
+  transactional slot result commit.
+- Added worker entry point using frozen specification and blueprint slot; cancellation
+  and version changes prevent late result commit.
+- Added offline tests for read-only observation, idempotent creation, revision gate,
+  pause/resume/cancel, cancellation during generation, stable run references, and
+  failed validation terminal status.
+- Ran isolated PostgreSQL integration tests for concurrent create, revision fencing,
+  failed validation, and admitted-run cancellation (3 PASS).
+- Disabled Celery remote control and event queues rejected by RabbitMQ 4; retained
+  durable generation queue and publisher confirms.
+- Added worker test assertions for frozen spec, plan, and question revision binding.
+pending:
+- Wire API question and validation reads to generation_job_results with student projection.
+- Provide QuestionService.generate_slot_result with no side effects; then exercise
+  Celery/RabbitMQ end to end.
+- Restart dedicated Celery worker with gossip, mingle, and heartbeat disabled; rerun
+  real RabbitMQ acceptance.
+- Confirm API and worker use the parent store spec revision integration in an end-to-end
+  run.
+decisions:
+- No direct model call from HTTP or SSE.
+- Unknown token and cost values remain null; ambiguous calls enter RECONCILING.
+- PostgreSQL and RabbitMQ are mandatory for production job execution.
+failed_approaches: []
+evidence_refs:
+- acceptance-runs/m1-04/sol-jobs-20260922-001/offline-tests.txt
+- acceptance-runs/m1-04/sol-jobs-20260922-001/postgres-tests.txt
+schema_version: 1
+session_id: sol-jobs-20260922-001
+summary: M1-04 Sol 开发交付；原完成事项与待办见下文，主验收另记。
+next_action: 主代理继续独立集成验收并生成新的接手记录。
+metadata_correction: 补齐 schema/session/摘要字段；不改写历史完成结论或声称新验收。

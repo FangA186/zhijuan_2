@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-09-22T14:11:01.359333+00:00",
+  "reason": "用户要求关闭本项目Docker服务以降低内存占用",
+  "stopped": [
+    "zhijuan-workflow-20260922-mq",
+    "zhijuan-workflow-20260922-pg"
+  ],
+  "already_stopped": [
+    "author-hermes",
+    "solver-hermes",
+    "solver-entry",
+    "live-budget-proxy"
+  ],
+  "remaining_running_unrelated": [
+    "zygf-gitea",
+    "zygf-postgres"
+  ],
+  "volumes_deleted": false,
+  "databases_deleted": false,
+  "paid_calls_added": 0,
+  "impact": "常用8000草稿数据库和任务队列暂时不可用；项目资料看板独立读文件。不要将主动停机解释为功能回退或数据丢失。"
+}

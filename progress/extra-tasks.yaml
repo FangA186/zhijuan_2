@@ -1,3 +1,120 @@
 schema_version: 1
-# Approved follow-up or bugfix tasks; do not alter the frozen 32-task baseline.
-tasks: []
+tasks:
+- id: DEV-01
+  phase: M1
+  title: 项目进展与开发资料可视化工作台
+  depends_on: []
+  source_files:
+  - AGENTS.md
+  - progress/features.yaml
+  - progress/work.yaml
+  - docs/project-map.md
+  target_files:
+  - tools/project_overview.py
+  - progress/file-guide.yaml
+  - apps/web/src/pages/ProjectOverview.tsx
+  - apps/web/projectOverviewPlugin.ts
+  - tests/test_project_overview.py
+  implementation_steps:
+  - 只读聚合功能、任务、交接、证据与 AGENTS 引用，保留证据边界。
+  - 提供中文目录用途导航、文件查找、功能检查点与文档查看。
+  - 接入本地 Vite 页面，验证路径边界、页面交互和小屏布局。
+  failure_action: 元数据异常单独提示，不伪造通过；受限文件禁止读取，保留出卷主流程。
+  acceptance_refs: []
+- id: DEV-02
+  phase: M1
+  title: 开发记忆收尾门禁与任务作用域交接
+  depends_on:
+  - DEV-01
+  source_files:
+  - AGENTS.md
+  - progress/features.yaml
+  - progress/work.yaml
+  - tools/project_memory.py
+  - tools/memory_lib.py
+  target_files:
+  - tools/memory_finish.py
+  - tools/project_memory.py
+  - tools/memory_lib.py
+  - tests/test_project_memory.py
+  - progress/handoffs/README.md
+  - tools/project_overview.py
+  - tests/test_project_overview.py
+  implementation_steps:
+  - 按任务核对修改、交接、证据、账本和摘要；失败返回非零。
+  - 交接仅纳入任务作用域及全局关键变更，避免无关图片撑大记录。
+  - 独立临时目录测试，不自动编造开发事实或签收产品。
+  failure_action: 记录闭环失败不得称完成；保留源码并明确缺失项。
+  acceptance_refs: []
+- id: DEV-03
+  phase: M1
+  title: 全仓代码结构整理与单文件 200 行门禁
+  depends_on:
+  - DEV-02
+  source_files:
+  - AGENTS.md
+  - docs/project-map.md
+  - progress/features.yaml
+  - progress/work.yaml
+  - quality/suites.yaml
+  target_files:
+  - tools/check_code_lines.py
+  - README.md
+  - docs/decisions/DEV-015-maintainable-code-200-lines.md
+  - progress/file-guide.yaml
+  - apps/web/src/App.tsx
+  - services/api/main.py
+  - tests/test_project_memory.py
+  implementation_steps:
+  - 保留现有未提交修改，按职责拆分前后端、工具及测试，所有自有可维护代码文件不超过 200 物理行。
+  - 整理根目录资料与生成物，保留必要入口和锁定文件，清理可再生构建缓存。
+  - 执行离线回归、浏览器页面核验和独立代码验收，并记录未验证的业务边界。
+  failure_action: 若构建、行为或页面核验失败，保留原始资料并登记缺口，不把行数达标当成产品验收。
+  acceptance_refs: []
+- id: DEV-04
+  phase: M1
+  title: Bug 修复记忆、修前检索与本地/Notion看板
+  depends_on:
+  - DEV-03
+  source_files:
+  - AGENTS.md
+  - tools/project_overview.py
+  - tools/memory_finish.py
+  target_files:
+  - docs/project-overview.md
+  - docs/project-map.md
+  - docs/decisions/DEV-016-bug-memory.md
+  - AGENTS.md
+  - tools/bug_records.py
+  - tools/bug_workflow.py
+  - tools/bug_notion.py
+  - tools/bug_memory.py
+  - tools/project_overview.py
+  - tools/project_overview_files.py
+  - tools/memory_context.py
+  - tools/memory_finish.py
+  - tests/test_bug_memory.py
+  - apps/web/src/pages/ProjectOverview.tsx
+  - apps/web/src/pages/project-overview/BugPanel.tsx
+  - apps/web/src/pages/project-overview/BugPanel.css
+  - progress/bugs/README.md
+  - progress/bugs/notion-sync.json
+  - progress/templates/bug-record.yaml
+  - progress/file-guide.yaml
+  - quality/suites.yaml
+  - quality/README.md
+  - progress/bugs/BUG-20260924-001.yaml
+  - progress/bugs/BUG-20260924-002.yaml
+  - progress/bugs/BUG-20260924-003.yaml
+  - progress/bugs/BUG-20260924-004.yaml
+  - progress/bugs/BUG-20260924-005.yaml
+  - progress/bugs/BUG-20260924-006.yaml
+  - progress/bugs/BUG-20260924-007.yaml
+  - progress/bugs/BUG-20260924-008.yaml
+  - progress/bugs/BUG-20260924-009.yaml
+  implementation_steps:
+  - 修Bug前检索相关记录，复发追加旧ID历史，保留根因、修复、回归与证据。
+  - 本地项目页读取统一记录，Notion按稳定ID同步并回读核对。
+  - 记录已声明Bug修复的检索回执与交接ID，收尾门禁检查缺记录和待同步。
+  failure_action: 记录或同步失败明确待处理，历史修复不可冒充当前验证；不得自动执行付费调用。
+  acceptance_refs: []

@@ -1,0 +1,20 @@
+{
+  "report_kind": "browser-acceptance-v1",
+  "entry": "http://localhost:3000/ (user's daily entry; Vite dev server, frontend calls http://localhost:8000/v1 directly per apps/web/src/lib/api.ts:20)",
+  "mode": "READ-ONLY on the user's daily draft (no save/confirm/start clicks; only the read-only recheck button was clicked)",
+  "observations": [
+    {"id": "U12 network", "result": "PASS", "evidence": "page loads the user's 23-question/150-point draft from the API; api.ts baseUrl default is http://localhost:8000/v1; no alternate port involved"},
+    {"id": "U05 header sync", "result": "PASS", "evidence": "header shows 高一数学 · 满分150分 (120分钟) matching the senior draft (was: 九年级100分 known defect, fixed by batch-2 App.tsx/Header.tsx draft state source)"},
+    {"id": "U07 precise disable reasons", "result": "PASS", "evidence": "status region lists 生成 Worker 未就绪（WORKER_UNAVAILABLE）、任务调度器未就绪（DISPATCHER_UNAVAILABLE）、命题服务未就绪（AUTHOR_UNAVAILABLE）、盲解服务未就绪（SOLVER_UNAVAILABLE）、预算服务不可用（BUDGET_UNAVAILABLE）with 生成服务当前未就绪，暂不能开始命题 — not a generic network error"},
+    {"id": "U07 recheck", "result": "PASS", "evidence": "重新检查生成服务（只读，不会发起任何生成） clicked; readiness refreshed; no POST generated; draft intact"},
+    {"id": "U06 preset counts", "result": "PASS", "evidence": "高效检测 随堂小测 card now shows 25分钟 · 6题 · 满分50分 (was hardcoded 5题; computed from preset data 3+2+1)"},
+    {"id": "U03 scope preserved", "result": "PASS", "evidence": "已选 89 项出卷范围 with per-item source labels (已选入本次试卷的考查范围（教材章节 / 手动补充 / 模板建议）), scope confirmation checkbox checked"},
+    {"id": "U01 draft integrity", "result": "PASS", "evidence": "分值核对: 题型合计 150 分 / 试卷设定 150 分; ✓ 全卷共 23 道题 ✓ 满分 150 分; title textbox shows 2023-2024学年人教A版（2019）高中数学必修第一册期末综合测试卷"},
+    {"id": "side effects", "result": "PASS", "evidence": "after browsing: generation_jobs=0, generation_job_outbox=0, generation_job_results=0, draft version still 12"}
+  ],
+  "notes": [
+    "Provenance labels on pre-existing draft scope items default to 手动补充 (conservative; per DEV decision no marker = manual, never silently delete). Newly added items would carry their true source.",
+    "Header status chip is lg-breakpoint-only (existing behavior); narrow screens get the reason banner in the page body.",
+    "Interactive/destructive browser scenarios (template import, plan confirm, SSE drops, terminal-state pages) were NOT exercised on the daily entry to protect the user's draft; the underlying behaviors are covered by offline unit tests, PG integration and queue integration."
+  ]
+}

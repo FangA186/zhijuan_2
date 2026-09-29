@@ -1,0 +1,34 @@
+# Local current-draft API addition; formal multi-tenant API baseline remains unchanged.
+paths:
+  /v1/exams/current/planning-jobs:
+    post:
+      summary: 明确提交一次规划 Agent 任务，返回202；HTTP线程不运行模型
+      parameters:
+        - {name: If-Match, in: header, required: true, schema: {type: string}}
+        - {name: Idempotency-Key, in: header, required: true, schema: {type: string, minLength: 8, maxLength: 100}}
+      responses:
+        '202': {description: QUEUED或幂等返回已有规划任务；活动/未知任务阻止重复调用}
+        '403': {description: 仅本机教师可访问}
+        '409': {description: 配置变化、活动命题任务或服务尚未就绪}
+        '412': {description: If-Match与规格版本不一致}
+        '422': {description: 参数或规划输入不合法}
+        '428': {description: 缺少If-Match}
+  /v1/exams/current/planning-jobs/current:
+    get:
+      summary: 只读恢复当前规划，返回null或任务、实际活动记录、用量、错误与结果
+      description: 结果在COMPLETED且未stale时提供；UNKNOWN进入RECONCILING。正文仅在本机教师入口返回，不含密钥或私有推理。
+      responses:
+        '200': {description: 任务快照；stale结果不可确认；读取不触发调用}
+        '403': {description: 仅本机教师可访问}
+  /v1/exams/current/planning-jobs/{job_id}/cancel:
+    post:
+      summary: 取消排队任务或请求停止运行；外部终态未知时保持RECONCILING
+      parameters:
+        - {name: job_id, in: path, required: true, schema: {type: string}}
+      responses:
+        '200': {description: 更新后的任务；确认外部取消后才为CANCELLED}
+        '404': {description: 当前任务不匹配}
+        '409': {description: 外部结果未知需对账，不允许据此重新计费}
+# Old /plans/generate returns422 directing callers to planning-jobs.
+# Result reuses current plan contract plus planning_source, planning_summary, planner provenance.
+# Each slot additionally stores knowledge_ids, design_brief, planning_rationale; these are hashed.

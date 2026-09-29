@@ -1,0 +1,143 @@
+  </style>
+</head>
+<body>
+  <!-- 左侧层级导航栏 -->
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-title">
+        <span>📖 知卷 - 单词原图审查</span>
+      </div>
+      <div class="brand-subtitle">国家中小学智慧教育平台英语全量教材</div>
+      <div class="stats-bar">
+        <div class="stat-pill">
+          <div class="num" id="stat-books">-</div>
+          <div class="lbl">入库教材</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num" id="stat-images">-</div>
+          <div class="lbl">末尾高清图</div>
+        </div>
+      </div>
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="🔍 快速搜索教材或版本..." />
+      </div>
+      <div class="view-mode-tabs">
+        <button class="view-tab-btn active" id="tab-mode-grade" onclick="switchViewMode('grade')" title="学段 -> 年级 -> 版本 -> 册次，与官网课程教学完全一致">🎯 年级视角(官网)</button>
+        <button class="view-tab-btn" id="tab-mode-edition" onclick="switchViewMode('edition')" title="学段 -> 版本 -> 年级 -> 册次">📚 版本视角</button>
+      </div>
+    </div>
+    <div class="tree-container" id="tree-root">
+      <div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 13px;">
+        正在加载层级结构...
+      </div>
+    </div>
+  </aside>
+
+  <!-- 右侧主图片工作区 -->
+  <main id="main-content">
+    <div class="top-toolbar">
+      <div class="breadcrumb" id="breadcrumb-bar">
+        <span>👈 请在左侧选择具体教材册次</span>
+      </div>
+      <div class="toolbar-actions" id="toolbar-actions" style="display: none;">
+        <!-- 智能定位与清洗按钮 -->
+        <button class="btn btn-smart-filter" id="btn-smart-filter" onclick="smartSelectNonVocab()" title="根据 OCR 智能定位结果，一键勾选所有非单词页面，保留有效单词表">
+          ⚡ 一键勾选非单词页
+        </button>
+        <button class="btn btn-jump-start" id="btn-jump-start" onclick="jumpToVocabStart()" title="直接平滑滚动屏幕至单词表首页">
+          🎯 跳至单词表首页
+        </button>
+
+        <!-- 删除模式切换按钮 -->
+        <button class="btn btn-delete-mode active" id="btn-toggle-del-mode" onclick="toggleDeleteMode()" title="开启后直接点击图片任意位置即可勾选">
+          🔥 删除模式：已开启
+        </button>
+
+        <label class="toggle-trash" title="开启后删除将文件移入 .trash 文件夹，可随时撤销；关闭则直接从磁盘移除">
+          <input type="checkbox" id="use-trash-cb" checked />
+          <span>安全回收站模式</span>
+        </label>
+        <button class="btn btn-default" id="btn-open-trash" onclick="openTrashModal()" title="查看本册在回收站中的文件并支持一键恢复" style="border-color: rgba(56, 189, 248, 0.4); color: #38bdf8; font-weight: 600;">
+          ♻️ 误删恢复 (<span id="trash-badge-count">0</span>)
+        </button>
+        <button class="btn btn-default" onclick="selectFirstN(10)">选前10张</button>
+        <button class="btn btn-default" onclick="selectFirstN(15)">选前15张</button>
+        <button class="btn btn-default" onclick="toggleSelectAll()">全选/取消</button>
+        <button class="btn btn-danger" id="btn-batch-del" onclick="deleteSelected()" disabled>
+          🗑️ 批量删除选中 (<span id="selected-count">0</span>)
+        </button>
+      </div>
+    </div>
+
+    <div class="images-scroll-area" id="images-container">
+      <div class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h2>从左侧目录选择一本教材开始审查</h2>
+        <p>已全量下载全国各版本英语教材末尾 30 页图片，您可以在此逐页预览、筛选与清洗非词汇页。</p>
+      </div>
+    </div>
+
+    <!-- 底部悬浮删除操作栏 -->
+    <div id="bottom-floating-bar">
+      <div style="color: #f87171; font-weight: 700; font-size: 14px;">
+        📌 已勾选 <span id="float-selected-count" style="font-size: 17px; color: #fff;">0</span> 张待删除图片
+      </div>
+      <button class="btn btn-default" onclick="clearSelection()">取消勾选</button>
+      <button class="btn btn-danger" onclick="deleteSelected()" style="font-weight: 700; padding: 7px 18px; font-size: 14px;">
+        🗑️ 立即从磁盘删除 (Delete 键)
+      </button>
+    </div>
+  </main>
+
+  <!-- 全屏大图 Lightbox 沉浸审查模式 -->
+  <div id="lightbox">
+    <div class="lightbox-top">
+      <div class="lightbox-title" id="lb-title">图片全屏审查</div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn btn-danger" onclick="deleteCurrentLightboxImage()">🗑️ 删除此张 (Delete)</button>
+        <button class="btn btn-default" onclick="closeLightbox()">✕ 关闭 (Esc)</button>
+      </div>
+    </div>
+    <div class="lightbox-body">
+      <div class="nav-arrow prev" onclick="prevLightboxImage()" title="上一张 (←)">◀</div>
+      <img id="lb-img" class="lightbox-img" src="" alt="预览图" />
+      <div class="nav-arrow next" onclick="nextLightboxImage()" title="下一张 (→)">▶</div>
+    </div>
+    <div class="lightbox-bottom">
+      <div style="color: var(--text-muted); font-size: 13px;" id="lb-meta">-</div>
+      <div style="color: #60a5fa; font-size: 12px;">
+        💡 快捷键提示：按键盘 <kbd>←</kbd> / <kbd>→</kbd> 快速翻页，按 <kbd>Delete</kbd> 或 <kbd>Backspace</kbd> 直接删除并看下一张！
+      </div>
+    </div>
+  </div>
+
+  <!-- 回收站模态框 (误删恢复) -->
+  <div id="trash-modal" class="trash-modal-overlay" onclick="handleTrashModalOverlayClick(event)">
+    <div class="trash-modal-box">
+      <div class="trash-modal-header">
+        <div class="trash-modal-title">
+          <span>♻️ 本册回收站 / 误删恢复</span>
+          <span style="font-size: 13px; font-weight: normal; color: #94a3b8;" id="trash-modal-subtitle"></span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-default" onclick="toggleSelectAllTrash()">全选/取消</button>
+          <button class="btn btn-smart-filter" id="btn-batch-restore" onclick="restoreSelectedTrash()" disabled>
+            ↩️ 批量恢复选中 (<span id="trash-selected-count">0</span>)
+          </button>
+          <button class="btn btn-default" onclick="closeTrashModal()">✕ 关闭 (Esc)</button>
+        </div>
+      </div>
+      <div class="trash-modal-body" id="trash-modal-body">
+        <div style="text-align: center; color: #64748b; padding: 40px;">正在加载回收站...</div>
+      </div>
+      <div class="trash-modal-footer">
+        <div style="font-size: 12px; color: #94a3b8;">
+          💡 提示：所有删除的文件均安全暂存在本地 <code style="color: #38bdf8;">教材单词图片/.trash/</code> 目录，点击“恢复”即可原路放回。
+        </div>
+        <button class="btn btn-default" onclick="closeTrashModal()">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+

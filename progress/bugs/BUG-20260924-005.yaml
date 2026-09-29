@@ -1,0 +1,31 @@
+schema_version: 1
+id: BUG-20260924-005
+title: 部分失败试卷把计划满分当作已生成合计
+status: FIXED
+module: frontend
+updated_at: '2026-09-24'
+task_ids:
+- DEV-03
+keywords:
+- PARTIAL_FAILED
+- '128'
+- '150'
+- 总分
+symptom: 当前20题分组总分128，试卷总分栏仍显示计划150。
+reproduction:
+- 查看已有部分失败任务的已生成试卷。
+root_cause: 分组分数来自候选题，总分栏取规格计划分数，语义混用。
+resolution: 当前题目合计按已生成题组求和，另列计划满分；不改草稿数据。
+affected_files:
+- apps/web/src/pages/exam-paper/ExamPaperPrintView.tsx
+- apps/web/src/pages/exam-paper/paperScoreSummary.ts
+regression:
+- node --test tests/frontend_paper_scores.test.mjs
+- 浏览器核对当前合计128与计划150分别显示。
+verified_at: '2026-09-24'
+verification: 历史离线/页面范围通过，完整边界见证据
+evidence_refs:
+- acceptance-runs/maintenance/dev-03-code-structure-20260924-001/browser-check.md
+events:
+- 2026-09-24：从DEV-03实际验收回填；按登记范围修复。
+source_hashes: {}

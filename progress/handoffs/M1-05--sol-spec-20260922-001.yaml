@@ -1,0 +1,45 @@
+schema_version: 1
+task_id: M1-05
+session_id: sol-spec-20260922-001
+created_at: '2026-09-22'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - services/exam/spec_validation.py
+  - services/exam/spec_service.py
+  - apps/web/src/lib/api.ts
+  - apps/web/src/pages/FoolproofSetup.tsx
+  - apps/web/src/pages/ExamSetup.tsx
+  - tests/test_spec_service.py
+  - acceptance-runs/m1-05/sol-spec-20260922-001/
+  notice: 工作区包含其他人未提交改动；本记录仅描述本次规格子任务。
+summary: 规格服务按批准 JSON Schema、学段年级、范围确认、严格整数分值和精确配平阻断无效配置；前端对范围修改重新要求教师确认，并正确处理保存错误。离线检查通过，完整集成和真实验收待完成。
+completed:
+- ExamSpec 校验器与服务入口；UI 扩展字段以 sidecar 传给 store，不混入 canonical 规格。
+- 前端保存采用 canonical 字段白名单及 sidecar 字段白名单，HTTP 错误不再当作成功。
+- 快捷出卷和高级配置对未确认范围与分值失衡阻断继续生成。
+- 4 项离线服务测试和前端构建通过。
+pending:
+- 主集成者接 store.update_spec(canonical, sidecar=sidecar)，sidecar 只供 UI；GET 可合并返回，规划和
+  Agent 只读 canonical。
+- 主集成者将 SpecService ValueError 映射 422，原子增加 spec_revision 并使旧蓝图、检查和审批失效；确保生成入口再次校验与版本匹配。
+- 能力注册表尚未在运行服务提供；validate_spec 支持传入登记 entries，主集成者需从真实能力服务接线后才可宣称能力校验已启用。
+- 当前前端 generateBlueprint(spec) 仍可能发送 UI sidecar，蓝图边界需要复用 canonical 投影。
+- 未做真实三学段浏览器、权限、数据库和模型验收。
+decisions:
+- 不修改批准 contracts/exam-spec.schema.json；只允许 material_id、textbook_cover、chinese_config、english_config
+  四个顶层 UI sidecar 字段。
+- 分值必须精确等于 total_score_x100；不允许旧规则的 50/100 单位容差或静默舍入。
+- 初版完整规格 PUT 要求 scope_confirmed=true；草稿另需受控生命周期，不能用未确认规格启动生成。
+failed_approaches:
+- 无
+evidence_refs:
+- acceptance-runs/m1-05/sol-spec-20260922-001/spec-tests.log
+- acceptance-runs/m1-05/sol-spec-20260922-001/frontend-build.log
+- acceptance-runs/m1-05/sol-spec-20260922-001/diff-check.log
+next_action: 主集成者接 store.update_spec(canonical, sidecar=sidecar)，sidecar 只供 UI；GET
+  可合并返回，规划和 Agent 只读 canonical。
+metadata_correction: 补齐 next_action（优先引用原 pending）；不改写历史完成结论。

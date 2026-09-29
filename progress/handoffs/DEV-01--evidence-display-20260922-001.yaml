@@ -1,0 +1,54 @@
+schema_version: 1
+task_id: DEV-01
+session_id: evidence-display-20260922-001
+created_at: '2026-09-22T13:54:24+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - AGENTS.md
+  - apps/web/projectOverviewPlugin.ts
+  - apps/web/src/pages/ProjectOverview.tsx
+  - docs/project-map.md
+  - progress/features.yaml
+  - progress/file-guide.yaml
+  - progress/work.yaml
+  - tests/test_project_overview.py
+  - tools/project_overview.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15004
+summary: 功能卡显示阶段验证资料和最近开发进展
+next_action: 后续阶段报告继续据实登记到对应任务及交接；完整产品验收仍按原门禁。
+completed:
+- 聚合同任务真实存在的阶段证据路径，卡片不再把已有记录显示为未验证。
+- 详情显示最近开发时间、本次已做、还需完成和阶段资料入口。
+- 新增缺失/越界/跨任务引用不混入、局部证据不提升完整验收状态的回归；Chrome刷新确认SPEC7份资料、AUTH无证据；构建和三组离线检查通过。
+pending:
+- 产品全范围验收尚未完成，六项功能保持进行中。
+decisions:
+- 仅修复展示投影，不伪造已实现/验收通过，也不开放原始报告正文。
+failed_approaches:
+- 原卡片只读取完整功能last_evidence，遗漏work/handoff已有资料，导致进度看似未更新。
+evidence_refs:
+- acceptance-runs/devtools/project-evidence-display-20260922-001/report.json
+- acceptance-runs/devtools/project-evidence-display-20260922-001/change-impact.md
+scope_patterns:
+- AGENTS.md
+- apps/web/projectOverviewPlugin.ts
+- apps/web/src/pages/ProjectOverview.tsx
+- docs/project-map.md
+- progress/file-guide.yaml
+- tests/test_project_overview.py
+- tools/project_overview.py
+files:
+  AGENTS.md: 3d176f38f7754bf1c53d5be94c8b89a1cad13cb7040b90d5bf5c3dd878c4e18d
+  apps/web/projectOverviewPlugin.ts: 69b6591a40e7b32d289f2cc77d07eb94e8b87695d28f4585aa83b62d54dcd032
+  apps/web/src/pages/ProjectOverview.tsx: a6d49ef9463fd4bdab30c2c67aeb44aba1a53d951f92ef85e066e466e092c931
+  docs/project-map.md: 6d369c84032748018ca3a95c8a9683e7c2b923b5f0153491d8e8a27de367556c
+  progress/file-guide.yaml: fbf38f0a1a737bb2ff3111d08c38b6a1a016e953617a4ee62f5c2dac94a6f5e2
+  tests/test_project_overview.py: 1d044fdca0f63bb2f339424ce167a0ce77f27a2de08e17f80635000db5b11178
+  tools/project_overview.py: 65768c958e2cf94cce93d0a4368fcdae5fde6374e514d77b62ffedf486c19405
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

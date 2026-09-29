@@ -1,0 +1,1 @@
+真实页面先填2分，但ApiBase.saveExamSpec的canonicalKeys遗漏新增字段，后端默认0。首次200断言失败，未将本轮记成4/2/0通过。补齐白名单并新增真实方法mock-fetch往返测试；zero-policy保留本轮0分档位结果。

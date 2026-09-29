@@ -1,0 +1,58 @@
+schema_version: 1
+task_id: M1-04
+session_id: workbench-startup-20260922-001
+created_at: '2026-09-22T14:07:49+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths: []
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15030
+summary: 修复常用入口缺存储报错；health区分配置与运行，缺生成配置时不创建任务。真实Worker/Hermes仍未启用。
+next_action: 接续真实生成配置与完整验收；不得把配置齐备当运行健康或教学质量通过。
+completed:
+- 修复常用入口缺存储报错；health区分配置与运行，缺生成配置时不创建任务。真实Worker/Hermes仍未启用。
+- 219项Python、8项专属数据库、3项Node及前端构建通过；浏览器11题蓝图预览成功，模型调用新增0。
+pending:
+- 真实生成服务尚未配置完整，页面和后端均阻止启动。
+decisions:
+- 使用独立本地库保留草稿；验收环境与日常入口分开记录。
+- 配置状态只报告布尔值，不读取或输出密钥；不把Key存在当就绪。
+failed_approaches:
+- 此前只验证独立8001入口，常用8000缺DATABASE_URL；本轮修复接线。
+- 旧样例隐藏题型考点与所选范围不一致，预览被拒；调整后重新要求范围确认。
+evidence_refs:
+- acceptance-runs/workflow/workbench-startup-20260922-001/report.md
+- acceptance-runs/workflow/workbench-startup-20260922-001/unit.json
+- acceptance-runs/workflow/workbench-startup-20260922-001/integration.json
+- acceptance-runs/workflow/workbench-startup-20260922-001/runtime.json
+scope_patterns:
+- apps/web/src/App.tsx
+- apps/web/src/lib/api.ts
+- configs/business-policy.example.yaml
+- infra/compose.yaml
+- services/api/health.py
+- services/api/routes/exams.py
+- services/worker/celery_app.py
+- services/worker/leases.py
+- services/worker/outbox.py
+- services/worker/tasks.py
+- tests/integration/test_workflow_integration.py
+- tests/test_generation_configuration.py
+files:
+  '[missing-pattern] services/worker/celery_app.py': MISSING
+  '[missing-pattern] services/worker/leases.py': MISSING
+  '[missing-pattern] services/worker/outbox.py': MISSING
+  '[missing-pattern] services/worker/tasks.py': MISSING
+  apps/web/src/App.tsx: c132cc344a847785d1e408a0dbc477ae2f92811ea83615ffcf949ab932bfe82a
+  apps/web/src/lib/api.ts: 74d198a153285d897f10b34301763ab73e80fa1b85aa007cbe46f79bbbfba6ef
+  configs/business-policy.example.yaml: 0dae6ad1ee7298c600b10ee02b049ef22b8fe338a07ba64296cdf8353ec69ef1
+  infra/compose.yaml: 649b54742085b24ef3b6fc01c62b0756d208f58e9402b8e87048e0863fc1b38a
+  services/api/health.py: 8d4186b5af39e97c015f7ecf840968e65f134f1a26b62f36349e4613310ae7cb
+  services/api/routes/exams.py: f4f619f5da669fe2f43bed6f45879f30238f8fc638428577bb8f8dda6c7aed87
+  tests/integration/test_workflow_integration.py: bc1198dbab6cc2ad69f41fb86795547dbe599c56b1551e15a7f5a19ddb166b76
+  tests/test_generation_configuration.py: 22c5141aa6fecca9acb7ea04fad9ec28a25fdaa7a1a4be4e6a642349373fa87a
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

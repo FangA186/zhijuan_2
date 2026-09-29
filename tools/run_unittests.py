@@ -9,7 +9,7 @@ import sys
 import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from tools.memory_lib import safe_path, write_new
+from tools.memory_lib import atomic_replace, safe_path
 
 
 def summarize(result: unittest.TestResult) -> dict:
@@ -33,7 +33,7 @@ def main() -> int:
     result = unittest.TextTestRunner(verbosity=2).run(suite)
     report = dict(report_kind='unittest-counts-v1', created_at=datetime.now(timezone.utc).isoformat(),
                   pattern=args.pattern, **summarize(result))
-    write_new(ROOT, args.report, json.dumps(report, ensure_ascii=False, indent=2)+'\n')
+    atomic_replace(ROOT, args.report, json.dumps(report, ensure_ascii=False, indent=2)+'\n')
     print(json.dumps(report, ensure_ascii=False))
     return 0 if report['status'] == 'PASS' else 1
 

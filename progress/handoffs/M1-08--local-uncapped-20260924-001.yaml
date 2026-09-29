@@ -1,0 +1,45 @@
+schema_version: 1
+task_id: M1-08
+session_id: local-uncapped-20260924-001
+created_at: '2026-09-24T03:38:19+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15127
+summary: 本地代理无累计上限但旧账保留、用量与未知结果记录不变
+next_action: 继续验证实际账单和未知状态对账
+completed:
+- 旧账本继续记录calls和reserved_cny，UNKNOWN与RESERVED继续计入未决，旧数据不清零。
+- 测试覆盖并发请求全部逐次入账及超过旧上限后仍可调用。
+pending:
+- 真实供应商费用仍未知，当前预留字段不等于平台账单；生产预算调度尚未实现。
+decisions:
+- 本地累计封顶取消，记账与对账不取消，见DEV-013。
+failed_approaches:
+- 无。
+evidence_refs:
+- acceptance-runs/workflow/local-uncapped-20260924-001/report.json
+scope_patterns:
+- acceptance/evidence-manifest.template.json
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- docs/observability.md
+- reference_code/runtime_policy.py
+- services/api/audit.py
+- services/worker/usage.py
+files:
+  '[missing-pattern] docs/observability.md': MISSING
+  '[missing-pattern] services/api/audit.py': MISSING
+  '[missing-pattern] services/worker/usage.py': MISSING
+  acceptance/evidence-manifest.template.json: 7579e586c7b1e22bc1942ee500bbb956adb8919ccc1126befee0155d07f2ebff
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  reference_code/runtime_policy.py: d3b06af50049e4bb0d0689679f1d7b689ab776e34c0ad0039dbaebb58e846df2
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

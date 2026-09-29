@@ -1,0 +1,47 @@
+schema_version: 1
+task_id: M1-03
+session_id: local-uncapped-20260924-001
+created_at: '2026-09-24T03:38:18+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - services/hermes_adapter/http_adapter.py
+  - services/hermes_adapter/status_map.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15124
+summary: 本地DeepSeek代理移除累计请求和金额封顶但保留鉴权与逐次记录
+next_action: 生产预算策略单独评审；真实调用成本按供应商账单对账
+completed:
+- 本地代理取消累计次数/金额封顶，保留Bearer鉴权、模型白名单、原子记账和UNKNOWN记录。
+- 只读查询min_requests=46返回limit_enabled=false、sufficient=true；旧账65次、0未决不变。
+pending:
+- 生产预算策略与供应商账单对账未做；本次不执行付费模型调用。
+decisions:
+- DEV-013取代DEV-011的本地80/80上限；生产基线要求仍需单独处理。
+failed_approaches:
+- 旧代理进程加载了缓存代码，单改挂载源码不足以生效；确认无活动作业后重启本项目代理容器并读回状态。
+evidence_refs:
+- acceptance-runs/workflow/local-uncapped-20260924-001/report.json
+scope_patterns:
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- execution/templates/hermes-capability-probe.yaml
+- reference_code/adapter_contract.py
+- services/hermes_adapter/http_adapter.py
+- services/hermes_adapter/runtime_factory.py
+- services/hermes_adapter/status_map.py
+files:
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  execution/templates/hermes-capability-probe.yaml: 672622b5822e538458a699d934b03c101676a15259f7cc8faf6a07651f8fed0e
+  reference_code/adapter_contract.py: d944c5313a36f2cc89c5b4d79c62e741bf9834e7c5a430f4479a3b6d63a35819
+  services/hermes_adapter/http_adapter.py: 07ed30d29bd8defa984d89f0ed4a4f273410449c16879883d58bd0f680b867ea
+  services/hermes_adapter/runtime_factory.py: d0b029f7b0f6817ae23174a48c047a8450aea2bfd7d91f13ed6be965c34a5a8d
+  services/hermes_adapter/status_map.py: a212b5b1ae3bbd01447755b06e28e7d7565d3cf2e7874d126afcc194828b3bec
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

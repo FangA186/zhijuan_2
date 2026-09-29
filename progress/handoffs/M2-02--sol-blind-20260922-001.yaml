@@ -1,0 +1,35 @@
+schema_version: 1
+task_id: M2-02
+session_id: sol-blind-20260922-001
+created_at: '2026-09-22T19:00:00+08:00'
+summary: 'Dedicated Hermes solver container and public-question-only Runs proxy pass offline adapter-wire, file, tool and route probes; authorized live model acceptance remains.'
+next_action: 'Set distinct real solver keys, approved HERMES_SOLVER_MODEL_ID and DeepSeek key, boot the solver stack, then run one budget-controlled solver request and confirm output and usage.'
+completed:
+  - 'Blind runtime recursively rejects answer and other private fields before schema validation.'
+  - 'Solver-only proxy accepts only fresh /v1/runs requests with public_question input, plus run status and stop; it rejects session reuse and unrelated Hermes endpoints.'
+  - 'Dedicated container uses separate HOME, HERMES_HOME/state.db, workdir, read-only blind-solver Skill, explicit empty api_server toolset and no author mounts.'
+  - 'Added two offline negative tests for nested private fields and run admission.'
+  - 'Built Hermes image successfully from pinned vendor commit f5d192611032025d2757b07ad838921872126182 using editable install plus upstream-pinned aiohttp 3.14.3.'
+  - 'Successful image manifest list digest sha256:89a6b6bf91a59430b47777a6a468aa3f383742c5816762c2ea7dc5cd2c8a95a0; build exit code 0.'
+  - 'Booted isolated containers with offline-only fake keys; gateway /health returned HTTP 200, effective api_server toolsets resolved to [], author adapter path was absent, and read-only blind Skill was present.'
+  - 'Proxy returned 404 for /v1/skills and /api/sessions, and 400 for a Runs payload with nested answers; no request was admitted or sent to DeepSeek.'
+  - 'Fixed the proxy to accept the actual HermesDeepSeekAdapter /v1/runs body.input shape: exactly {"public_question": ...}; adapter+MockTransport offline test captures POST bytes and validates that shape.'
+  - 'Required HERMES_SOLVER_MODEL_ID in Compose and start script; active Hermes config and proxy both use that explicit value or fail closed.'
+  - 'Created an offline author-directory canary file and verified os.open at its absolute path inside solver container failed with ENOENT (errno 2); removed only that test file afterward.'
+  - 'Rebuilt image after model wiring: exit 0, manifest list sha256:3c0a3ff6194200c92346a11a633588c997db071a11e27002d0a61b3296cd7654. Containers stopped after fake-key probes.'
+pending:
+  - 'With user-approved budget controlled by main agent, verify real solver output and usage through dedicated gateway.'
+  - 'Freeze and audit the full transitive container dependency set; the upstream pyproject pins direct dependencies, but the Docker build currently resolves transitives at build time.'
+decisions:
+  - 'Hermes native gateway has additional session/skill endpoints, so a narrow ingress proxy rejects them before Hermes.'
+  - 'The solver proxy is reachable only on host loopback; Hermes upstream is not published.'
+  - 'The proxy discards client instructions and skill text, then loads the fixed read-only blind-solver Skill for Hermes.'
+failed_approaches:
+  - 'agent.disabled_toolsets: [all] was removed because all is not a proven upstream toolset; explicit platform_toolsets.api_server: [] is the vendor-supported empty list.'
+  - 'pip install . was rejected by the fixed Hermes setup.py wheel guard; switched to supported pip install -e .'
+  - 'Bare Hermes install omitted optional aiohttp and could not start API Server; added the upstream-pinned aiohttp==3.14.3.'
+evidence_refs:
+  - 'tests/test_blind_isolation.py'
+  - 'infra/hermes-solver/compose.yaml'
+  - 'services/hermes_adapter/isolation_gateway.py'
+  - 'infra/hermes-solver/README.md'

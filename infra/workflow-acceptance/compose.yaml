@@ -1,0 +1,85 @@
+services:
+  budget-proxy:
+    image: python:3.12-slim
+    command: [python, /app/live_budget_proxy.py, --ledger, /ledger/acceptance.sqlite, --bind, 0.0.0.0, --port, '8650']
+    environment:
+      ZHIJUAN_RAW_API_DIR: ${ZHIJUAN_RAW_API_DIR:-}
+      ZHIJUAN_DIAGNOSTIC_THINKING: ${ZHIJUAN_DIAGNOSTIC_THINKING:-disabled}
+      ZHIJUAN_BUDGET_PROXY_TOKEN: ${ZHIJUAN_BUDGET_PROXY_TOKEN:?internal token required}
+      DEEPSEEK_UPSTREAM_API_KEY: ${DEEPSEEK_UPSTREAM_API_KEY:?approved provider key required}
+    volumes:
+      - ../../tools/live_budget_proxy.py:/app/live_budget_proxy.py:ro
+      - ../../tools/raw_api_capture.py:/app/raw_api_capture.py:ro
+      - ../../.runtime/raw-api:/raw-api
+      - ../../tools/live_budget_stream.py:/app/live_budget_stream.py:ro
+      - ../../contracts/question-review.schema.json:/app/contracts/question-review.schema.json:ro
+      - ../../contracts/blueprint-design.schema.json:/app/contracts/blueprint-design.schema.json:ro
+      - ../../tools/deepseek_json_contract.py:/app/deepseek_json_contract.py:ro
+      - ../../tools/json_format_retry.py:/app/json_format_retry.py:ro
+      - ../../contracts/candidate.schema.json:/app/contracts/candidate.schema.json:ro
+      - ../../tools/live_budget_ledger.py:/app/live_budget_ledger.py:ro
+      - ../../tools/live_budget_status.py:/app/live_budget_status.py:ro
+      - /tmp/zhijuan-workflow-20260922/budget:/ledger
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  author-hermes:
+    image: sha256:25f3374666b543fa94810427215c04b1fd7d570d5216dc61d7574fe39a495bc6
+    init: true
+    environment:
+      HOME: /home/solver
+      HERMES_HOME: /state
+      API_SERVER_HOST: 0.0.0.0
+      API_SERVER_PORT: 8642
+      API_SERVER_KEY: ${HERMES_API_KEY:?author key required}
+      HERMES_SOLVER_MODEL_ID: deepseek-flash
+      DEEPSEEK_BASE_URL: http://budget-proxy:8650/v1
+      DEEPSEEK_API_KEY: ${ZHIJUAN_BUDGET_PROXY_TOKEN:?internal token required}
+    volumes:
+      - author-state-v20260924:/state
+      - ./profile.yaml:/etc/hermes-solver/config.yaml:ro
+      - ../../skills/question-author:/state/skills/question-author:ro
+    read_only: true
+    tmpfs: ['/tmp', '/work:uid=10001,gid=10001']
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    ports: ['127.0.0.1:8644:8642']
+  solver-hermes:
+    image: sha256:25f3374666b543fa94810427215c04b1fd7d570d5216dc61d7574fe39a495bc6
+    init: true
+    environment:
+      HOME: /home/solver
+      HERMES_HOME: /state
+      API_SERVER_HOST: 0.0.0.0
+      API_SERVER_PORT: 8642
+      API_SERVER_KEY: ${HERMES_SOLVER_UPSTREAM_KEY:?upstream key required}
+      HERMES_SOLVER_MODEL_ID: deepseek-flash
+      DEEPSEEK_BASE_URL: http://budget-proxy:8650/v1
+      DEEPSEEK_API_KEY: ${ZHIJUAN_BUDGET_PROXY_TOKEN:?internal token required}
+    volumes:
+      - solver-state-v20260924:/state
+      - ./profile.yaml:/etc/hermes-solver/config.yaml:ro
+      - ../../skills/blind-solver:/state/skills/blind-solver:ro
+    read_only: true
+    tmpfs: ['/tmp', '/work:uid=10001,gid=10001']
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  solver-entry:
+    image: python:3.12-slim
+    command: [python, /app/isolation_gateway.py]
+    environment:
+      HERMES_SOLVER_API_KEY: ${HERMES_SOLVER_API_KEY:?solver key required}
+      HERMES_SOLVER_UPSTREAM_KEY: ${HERMES_SOLVER_UPSTREAM_KEY:?upstream key required}
+      HERMES_SOLVER_UPSTREAM_URL: http://solver-hermes:8642
+      HERMES_SOLVER_MODEL_ID: deepseek-flash
+    volumes:
+      - ../../services/hermes_adapter/isolation_gateway.py:/app/isolation_gateway.py:ro
+      - ../../services/hermes_adapter/solver_output.py:/app/solver_output.py:ro
+      - ../../skills/blind-solver:/app/blind-solver:ro
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    ports: ['127.0.0.1:8643:8643']
+volumes:
+  author-state-v20260924:
+  solver-state-v20260924:

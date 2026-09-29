@@ -1,0 +1,41 @@
+{
+  "report_kind": "l03-full-paper-live-v1",
+  "authorization": "DEV-011: user explicitly relaxed the budget requirement in-session ('没事啊你直接真实请求api测试啊，我放宽要求了' + '你直接完整的生产一整套试卷我看看'); ceiling raised 20->80 requests / 30->80 CNY via env-only override, code defaults unchanged",
+  "entry": "daily workbench path: http://127.0.0.1:8000 (the API the localhost:3000 UI calls), user's own 23-question/150-point senior draft",
+  "attempts": [
+    {"n": 1, "job": "2cc25675", "outcome": "QUEUED forever — dispatch blocked: RabbitMQ permission regex mismatch (default-exchange publish checked against routing key 'zhijuan.run_generation_job'; minimal pattern '^generation' refused). 0 upstream calls."},
+    {"n": 2, "job": "0b99971f", "outcome": "FAILED at slot_003 — author output truncated at 498 output tokens mid-JSON (HERMES_OUTPUT_INVALID), and worker aborted the whole job on a single slot failure. +5 upstream calls (2 slots had already completed REVIEW)."},
+    {"n": 3, "job": "3d418c40", "outcome": "PARTIAL_FAILED after processing all 23 slots: 18 slots REVIEW_REQUIRED (author+blind-solve complete, awaiting teacher review), 5 slots FAIL (slot_009/011/012/015/021, deterministic structure-check failures, no solver call for them). +41 upstream calls."}
+  ],
+  "fixes_made_between_attempts": [
+    "SKILL.md: empty text blocks forbidden (fill or remove) — slots 1-2 of attempt 2 passed schema after this fix; attempt 3 had zero empty-text failures",
+    "run_job: per-slot resilience per plan §9.3 — deterministic slot failures mark the slot FAIL and continue; job ends PARTIAL_FAILED instead of aborting (offline suite 401 PASS after change)",
+    "local_runtime vhost grant + source: '.*' (RabbitMQ 4 permission regexes are full-string anchored; prefix patterns cannot match 'amq.default'); minimal-permission redesign left as an open item",
+    "budget proxy limits env-overridable (DEV-011) with tests"
+  ],
+  "budget": {
+    "before_all_attempts": {"calls": 18, "reserved_cny": 18},
+    "after_all_attempts": {"calls": 65, "reserved_cny": 65},
+    "delta": {"calls": 47, "reserved_cny": 47},
+    "pending_or_unknown": 0,
+    "ceiling": 80,
+    "actual_provider_cost": "unknown — reservation is 1 CNY per request by design; per-slot usage tokens recorded in generation_job_results (e.g. L01 author 11252 in / 701 out); no official bill reconciled"
+  },
+  "result_summary": {
+    "job_status": "PARTIAL_FAILED",
+    "slots": "23/23 processed: 18 REVIEW_REQUIRED, 5 FAIL (009,011,012,015,021)",
+    "validation": "no slot is PASS; REVIEW means blind-solve agreement without trusted math proof, awaiting teacher review",
+    "usage_status": "PARTIAL_UNKNOWN; job-level tokens_used null by design (per-slot trusted usage in results rows)"
+  },
+  "browser_evidence": [
+    "progress page: 命题任务进度 部分题目检查失败; 失败结果不会冒充已完成; 已停止自动重连，不会重复发起出题; 23/23 题 (100%); Tokens 消耗: 部分已知（总量未知）",
+    "paper view: exam renders with KaTeX math, per-question 待教师复核 badges, 换一题 disabled (版本化重生成未启用), export buttons present but export features remain out-of-scope/blocked",
+    "observations recorded (not fixed, display-level): multi-select section note says 全部选对的得 5 分 while section is 每小题 4 分; paper header shows 本卷共 20 小题 vs 23 slots (18 candidates rendered) — count aggregation question for teacher-facing view"
+  ],
+  "not_run_or_not_claimed": [
+    "教学质量验收：REVIEW/FAIL 是检查状态，不代表题目正确；教师逐题复核未做",
+    "5 个 FAIL 槽的重新生成：版本化单题重生成入口按计划保持禁用",
+    "导出/打印/发布：保持既有未完成阻断，本报告未点击",
+    "实际费用对账：需要官方账单，当前为保守预留口径"
+  ]
+}

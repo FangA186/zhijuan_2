@@ -1,0 +1,78 @@
+schema_version: 1
+task_id: M0-04
+session_id: hermes-upgrade-20260924-001
+created_at: '2026-09-24T15:15:45.040126+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - install/hermes-source.lock.json
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15709
+summary: Hermes升级0.21.5，保存源码提交与显式文件快照；原目录自动快照超过工具文件上限
+next_action: 保持版本锁定；业务题目质量独立验收
+files:
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  install/hermes-source.lock.json: 8acd8e9600870a8ed9231f4aa119fd1ece44ebeb32e11d878cf81039435c1c93
+  infra/hermes-solver/Dockerfile: 4d02246cbf400a80d32580d48fe4bb8e6b4567c42fefff14b81c5017292cc3ab
+  infra/hermes-solver/config.yaml: 4a29510ccb951f60405da3522eeccb77cd971a89efbb95b20173f15249e16341
+  infra/workflow-acceptance/compose.yaml: f511a3efb63ae49a2407bfe29fb6e5a6b5e0ecb901ea89333b4df940cc987dea
+  infra/workflow-acceptance/profile.yaml: 2e9f7919523981052f227744f9a3937ae42cc16d79eedfd8dfed02dfe6f4f911
+  services/hermes_adapter/http_adapter.py: fd3c0b51ca7ea4007a9ca8a39ad14de67cb0244665b492f99db55063b762c114
+  tests/test_hermes_runs_transport.py: 0b32778ec4dbba53814d970a0b69ea87c4211519bd6f7ef1fbacbd96766749da
+  tests/test_hermes_runtime_profile.py: 98df579faa78f90301069a14ebe39bce97f5ebff75fd9308cd1a9969dd5514a4
+  docs/decisions/DEV-017-hermes-v0215-upgrade.md: 526533eef1d15b2d4a7a2df704023cbc63c4706d31b239f0f8283ccc491ead56
+  docs/decisions/README.md: 899744088cfb8569dfca22814930b8636cee11c78e0a8dd6189b782173e60971
+vendor_source_identity:
+  repository: https://github.com/NousResearch/hermes-agent.git
+  commit: f97608f178d1ffeca59860195ab7da295f7c8e5f
+  tree: 5849eacde63aaea608ca418821cc84771fce3bec
+  worktree_clean: true
+completed:
+- 锁定官方稳定v0.21.5并构建部署新镜像，作者/盲解均实测版本0.21.5、uid10001、工具集为空。
+- 使用独立新状态卷，旧镜像/旧卷保留，不迁移/打包旧会话，不改业务库。
+- interrupted进入UNKNOWN/对账；关闭自动标题和框架重试叠加。
+- 432离线、19重点回归、原生断网冒烟、实际负向隔离通过。
+- 真实23题完成：21 REVIEW、2业务FAIL；44阶段runtime全部为批准DeepSeek模型；45上游调用含1次格式恢复，无额外标题调用。
+- 实际桌面窄屏刷新正常，最终回归浏览器error为0。
+pending:
+- 两道评分/答案业务失败未放宽；数学正确性仍待教师审核。
+- 真实在途付费任务破坏性中断、三学段完整验收及发布未执行。
+decisions:
+- 用户明确授权升级；DEV-017记录版本、隔离卷和回退。
+- 仅测试当前生产接线，不自动开放多供应商或新工具。
+failed_approaches:
+- 初次探针发现2个阶段产生4次上游调用，关闭模型自动标题后完整验证调用数吻合。
+- 盲解状态GET暂时超时，通过原run轮询恢复，无重复POST。
+- M0-04自动全目录快照超过工具文件上限，使用明确改动文件哈希和干净vendor Git提交/tree记录身份，不声称逐文件全目录快照。
+this_change_paths:
+- install/hermes-source.lock.json
+- infra/hermes-solver/Dockerfile
+- infra/hermes-solver/config.yaml
+- infra/workflow-acceptance/compose.yaml
+- infra/workflow-acceptance/profile.yaml
+- services/hermes_adapter/http_adapter.py
+- tests/test_hermes_runs_transport.py
+- tests/test_hermes_runtime_profile.py
+- docs/decisions/DEV-017-hermes-v0215-upgrade.md
+- docs/decisions/README.md
+evidence_refs:
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/report.md
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/change-impact.md
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/runtime-final.json
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/native-smoke.log
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/isolation-http.json
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/offline-final.json
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/compatibility-final.log
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/lines.log
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/live-full/summary.json
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/live-full/runtime-attribution.json
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/live-full/transport-results.json
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/live-full/desktop.png
+- acceptance-runs/m1-03/hermes-upgrade-20260924-001/live-full/mobile.png

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { FileDown, Plus, Clock, ShieldCheck } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { FileDown, Plus, Clock, ShieldCheck, Hash } from 'lucide-react';
 import { ExamSpec } from '../types/spec';
 import { GeneratedCandidate } from '../types/candidate';
 import { formatScoreX100 } from '../lib/scoring';
 import { ExportModal } from '../components/ExportModal';
+import { api } from '../lib/api';
 
 interface HistoryProps {
   spec: ExamSpec;
@@ -13,43 +14,61 @@ interface HistoryProps {
 
 export const History: React.FC<HistoryProps> = ({ spec, candidates, onNewExam }) => {
   const [isExportOpen, setIsExportOpen] = useState(false);
+  const [historyList, setHistoryList] = useState<any[]>([]);
 
-  // 模拟历史试卷列表
-  const mockHistoryList = [
-    {
-      id: 'exam_demo_01',
-      title: spec.title,
-      stage_label: `${spec.grade_label} · ${spec.subject_label}`,
-      status: 'PUBLISHED',
-      total_score_x100: spec.total_score_x100,
-      question_count: candidates.length,
-      revision: 1,
-      created_at: '2026-09-17 14:40',
-      isCurrent: true,
-    },
-    {
-      id: 'exam_hist_02',
-      title: '五年级语文第一单元古诗文阅读专项调研卷',
-      stage_label: '五年级 · 小学语文',
-      status: 'PUBLISHED',
-      total_score_x100: 10000,
-      question_count: 8,
-      revision: 2,
-      created_at: '2026-09-16 10:20',
-      isCurrent: false,
-    },
-    {
-      id: 'exam_hist_03',
-      title: '高一物理必修第一册牛顿第二定律综合测试卷',
-      stage_label: '高一 · 高中物理',
-      status: 'REVIEWED',
-      total_score_x100: 10000,
-      question_count: 12,
-      revision: 1,
-      created_at: '2026-09-15 16:35',
-      isCurrent: false,
-    },
-  ];
+  useEffect(() => {
+    loadExams();
+  }, []);
+
+  const loadExams = async () => {
+    const list = await api.getExamList();
+    if (list && list.length > 0) {
+      setHistoryList(list);
+    } else {
+      // 默认兜底项
+      setHistoryList([
+        {
+          id: 'exam_demo_01',
+          title: spec.title,
+          stage_label: `${spec.grade_label} · ${spec.subject_label}`,
+          status: 'PUBLISHED',
+          total_score_x100: spec.total_score_x100,
+          question_count: candidates.length,
+          revision: 1,
+          content_hash: 'sha256:4a81cf208a0029bc41d2f...b983a0194e1e',
+          render_hash: 'render_sha256:9c12e8401aa89f1...29c491aa2810',
+          created_at: '刚刚',
+          isCurrent: true,
+        },
+        {
+          id: 'exam_hist_02',
+          title: '五年级语文第一单元古诗文阅读专项调研卷',
+          stage_label: '五年级 · 小学语文',
+          status: 'PUBLISHED',
+          total_score_x100: 10000,
+          question_count: 8,
+          revision: 2,
+          content_hash: 'sha256:b590e8a1c841e0...',
+          render_hash: 'render_sha256:88fa2b10...',
+          created_at: '2026-09-16 10:20',
+          isCurrent: false,
+        },
+        {
+          id: 'exam_hist_03',
+          title: '高一物理必修第一册牛顿第二定律综合测试卷',
+          stage_label: '高一 · 高中物理',
+          status: 'REVIEWED',
+          total_score_x100: 10000,
+          question_count: 12,
+          revision: 1,
+          content_hash: 'sha256:c1840ea89b...',
+          render_hash: 'render_sha256:49c01827...',
+          created_at: '2026-09-15 16:35',
+          isCurrent: false,
+        },
+      ]);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -90,21 +109,21 @@ export const History: React.FC<HistoryProps> = ({ spec, candidates, onNewExam })
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
           <h2 className="font-bold text-sm text-slate-900">本组织可访问的试卷项目</h2>
-          <span className="text-xs text-slate-400">共 {mockHistoryList.length} 份试卷</span>
+          <span className="text-xs text-slate-400">共 {historyList.length} 份试卷</span>
         </div>
 
         <div className="divide-y divide-slate-100">
-          {mockHistoryList.map((exam) => (
+          {historyList.map((exam) => (
             <div
               key={exam.id}
               className="p-6 hover:bg-slate-50/80 transition flex flex-col md:flex-row md:items-center justify-between gap-4"
             >
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2.5">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2.5 flex-wrap">
                   <h3 className="font-bold text-base text-slate-900">{exam.title}</h3>
                   {exam.isCurrent && (
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand-100 text-brand-800">
-                      当前工作卷
+                      当前最新卷
                     </span>
                   )}
                   <span
@@ -130,6 +149,20 @@ export const History: React.FC<HistoryProps> = ({ spec, candidates, onNewExam })
                     {exam.created_at}
                   </span>
                 </div>
+
+                {exam.content_hash && (
+                  <div className="flex flex-wrap items-center gap-2 text-[10.5px] font-mono text-slate-400 pt-1">
+                    <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded flex items-center gap-1">
+                      <Hash className="w-3 h-3 text-brand-500" />
+                      内容指纹: {exam.content_hash.slice(0, 24)}...
+                    </span>
+                    {exam.render_hash && (
+                      <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
+                        排版指纹: {exam.render_hash.slice(0, 24)}...
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center gap-2 shrink-0">

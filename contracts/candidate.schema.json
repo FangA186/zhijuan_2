@@ -286,6 +286,42 @@
           "additionalProperties": false,
           "properties": {
             "type": {
+              "const": "diagram"
+            },
+            "spec": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "counting_rods"
+                },
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  },
+                  "minItems": 1,
+                  "maxItems": 9
+                }
+              },
+              "required": [
+                "kind",
+                "values"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "spec"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
               "const": "table"
             },
             "headers": {
@@ -430,8 +466,20 @@
               "acceptable_variants"
             ]
           },
-          "minItems": 1,
+          "minItems": 0,
           "maxItems": 100
+        },
+        "scoring_mode": {
+          "type": "string",
+          "enum": [
+            "additive",
+            "exclusive"
+          ]
+        },
+        "partial_score_x100": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
         }
       },
       "required": [
@@ -441,6 +489,40 @@
         "accepted_answers",
         "solution",
         "rubric"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "scoring_mode"
+            ],
+            "properties": {
+              "scoring_mode": {
+                "const": "exclusive"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "partial_score_x100"
+            ],
+            "properties": {
+              "rubric": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "rubric": {
+                "minItems": 1
+              },
+              "partial_score_x100": {
+                "const": 0
+              }
+            }
+          }
+        }
       ]
     }
   }

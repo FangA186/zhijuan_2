@@ -1,0 +1,26 @@
+{
+  "report_kind": "queue-integration-v1",
+  "environment": {
+    "database": "zhijuan_accept_w6 (dedicated, migrations 003/004/005 pre-applied)",
+    "broker": "RabbitMQ container zhijuan-workflow-20260922-mq, dedicated vhost zhijuan-accept-w6 (created for this run; daily vhost zhijuan-local untouched)",
+    "worker": "real Celery worker subprocess: .venv/bin/celery -A services.worker.jobs:app worker --pool=solo --concurrency=1 --without-gossip --without-mingle --without-heartbeat",
+    "hermes": "two FakeHermesServer instances on loopback (author/solver separated), protocol mirrors vendor api_server_runs.py: POST /v1/runs 202 {run_id}, GET /v1/runs/{id} with run_id echo + completed flag + output JSON string + usage, POST stop"
+  },
+  "command": "ZHIJUAN_SKIP_DOTENV=1 DATABASE_URL=$TEST_DSN ZHIJUAN_TEST_DATABASE_URL=$TEST_DSN CELERY_BROKER_URL=$ACCEPT_VHOST_URL python -m unittest tests.integration.test_queue_runtime -v",
+  "tests_run": 4,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "status": "PASS",
+  "cases": [
+    {"id": "Q1 normal completion", "result": "PASS", "assertions": "dispatch>=1 -> worker consumes -> author admissions=1, solver admissions=1 -> COMPLETED; results=1 with overall REVIEW (no trusted math); duplicate dispatch_outbox() does not re-admit (admissions stay 1)"},
+    {"id": "Q2 cancel before worker", "result": "PASS", "assertions": "cancel then dispatch: author admissions=0, solver admissions=0, job CANCELLED"},
+    {"id": "Q3 admission 5xx unknown", "result": "PASS", "assertions": "author admission returns 500: exactly 1 attempt (admit_failures=1, admissions=0), no repost, job RECONCILING, solver never called"},
+    {"id": "Q4 plan/score fence", "result": "PASS", "assertions": "stored plan_snapshot/spec_snapshot and slot score_x100=100 preserved through worker run"}
+  ],
+  "notes": [
+    "Worker readiness proven by real heartbeat row (component=worker, runtime_id=zhijuan-accept-w6, metadata model_id/gateway host:port).",
+    "Two earlier FAIL runs were test-design artifacts, not product defects: (a) leftover pending outbox rows from a debug run were dispatched by later tests' dispatch_outbox (fixed by truncating job runtime tables in tearDown on the disposable test DB); (b) the intentional duplicate-dispatch check wrongly asserted dispatch count >= 1 although 0 is the correct behavior after the row is marked dispatched (fixed by splitting first-dispatch and duplicate-dispatch assertions). A controlled experiment (manual worker, no test process, clean DB, 6s window) confirmed no external dispatcher exists and an undispatched job stays QUEUED.",
+    "not_run here: status-poll timeout/wrong-run_id fault windows (covered offline by tests/test_hermes_runs_transport.py), SSE stream behavior (browser phase), pause/resume transitions (covered offline), multi-slot ordering (single-slot plan)."
+  ]
+}

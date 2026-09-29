@@ -35,7 +35,7 @@ def map_provider_status(
     status_lower = (raw_status or "").strip().lower()
     if status_lower in ("completed", "succeeded", "success"):
         return "SUCCEEDED"
-    elif status_lower in ("failed", "error", "rejected"):
+    elif status_lower in ("failed", "error", "rejected", "partial"):
         return "FAILED"
     elif status_lower in ("cancelled", "canceled", "stopped"):
         return "CANCELLED"

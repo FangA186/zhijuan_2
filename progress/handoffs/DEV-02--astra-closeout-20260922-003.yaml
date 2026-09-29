@@ -1,0 +1,53 @@
+schema_version: 1
+task_id: DEV-02
+session_id: astra-closeout-20260922-003
+created_at: '2026-09-22T12:14:46+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - AGENTS.md
+  - progress/features.yaml
+  - progress/handoffs/README.md
+  - progress/work.yaml
+  - tests/test_project_memory.py
+  - tools/memory_finish.py
+  - tools/memory_lib.py
+  - tools/project_memory.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 14962
+summary: 开发记忆作用域交接与收尾门禁完成并独立复核
+next_action: 后续开发按AGENTS更新事实和证据，再运行finish；生产阶段单独验收
+completed:
+- finish按任务核对改动、映射、最新交接与指纹、账本、证据和派生摘要，失败返回非零。
+- 产品DONE需要范围匹配且指纹当前的独立应用验收记录；无验收、自审字段或过期记录不通过。
+- 交接仅收集相关任务/全局关键变更；非账本progress文档也有指纹；避免无关资源撑大上下文。
+- AGENTS已要求开发完成后的记录更新和finish；独立53项记忆测试及看板7项通过。
+pending:
+- 远程保护和审核身份签名未启用；工具不自动生成开发事实，后续执行者须据实更新记录。
+decisions:
+- DEV-02只按开发工具范围DONE；六项产品功能仍IN_PROGRESS。
+- 保留旧交接与旧失败报告，新增当前快照而不改写历史结果。
+failed_approaches:
+- 初始收尾发现README漏映射、AGENTS指纹过期、旧功能证据失效和摘要未更新；已补全并重新验证。
+evidence_refs:
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/offline/report.json
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+scope_patterns:
+- AGENTS.md
+- progress/handoffs/README.md
+- tests/test_project_memory.py
+- tools/memory_finish.py
+- tools/memory_lib.py
+- tools/project_memory.py
+files:
+  AGENTS.md: 3d176f38f7754bf1c53d5be94c8b89a1cad13cb7040b90d5bf5c3dd878c4e18d
+  progress/handoffs/README.md: 20fc3719110ada5c3710b99d3f86fd8e2fd887cc68e88ef76412d400806028c2
+  tests/test_project_memory.py: ddbe067d564b15d7df4d3becd8153bfe1a43e5a879f1a0f11a37ca89dd4c132f
+  tools/memory_finish.py: cae0a0a3d72703b72ac9b20052291fa234fde07be385137645906a0a5ba0290c
+  tools/memory_lib.py: 85d67ff784112dc5eaf1fb4cec003a1162dbf65b3fa44edff62434f37ef89e39
+  tools/project_memory.py: d9313deb843fa47a4b482836035694d3a3cc70dcf57e4e8886ea22ac5c90f9d6
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

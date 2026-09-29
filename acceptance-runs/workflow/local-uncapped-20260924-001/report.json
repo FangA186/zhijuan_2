@@ -1,0 +1,37 @@
+{
+  "report_kind": "local-uncapped-offline-and-readonly-runtime-v1",
+  "created_at": "2026-09-24T03:36:52Z",
+  "scope": "local generation admission and DeepSeek proxy request/amount cap removal",
+  "status": "OFFLINE_PASS_LIVE_STATUS_ONLY",
+  "tests": {
+    "command": "env -u DATABASE_URL ZHIJUAN_SKIP_DOTENV=1 .venv/bin/python -m unittest tests.test_live_budget_proxy tests.test_generation_accept tests.test_runtime_readiness -v",
+    "tests_run": 92,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0
+  },
+  "runtime_readback": {
+    "active_jobs_before_proxy_restart": 0,
+    "undispatched_outbox_before_proxy_restart": 0,
+    "proxy_restarted": true,
+    "budget_status_for_min_requests_46": {
+      "calls": 65,
+      "reserved_cny": 65,
+      "limit_enabled": false,
+      "max_requests": null,
+      "max_reserved_cny": null,
+      "remaining_requests": null,
+      "remaining_cny": null,
+      "pending_count": 0,
+      "sufficient": true,
+      "reason_code": "BUDGET_OK"
+    },
+    "readyz": "READY",
+    "start_local_output_budget_warning": false
+  },
+  "not_run": [
+    "No new generation-job POST, model call, provider billing, or teaching-quality review",
+    "No production deployment or tenant authorization acceptance",
+    "Existing confirmed plan still idempotently replays its old PARTIAL_FAILED job"
+  ]
+}

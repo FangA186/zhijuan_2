@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>知卷 · DeepSeek 原始流</title><link rel="stylesheet" href="/raw-api.css"></head>
+<body>
+<header><div><h1>DeepSeek 原始流</h1><p id="source">DeepSeek 原始响应 / Hermes 结果，分别标记来源</p></div><span id="connection" role="status">检查后台连接…</span></header>
+<div class="toolbar"><strong>全部记录</strong><button id="reconnect">重新连接</button><button id="clear">归档并清空</button><button id="copy" disabled>复制全部原始数据</button><label><input id="follow" type="checkbox" checked>跟随</label></div>
+<p id="hint">正在检查后台状态…</p>
+<div id="metadata"></div>
+<main>
+<section class="wire"><h2>原始 SSE / JSON <span id="count">0 行</span></h2><textarea id="raw" aria-label="全部原始数据" readonly placeholder="等待实际响应…"></textarea></section>
+<aside>
+<section><h2>reasoning_content · 思考内容</h2><pre id="reasoning">尚未收到该字段</pre></section>
+<section><h2>content · 回答内容</h2><pre id="content">尚未收到该字段</pre></section>
+<section><h2>tool_calls · 工具调用增量</h2><pre id="tools">尚未收到该字段</pre></section>
+<section><h2>finish_reason / usage / error</h2><pre id="result">尚无结束或用量信息</pre></section>
+</aside>
+</main>
+<script type="module" src="/raw-api-viewer.js"></script>
+</body></html>

@@ -1,0 +1,44 @@
+schema_version: 1
+task_id: M1-03
+session_id: astra-closeout-20260922-003
+created_at: '2026-09-22T12:18:10+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - services/hermes_adapter/http_adapter.py
+  - services/hermes_adapter/status_map.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 14974
+summary: Hermes原生Runs与受控官方DeepSeek链路完成本轮实现
+next_action: 生产权限、完整能力/安全评估和自动对账待补；不视为完整适配器验收。
+completed:
+- 原生Runs、run_id校验、取消和未知状态不重发；实际命题/盲解单题链路通过，候选检查REVIEW。
+pending:
+- 生产权限、完整能力/安全评估和自动对账待补；不视为完整适配器验收。
+decisions:
+- 任务保持IN_PROGRESS，开发实现/离线通过/真实单题执行/教学正确性分开。
+- 仅验收专属数据库与容器，本轮已停止付费服务；未提交或推送。
+failed_approaches:
+- 非法JSON、评分表FAIL与读取超时保留原报告；未通过调整答案或放宽检查获取通过。
+evidence_refs:
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+- acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+- acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+scope_patterns:
+- execution/templates/hermes-capability-probe.yaml
+- reference_code/adapter_contract.py
+- services/hermes_adapter/http_adapter.py
+- services/hermes_adapter/runtime_factory.py
+- services/hermes_adapter/status_map.py
+files:
+  execution/templates/hermes-capability-probe.yaml: 672622b5822e538458a699d934b03c101676a15259f7cc8faf6a07651f8fed0e
+  reference_code/adapter_contract.py: d944c5313a36f2cc89c5b4d79c62e741bf9834e7c5a430f4479a3b6d63a35819
+  services/hermes_adapter/http_adapter.py: 07ed30d29bd8defa984d89f0ed4a4f273410449c16879883d58bd0f680b867ea
+  services/hermes_adapter/runtime_factory.py: d0b029f7b0f6817ae23174a48c047a8450aea2bfd7d91f13ed6be965c34a5a8d
+  services/hermes_adapter/status_map.py: a212b5b1ae3bbd01447755b06e28e7d7565d3cf2e7874d126afcc194828b3bec
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

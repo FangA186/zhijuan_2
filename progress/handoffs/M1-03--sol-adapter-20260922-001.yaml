@@ -1,0 +1,23 @@
+schema_version: 1
+task_id: M1-03
+session_id: sol-adapter-20260922-001
+created_at: '2026-09-22T17:14:44+08:00'
+summary: 'Hermes native Runs adapter replaced direct DeepSeek execution entry points; offline transport contract checked.'
+next_action: 'Integrate remaining direct callers and verify separately isolated Hermes gateways before real model acceptance.'
+completed:
+  - 'Verified pinned Hermes /v1/runs admission, status, and stop source contract.'
+  - 'Routed author and solver execution through Hermes Runs with explicit DeepSeek provider.'
+  - 'Removed direct DeepSeek network call behavior from adapter entry points and stopped synthetic request IDs and usage.'
+  - 'Added fail-closed distinct solver gateway configuration and offline MockTransport tests.'
+pending:
+  - 'Verify physical solver filesystem, tools, credentials, and session isolation in deployment.'
+  - 'Integrate job_service and template_parser callers and run authorized real Hermes/DeepSeek acceptance.'
+  - 'Resolve shared project_memory check failure: Handoff needs summary and next action.'
+decisions:
+  - 'Legacy DeepSeek api_key and base_url constructor parameters are ignored as Hermes credentials.'
+  - 'Transport ambiguity returns UNKNOWN for reconciliation; no automatic admission retry.'
+  - 'Hermes gateway run_id is not reported as a provider request ID.'
+failed_approaches: []
+evidence_refs:
+  - 'acceptance-runs/devtools/hermes-runs-adapter-20260922-001/report.md'
+  - 'tests/test_hermes_runs_transport.py'

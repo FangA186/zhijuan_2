@@ -1,0 +1,50 @@
+schema_version: 1
+task_id: M1-05
+session_id: template-parser-20260924-001
+created_at: '2026-09-24T03:48:28+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - configs/local-runtime.env.example
+  - contracts/candidate.schema.json
+  - services/api/routes/exams.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15130
+summary: 模板识别禁用DeepSeek直连与虚假100%文案，规则结构与原文分值冲突可核对
+next_action: 需要AI模板解析时单独设计Hermes受控任务并验收，不借命题角色直连
+completed:
+- 普通模板上传只走确定性结构提取，force_llm请求明确501；删除已禁用DeepSeek直连的模板解析类。
+- 页面撤下AI深度识别和100%精准文案，原文分值冲突提示教师核对，损坏DOCX不再返回默认成功。
+- 模板单测10项、前端构建和运行态合成请求通过；真实用户DOCX的52/40矛盾被识别，未发起模型调用。
+pending:
+- Hermes模板深度识别尚无角色/Skill、异步任务、账本和真实验收，不能称该功能已完成。
+- 教师仍需核对规则提取结果及原卷冲突；本轮未修改当前试卷草稿。
+decisions:
+- 遵守AGENTS规定的Hermes唯一模型入口；本地修复先下线无效AI按钮，见docs/decisions/DEV-014-template-parser-hermes-only.md。
+failed_approaches:
+- 旧实现调用_adapter._call_deepseek_chat，被禁用后以llm_error返回并把规则结果称100%精准；已删除这条路径及误导文案。
+evidence_refs:
+- acceptance-runs/workflow/template-parser-20260924-001/report.json
+scope_patterns:
+- acceptance/fixtures/minimum-primary.json
+- configs/local-runtime.env.example
+- contracts/candidate.schema.json
+- contracts/exam-spec.schema.json
+- contracts/openapi.yaml
+- services/api/routes/exams.py
+- services/api/routes/jobs.py
+- services/api/routes/plans.py
+files:
+  '[missing-pattern] services/api/routes/jobs.py': MISSING
+  '[missing-pattern] services/api/routes/plans.py': MISSING
+  acceptance/fixtures/minimum-primary.json: df1f1f2f25606cc1eb4812852913d64c7f67240ce857efcb8d6020ac755b8aa1
+  configs/local-runtime.env.example: fc603c5adf744b16eb851b7a1c574049b861b8b247b769eae1e1999248db4a86
+  contracts/candidate.schema.json: 562b74108c41fdb06e75892839a18e1ab1d0a2913d5090016dcc56bb1504db31
+  contracts/exam-spec.schema.json: 65bc37d85770e54a60c88fa1d445edc330369d7ac905addcbe56f24aec3ac0e8
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  services/api/routes/exams.py: b6ba33fd1fa1ceabe745d50a896cf43ede16972922c71d18f57b6b5a714d8029
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

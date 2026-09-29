@@ -1,0 +1,53 @@
+schema_version: 1
+task_id: M1-05
+session_id: workbench-startup-20260922-001
+created_at: '2026-09-22T14:07:49+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - services/api/routes/exams.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 15030
+summary: Chrome常用入口可读取、保存和预览11题；旧题型范围重分配后要求重新确认，生成未配置时禁用启动。
+next_action: 接续真实生成配置与完整验收；不得把配置齐备当运行健康或教学质量通过。
+completed:
+- Chrome常用入口可读取、保存和预览11题；旧题型范围重分配后要求重新确认，生成未配置时禁用启动。
+- 219项Python、8项专属数据库、3项Node及前端构建通过；浏览器11题蓝图预览成功，模型调用新增0。
+pending:
+- 真实生成服务尚未配置完整，页面和后端均阻止启动。
+decisions:
+- 使用独立本地库保留草稿；验收环境与日常入口分开记录。
+- 配置状态只报告布尔值，不读取或输出密钥；不把Key存在当就绪。
+failed_approaches:
+- 此前只验证独立8001入口，常用8000缺DATABASE_URL；本轮修复接线。
+- 旧样例隐藏题型考点与所选范围不一致，预览被拒；调整后重新要求范围确认。
+evidence_refs:
+- acceptance-runs/workflow/workbench-startup-20260922-001/report.md
+- acceptance-runs/workflow/workbench-startup-20260922-001/unit.json
+- acceptance-runs/workflow/workbench-startup-20260922-001/integration.json
+- acceptance-runs/workflow/workbench-startup-20260922-001/runtime.json
+scope_patterns:
+- acceptance/fixtures/minimum-primary.json
+- apps/web/src/lib/sectionScope.ts
+- apps/web/src/pages/FoolproofSetup.tsx
+- contracts/exam-spec.schema.json
+- contracts/openapi.yaml
+- services/api/routes/exams.py
+- services/api/routes/jobs.py
+- services/api/routes/plans.py
+- tests/frontend_section_scope.test.mjs
+files:
+  '[missing-pattern] services/api/routes/jobs.py': MISSING
+  '[missing-pattern] services/api/routes/plans.py': MISSING
+  acceptance/fixtures/minimum-primary.json: df1f1f2f25606cc1eb4812852913d64c7f67240ce857efcb8d6020ac755b8aa1
+  apps/web/src/lib/sectionScope.ts: 91f376f75286362d8399d1c413b6a04dc639f339aac32078f2c8fcb51a915baf
+  apps/web/src/pages/FoolproofSetup.tsx: 52469785b07176a39add5173efc755fef3237c9e7f5035ed93f4f8d081ab126a
+  contracts/exam-spec.schema.json: 65bc37d85770e54a60c88fa1d445edc330369d7ac905addcbe56f24aec3ac0e8
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  services/api/routes/exams.py: f4f619f5da669fe2f43bed6f45879f30238f8fc638428577bb8f8dda6c7aed87
+  tests/frontend_section_scope.test.mjs: bdc74f497633e38ec80568045650520e1b6f7a89f8a1c8c180ae70dc3215269b
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

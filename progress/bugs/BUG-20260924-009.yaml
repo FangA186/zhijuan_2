@@ -1,0 +1,31 @@
+schema_version: 1
+id: BUG-20260924-009
+title: 历史部分失败试卷显示图示缺失
+status: OPEN
+module: frontend
+updated_at: '2026-09-24'
+task_ids:
+- M2-03
+- M2-07
+keywords:
+- 缺图
+- 图示缺失
+- SVG
+- asset_id
+symptom: 旧草稿中有图示缺失提示；含图旧打印和Word导出被阻断。
+reproduction:
+- 查看本机已有部分失败任务的试卷与导出弹窗。
+root_cause: 尚未定位该历史草稿图资产缺失的完整原因。
+resolution: 待检查图资产引用与受控图形能力，不可将缺图或被阻断导出标为通过。
+affected_files:
+- apps/web/src/lib/math.tsx
+- services/diagram_assets.py
+regression:
+- 只读核对历史草稿资产引用；后续真实图示与导出需单独验收。
+verified_at: ''
+verification: NOT_RUN
+evidence_refs:
+- acceptance-runs/maintenance/dev-03-code-structure-20260924-001/browser-check.md
+events:
+- 2026-09-24：从DEV-03实际验收回填；仍待处理，不计产品通过。
+source_hashes: {}

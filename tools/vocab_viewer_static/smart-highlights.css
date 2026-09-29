@@ -1,0 +1,80 @@
+    /* 智能卡片识别高亮 */
+    .image-card.card-vocab-start {
+      border-color: rgba(245, 158, 11, 0.8) !important;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+    }
+    .image-card.card-vocab-page {
+      border-color: rgba(16, 185, 129, 0.5) !important;
+    }
+    .image-card.card-non-vocab-page .thumb-wrapper img {
+      filter: saturate(0.65) brightness(0.85);
+      transition: filter 0.2s;
+    }
+    .image-card.card-non-vocab-page:hover .thumb-wrapper img {
+      filter: saturate(1) brightness(1);
+    }
+    .image-card.flash-highlight {
+      animation: flashHighlight 1.6s ease-out;
+    }
+    @keyframes flashHighlight {
+      0% { box-shadow: 0 0 32px rgba(245, 158, 11, 0.95); transform: scale(1.05); }
+      100% { box-shadow: 0 0 16px rgba(245, 158, 11, 0.35); transform: scale(1); }
+    }
+
+    .card-footer {
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(15, 23, 42, 0.6);
+      z-index: 9;
+    }
+    .card-info {
+      font-size: 11px;
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .card-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .btn-icon-zoom {
+      background: rgba(59, 130, 246, 0.15);
+      color: #93c5fd;
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+    .btn-icon-zoom:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-icon-del {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+    .btn-icon-del:hover {
+      background: var(--danger);
+      color: #fff;
+    }
+

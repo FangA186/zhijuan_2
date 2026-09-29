@@ -6,6 +6,7 @@ from .settings import settings
 from .health import router as health_router
 from .routes.exams import router as exams_router
 from .routes.curriculum import router as curriculum_router
+from .routes.raw_api_routes import router as raw_api_router
 
 app = FastAPI(
     title=settings.app_title,
@@ -16,15 +17,17 @@ app = FastAPI(
 # Enable CORS for frontend workbench
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["ETag"],
 )
 
 app.include_router(health_router)
 app.include_router(exams_router)
 app.include_router(curriculum_router)
+app.include_router(raw_api_router)
 
 @app.get("/")
 def root():

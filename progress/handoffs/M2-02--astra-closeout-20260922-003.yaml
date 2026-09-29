@@ -1,0 +1,60 @@
+schema_version: 1
+task_id: M2-02
+session_id: astra-closeout-20260922-003
+created_at: '2026-09-22T12:18:11+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - infra/hermes-solver/Dockerfile
+  - infra/hermes-solver/compose.yaml
+  - services/hermes_adapter/blind_runtime.py
+  - services/hermes_adapter/comparator.py
+  - services/hermes_adapter/isolation_gateway.py
+  - tests/test_blind_isolation.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 14974
+summary: 独立盲解输入与运行隔离完成本轮实现
+next_action: 共享材料安全解析、更广对抗与跨租户测试待补。
+completed:
+- 公开输入白名单、私有字段拒绝、独立容器/卷/工作目录和空工具集；真实盲解成功。
+pending:
+- 共享材料安全解析、更广对抗与跨租户测试待补。
+decisions:
+- 任务保持IN_PROGRESS，开发实现/离线通过/真实单题执行/教学正确性分开。
+- 仅验收专属数据库与容器，本轮已停止付费服务；未提交或推送。
+failed_approaches:
+- 非法JSON、评分表FAIL与读取超时保留原报告；未通过调整答案或放宽检查获取通过。
+evidence_refs:
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+- acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+- acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+scope_patterns:
+- contracts/blind-input.schema.json
+- contracts/public-question.schema.json
+- infra/hermes-solver/Dockerfile
+- infra/hermes-solver/compose.yaml
+- services/api/domain/public_projection.py
+- services/hermes_adapter/blind_runtime.py
+- services/hermes_adapter/comparator.py
+- services/hermes_adapter/isolation_gateway.py
+- skills/blind-solver/SKILL.md
+- tests/security/test_blind_isolation.py
+- tests/test_blind_isolation.py
+files:
+  '[missing-pattern] services/api/domain/public_projection.py': MISSING
+  '[missing-pattern] tests/security/test_blind_isolation.py': MISSING
+  contracts/blind-input.schema.json: b9acfdb1f18d142989eb5a929dac8cae54a224926405bce1c42125a67981de95
+  contracts/public-question.schema.json: 5b5418bd3a103aa199dbb91845adbee1fa69eef960c3421e55d680b773f8b534
+  infra/hermes-solver/Dockerfile: 29374c839130a6ad14927cb9b7cd7f717cce3db1351685fe92c750b3e74fa013
+  infra/hermes-solver/compose.yaml: d70fcec9d4133575b9206974d04448bafb0487c0e09c998cef492c8e1217e870
+  services/hermes_adapter/blind_runtime.py: 0d33b115836ac31b5c657f95c34a7facad5c8fde967370af9ef7140b921a5c92
+  services/hermes_adapter/comparator.py: 981c02fa7ccbf6fc02695c0028ab72909e8d32a62e49f0e831d370c8480ec2fb
+  services/hermes_adapter/isolation_gateway.py: 589d05fe39c8b4a7e4854c259ad1eae4396477073561f83cb52e8758076be001
+  skills/blind-solver/SKILL.md: b949b7496f06c28f04e7f5faf2cfaa86ef861531c57cd014872a1a30bc99636d
+  tests/test_blind_isolation.py: 3572d2aa8026de014ef5faad02162be3f551a0df2eff2039a630375da5f3d94d
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。

@@ -1,0 +1,18 @@
+{
+  "report_kind": "pg-integration-v1",
+  "database": "zhijuan_accept_w6 (dedicated test DB, not zhijuan_local)",
+  "migrations_applied_first": ["database/003_generation_jobs.sql", "database/004_generation_exam_state.sql", "database/005_local_runtime_heartbeats.sql"],
+  "asserted_identity": "current_database()=zhijuan_accept_w6, schema=public",
+  "command": "ZHIJUAN_SKIP_DOTENV=1 DATABASE_URL=$TEST_DSN ZHIJUAN_TEST_DATABASE_URL=$TEST_DSN <cleared model/gateway vars> python -m unittest discover -s tests/integration",
+  "tests_run": 17,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "status": "PASS",
+  "notes": [
+    "Existing 8 integration tests pass unchanged (concurrent create dedup, revision fence, fail-result preservation, find_by_plan real SQL positive+negative).",
+    "New tests/integration/test_runtime_heartbeats_pg.py: 8 cases (DB-assigned timestamps, idempotent upsert, TTL expiry, cross-runtime isolation, freshest-instance dedup, future-timestamp rejection, component separation, migration idempotency).",
+    "test_workflow_integration setUpClass extended with readiness+budget probe stubs (test-env substitution of dependency liveness, same semantics as its existing configured stub; production gates covered offline by tests/test_generation_accept.py).",
+    "First run without pre-applied migrations exposed import-time store connection error; fixed by pre-applying 003/004/005 per test plan §2.3 (procedure fix, not code fix)."
+  ]
+}

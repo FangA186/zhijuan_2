@@ -1,0 +1,30 @@
+{
+  "report_kind": "template-parser-no-direct-provider-v1",
+  "created_at": "2026-09-24T03:47:31Z",
+  "scope": "template upload fallback, forced AI route, score-conflict disclosure and UI copy",
+  "status": "OFFLINE_PASS_LIVE_API_READBACK",
+  "tests": {
+    "command": "env -u DATABASE_URL ZHIJUAN_SKIP_DOTENV=1 .venv/bin/python -m unittest tests.test_template_parser -q",
+    "tests_run": 10,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0
+  },
+  "frontend_build": {"command": "cd apps/web && npm run build", "exit_code": 0},
+  "live_synthetic_api": {
+    "normal_parse_status": 200,
+    "engine_used": "rule_engine",
+    "warning_count": 1,
+    "forced_ai_status": 501
+  },
+  "uploaded_math_fixture": {
+    "sections": 4,
+    "warning_count": 1,
+    "score_conflict_52_vs_40_detected": true
+  },
+  "limitations": [
+    "No AI template recognition through Hermes has been implemented",
+    "Rule extraction and warning are not teacher validation or 100 percent accuracy",
+    "No paid model call, current exam-spec write, or full browser file upload was performed"
+  ]
+}

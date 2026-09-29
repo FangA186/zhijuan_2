@@ -1,0 +1,81 @@
+    /* 选中状态：大红加粗边框 + 红色半透明背景 */
+    .image-card.selected {
+      border-color: #ef4444 !important;
+      background: rgba(239, 68, 68, 0.15) !important;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.5) !important;
+    }
+    .image-card.selected .thumb-wrapper img {
+      filter: brightness(0.85);
+    }
+
+    .selected-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(239, 68, 68, 0.15);
+      z-index: 8;
+      pointer-events: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .image-card.selected .selected-overlay {
+      display: flex;
+    }
+    .selected-check-badge {
+      background: #ef4444;
+      color: #fff;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+      border: 2px solid #fff;
+    }
+
+    .thumb-wrapper {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      background: #020617;
+      overflow: hidden;
+    }
+    .thumb-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.2s;
+    }
+    .thumb-wrapper:hover img {
+      transform: scale(1.02);
+    }
+
+    .card-checkbox {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      accent-color: #ef4444;
+    }
+
+    .page-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(4px);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      z-index: 9;
+    }
+

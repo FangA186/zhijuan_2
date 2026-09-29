@@ -1,0 +1,22 @@
+schema_version: 1
+task_id: M1-05
+session_id: sol-grade-mapping-20260922-004
+created_at: '2026-09-22'
+summary: 教材年级映射收敛为共用纯函数，确认范围在学段和教材变更时失效。
+completed:
+- 新增 stageYearFromGrade，七/八/九年级与初一/二/三、高一/二/三均映射为学段内1/2/3；小学一年级至六年级保持1-6。
+- FoolproofSetup 与 ExamSetup 共用解析；无法识别年级时提示并停止教材选择，不沿用旧学段年级。
+- ExamSetup 切换学段或教材后置 scope_confirmed=false。
+- Node 直接测试年级映射及未知输入，前端构建通过。
+pending:
+- 尚未在真实浏览器与所有官方教材目录组合中逐一点击验收。
+decisions:
+- 年级未知时明确提示，避免教材标签与 stage_year 不一致。
+failed_approaches:
+- 原 ExamSetup 与 FoolproofSetup 各自解析且带默认值，教材缺明确年级时可能沿用旧值或给初中/高中默认1；已改为共用解析与显式拒绝。
+evidence_refs:
+- acceptance-runs/m1-05/sol-grade-mapping-20260922-004/grade-mapping-test.log
+- acceptance-runs/m1-05/sol-grade-mapping-20260922-004/frontend-build.log
+- acceptance-runs/m1-05/sol-grade-mapping-20260922-004/diff-check.log
+next_action: 尚未在真实浏览器与所有官方教材目录组合中逐一点击验收。
+metadata_correction: 补齐 next_action（优先引用原 pending）；不改写历史完成结论。

@@ -1,0 +1,50 @@
+schema_version: 1
+task_id: M1-05
+session_id: astra-closeout-20260922-003
+created_at: '2026-09-22T12:18:10+00:00'
+git:
+  state: GIT
+  head: 1a89b534185055055d23697f1a61b307efa56253
+  branch: main
+  base: null
+  changed_paths:
+  - services/api/routes/exams.py
+  hidden_path_count: 0
+  notice: 包含暂存、未暂存与未跟踪路径；有 --base 时加共同祖先到 HEAD 的改动。未读取 diff 正文。
+  outside_task_path_count: 14977
+summary: 三学段规格与蓝图确认前端完成本轮实现
+next_action: 全学科课程组合、角色权限及完整三学段浏览器闭环尚未验收。
+completed:
+- 学段内年级、整数分值、范围确认与教材sidecar规范化；三学段API、年级/教材浏览器验证与构建通过。
+- 最终页面显示服务端REVIEW并禁用尚未实现的版本化换题；最终构建和真实结果回读通过。
+pending:
+- 全学科课程组合、角色权限及完整三学段浏览器闭环尚未验收。
+decisions:
+- 任务保持IN_PROGRESS，开发实现/离线通过/真实单题执行/教学正确性分开。
+- 仅验收专属数据库与容器，本轮已停止付费服务；未提交或推送。
+failed_approaches:
+- 最终复核发现同规格重拟计划会复用旧结果；已加事务与查询版本围栏，保留失败复现。
+evidence_refs:
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/report.md
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/final-unit.json
+- acceptance-runs/workflow/plan-version-fence-20260922-001/all-integration-final.json
+- acceptance-runs/workflow/sol-six-features-20260922-001/live-queue-strict.json
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/frontend-final-004/report.md
+- acceptance-runs/workflow/sol-six-features-final-20260922-003/browser-check.json
+scope_patterns:
+- acceptance/fixtures/minimum-primary.json
+- apps/web/src/pages/ExamPaperWorkbench.tsx
+- contracts/exam-spec.schema.json
+- contracts/openapi.yaml
+- services/api/routes/exams.py
+- services/api/routes/jobs.py
+- services/api/routes/plans.py
+files:
+  '[missing-pattern] services/api/routes/jobs.py': MISSING
+  '[missing-pattern] services/api/routes/plans.py': MISSING
+  acceptance/fixtures/minimum-primary.json: df1f1f2f25606cc1eb4812852913d64c7f67240ce857efcb8d6020ac755b8aa1
+  apps/web/src/pages/ExamPaperWorkbench.tsx: 48ae5ebbcc69dc8a622e845c0690c4d5a455928d6197509825a3344b821e308e
+  contracts/exam-spec.schema.json: 65bc37d85770e54a60c88fa1d445edc330369d7ac905addcbe56f24aec3ac0e8
+  contracts/openapi.yaml: 1c600a063d085ce47b009860770aa75629f2101caa8bd61a84d284610197e73c
+  services/api/routes/exams.py: 0a52850d2cea204881ed0f63201bc7e5d54a4f137aec81b9b4ae5c2a3944446e
+note: 此命令只创建交接框架和现场快照；completed 等由执行者据实填写，不自动变更任务状态。
