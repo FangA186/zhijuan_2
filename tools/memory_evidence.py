@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from .memory_base import ID, IMPLEMENTATION, TASK_STATES, RecordError, digest, load_records, read_data, relative_name, safe_path
+from .memory_local_evidence import historical_reference
 from .memory_graph import closure, file_snapshot, graph_check, keyed
 
 def evidence_scope(root: Path, ids: list[str]) -> dict:
@@ -91,7 +92,7 @@ def validate_memory(root: Path, strict_evidence: bool = False) -> dict:
         if f['implementation'] == 'IMPLEMENTED' and not f['implementation_paths']:
             raise RecordError('IMPLEMENTED needs existing implementation paths, not target path names')
         if f['last_evidence']:
-            safe_path(root, f['last_evidence'], must_exist=True)
+            historical_reference(root, f['last_evidence'], warnings, strict=strict_evidence)
     graph_check(by)
     if work.get('stage_hint') not in {'M0', 'M1', 'M2', 'M3'} or work.get('recommended_next_task') not in tasks:
         raise RecordError('Invalid current stage or recommended next task')
@@ -104,7 +105,7 @@ def validate_memory(root: Path, strict_evidence: bool = False) -> dict:
             if not record.get('evidence_refs') or not record.get('completed_by') or not record.get('completed_at'):
                 raise RecordError('DONE requires real evidence and completion attribution')
             for ref in record['evidence_refs']:
-                safe_path(root, ref, must_exist=True)
+                historical_reference(root, ref, warnings, strict=strict_evidence)
             # No automatic human stage signature is produced by this structural check.
     for s in suites.values():
         if s.get('status') not in {'IMPLEMENTED', 'PLANNED'}:
@@ -141,7 +142,7 @@ def validate_memory(root: Path, strict_evidence: bool = False) -> dict:
         if not h.get('summary') or not h.get('next_action'):
             raise RecordError('Handoff needs summary and next action')
         for ref in h.get('evidence_refs', []):
-            safe_path(root, ref, must_exist=True)
+            historical_reference(root, ref, warnings, strict=strict_evidence)
     return {'status': 'PASS', 'scope': 'record_structure_only', 'features': len(by),
             'actual_task_records': len(work['tasks']), 'warnings': warnings,
             'application_verified': False, 'remote_ci_activated': False}

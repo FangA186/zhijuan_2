@@ -277,14 +277,16 @@ tasks:
     - acceptance-runs/workflow/workbench-startup-20260922-001/integration.json
     - acceptance-runs/workflow/workbench-startup-20260922-001/runtime.json
   DEV-04:
-    status: DONE
-    review_note: Bug目录、修前检索及复发历史、本地页面与Notion9条回读同步已完成；声明的Bug任务由finish核对检索/记录/同步，不能认证所有外部Agent。
+    status: IN_PROGRESS
+    review_note: 修复运行产物排除后的CI依赖，干净Git副本和Linux3.12全部离线通过；远端修复提交重跑待确认。原功能已完成记录保留。
     evidence_refs:
     - acceptance-runs/devtools/bug-memory-20260924-001/offline-final/report.json
     - acceptance-runs/devtools/bug-memory-20260924-001/browser.md
     - acceptance-runs/devtools/bug-memory-20260924-001/change-impact.md
+    - acceptance-runs/devtools/ci-clean-checkout-20260929-001/report.md
     completed_by: Codex
     completed_at: '2026-09-24T12:28:16.926052+00:00'
+    reviewed_at: '2026-09-29T02:32:07.313803+00:00'
   M2-04:
     status: IN_PROGRESS
     reviewed_at: '2026-09-24T18:25:18.828355+00:00'

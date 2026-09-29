@@ -3,7 +3,7 @@
 > 由 progress/features.yaml、progress/work.yaml 及登记证据生成，不手改本文件。
 > 当前 Git 现场请运行 context；本摘要不是新的事实来源或阶段签收。
 
-记录摘要指纹：`165b0bcef9adff37fd1692780ffe1ed43de98cfb60655d6f789b063d8a64eb45`
+记录摘要指纹：`6c860870cfb562b9438ab8618c234c1e52ab4b8f7c85777c5ad2f17a604e83df`
 当前阶段提示：**M1**；建议下一任务：**M0-05**。
 
 | 功能 | 类别 | 实现 | 登记范围的验证 |
@@ -23,14 +23,14 @@
 | FEAT-PUBLISH · 审核发布与撤回 | PRODUCT | IN_PROGRESS | NOT_RUN |
 | FEAT-DOCX · 可编辑 Word 导出 | PRODUCT | NOT_STARTED | NOT_RUN |
 | FEAT-DEV-STRUCTURE · 可维护代码结构与 200 行离线门禁 | DEVTOOL | IMPLEMENTED | STALE |
-| FEAT-DEV-MEMORY · 跨会话记录、项目看板与离线质量工具 | DEVTOOL | IMPLEMENTED | STALE |
+| FEAT-DEV-MEMORY · 跨会话记录、项目看板与离线质量工具 | DEVTOOL | IMPLEMENTED | OFFLINE_PASS |
 
 ## 实际任务覆盖层
 
 - DEV-01: DONE；证据条数 5
 - DEV-02: DONE；证据条数 3
 - DEV-03: DONE；证据条数 3
-- DEV-04: DONE；证据条数 3
+- DEV-04: IN_PROGRESS；证据条数 4
 - M0-04: IN_PROGRESS；证据条数 7
 - M0-05: IN_PROGRESS；证据条数 5
 - M1-01: IN_PROGRESS；证据条数 2

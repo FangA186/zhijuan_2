@@ -21,3 +21,5 @@
 - [DEV-021 具体考点分配与同卷重复检查](DEV-021-topic-diversity.md)
 
 - [DEV-022 Hermes 规划 Agent 与持久蓝图任务](DEV-022-planner-agent.md)
+
+- [DEV-023 干净检出与本地历史证据边界](DEV-023-ci-local-evidence.md)

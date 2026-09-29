@@ -1,0 +1,51 @@
+schema_version: 1
+id: BUG-20260929-001
+title: 排除运行产物后干净检出CI依赖本地证据与教材数据而失败
+status: FIXED
+module: ci/developer-memory/curriculum-tests
+updated_at: '2026-09-29'
+task_ids:
+- DEV-04
+keywords:
+- CI
+- Missing required file
+- verification.json
+- all-offline
+- 干净检出
+symptom: CI预检在历史verification.json缺失时退出且没有上传报告；继续后教材单测缺本机数据。
+reproduction:
+- 对80dd988执行git archive，仅受跟踪文件运行all-offline，退出2
+- 首层修复后干净副本完整基础套件中7项教材测试失败
+root_cause: 记录结构检查强制依赖未入Git的历史产物；质量报告在预检之后才创建；教材测试绑定本地抓取数据，CI依赖落后于应用导入。
+resolution: 缺失且忽略的未跟踪历史证据标不可核验，严格验证不放宽；失败预检也写FAIL报告；复用运行锁依赖，教材单测改临时合成夹具并修复custom data_dir初始化。
+affected_files:
+- requirements-ci.lock
+- tools/memory_local_evidence.py
+- tools/memory_evidence.py
+- tools/run_quality_checks.py
+- services/curriculum/repository_loading.py
+- tests/curriculum_fixture.py
+- tests/test_curriculum_domain.py
+- tests/test_curriculum_vocab.py
+- tests/test_ci_checkout.py
+- docs/decisions/DEV-023-ci-local-evidence.md
+- docs/decisions/README.md
+regression:
+- python tools/run_quality_checks.py --suite all-offline --feature FEAT-DEV-MEMORY
+  --out acceptance-runs/ci/<new-directory>
+- python -m unittest tests.test_ci_checkout
+verified_at: '2026-09-29T02:32:07.313803+00:00'
+verification: CLEAN_CHECKOUT_OFFLINE_PASS / Linux Python3.12：9组通过，495基础测试无失败无跳过；远端重跑未执行
+evidence_refs:
+- acceptance-runs/devtools/ci-clean-checkout-20260929-001/report.md
+events:
+- 2026-09-29 修前DEV-04检索并复现后修复；保持运行产物和教材数据不入库。
+source_hashes:
+  tools/memory_local_evidence.py: a6ba0666e07452bcc8bf0ef5dda8532669c15b3ab80c903efd229e80b0d6a60b
+  tools/memory_evidence.py: 645cab3e7b8cea059aef53b49ae31d8c611fe5fadd9804c6e8b6e9318da654c2
+  tools/run_quality_checks.py: 86d97fc2b307689c4916070c0bb8e97a867de26b3ea06126a46cb421f4a7c4f9
+  services/curriculum/repository_loading.py: e3e5e944fd67152d8f94fb46c5016f055061af459fc71f1efddee521322e8e67
+  tests/curriculum_fixture.py: 8c4f771a30e2a20e66e4ec10e753c82c392fbb2e48177c9f344c3779d931f37a
+  tests/test_curriculum_domain.py: ed4029b1f88b6c426bb94f5f599c419eb832eac977ec666621cf9fef7f6f857f
+  tests/test_curriculum_vocab.py: 466b859b2c32941d78ff8c3ff719e9e8deff8e9452401e9c7e9fd93800723997
+  tests/test_ci_checkout.py: 86684ccb641408a82225b05b69dfe5e9c2c77ce29cf0aba17710908763c8f759

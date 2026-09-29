@@ -9,9 +9,9 @@ from .models import TextbookMaterial
 
 class CurriculumRepositoryLoadingMixin:
     def __init__(self, data_dir: Optional[Path] = None):
+        workspace_root = Path(__file__).resolve().parents[2]
         if data_dir is None:
             # Default to <workspace_root>/smartedu_data
-            workspace_root = Path(__file__).resolve().parents[2]
             data_dir = workspace_root / "smartedu_data"
         self.data_dir = data_dir
         self.tags_file = self.data_dir / "1_tags" / "national_lesson_tag.json"

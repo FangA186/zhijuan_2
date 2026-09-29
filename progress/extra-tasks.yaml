@@ -112,6 +112,18 @@ tasks:
   - progress/bugs/BUG-20260924-007.yaml
   - progress/bugs/BUG-20260924-008.yaml
   - progress/bugs/BUG-20260924-009.yaml
+  - requirements-ci.lock
+  - tools/memory_local_evidence.py
+  - tools/memory_evidence.py
+  - tools/run_quality_checks.py
+  - services/curriculum/repository_loading.py
+  - tests/curriculum_fixture.py
+  - tests/test_curriculum_domain.py
+  - tests/test_curriculum_vocab.py
+  - tests/test_ci_checkout.py
+  - docs/decisions/DEV-023-ci-local-evidence.md
+  - docs/decisions/README.md
+  - progress/bugs/BUG-20260929-001.yaml
   implementation_steps:
   - 修Bug前检索相关记录，复发追加旧ID历史，保留根因、修复、回归与证据。
   - 本地项目页读取统一记录，Notion按稳定ID同步并回读核对。

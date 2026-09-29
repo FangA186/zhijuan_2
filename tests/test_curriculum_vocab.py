@@ -2,6 +2,9 @@
 from __future__ import annotations
 import json
 import unittest
+import tempfile
+from unittest.mock import patch
+from tests.curriculum_fixture import material, write
 from pathlib import Path
 from fastapi.testclient import TestClient
 
@@ -15,7 +18,11 @@ from services.api.main import app
 class TestCurriculumVocab(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.repo = CurriculumRepository()
+        cls.directory = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls.directory.cleanup)
+        root = Path(cls.directory.name).resolve()
+        cls.repo = CurriculumRepository(root / "data")
+        cls.repo.vocab_images_base = root / "images"
         cls.service = CurriculumService(cls.repo)
         cls.client = TestClient(app)
 
@@ -23,6 +30,17 @@ class TestCurriculumVocab(unittest.TestCase):
         catalog_path = Path(__file__).resolve().parents[1] / "services/curriculum/vocab_catalog.json"
         with open(catalog_path, "r", encoding="utf-8") as f:
             cls.catalog = json.load(f)
+        sample_id, record = next(iter(cls.catalog['materials'].items()))
+        write(cls.repo.mats_file, [material(sample_id, record['edition'], '英语', record['stage'])])
+        write(cls.repo.tags_file, {'hierarchies': []})
+        image = cls.repo.vocab_images_base / record['folder_path'] / record['images'][0]['filename']
+        image.parent.mkdir(parents=True, exist_ok=True)
+        # Byte-serving fixture, not a copied textbook page or a visual-rendering test.
+        image.write_bytes(b'\xff\xd8\xff' + b'fixture' * 200 + b'\xff\xd9')
+        for module in ['services.api.routes.curriculum', 'services.api.routes.vocab_image_routes']:
+            scoped = patch(module + '.curriculum_service', cls.service)
+            scoped.start(); cls.addClassCleanup(scoped.stop)
+
 
     def test_vocab_catalog_total_counts(self):
         """Verify the catalog contains all 367 textbooks and 2,005 clean images."""

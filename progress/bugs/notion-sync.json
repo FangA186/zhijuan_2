@@ -66,6 +66,11 @@
       "url": "https://app.notion.com/p/3e9a7a41f60a8180a10ed7663af1b3e0",
       "content_hash": "570f1e025ac49056a18b4021387643d4041447183267c0a9be6744f71802f5ab",
       "synced_at": "2026-09-28T15:20:59+00:00"
+    },
+    "BUG-20260929-001": {
+      "url": "https://app.notion.com/p/3eaa7a41f60a8186a710d0969db22c14",
+      "content_hash": "498aec39286cfc2e0ebf5771fda8e86b7b922a844a5e2f8f384d27a66138bcd3",
+      "synced_at": "2026-09-29T02:39:54+00:00"
     }
   }
 }

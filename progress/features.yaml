@@ -696,6 +696,16 @@ features:
   - apps/web/vite.config.ts
   - tools/memory_finish.py
   - progress/handoffs/README.md
+  - requirements-ci.lock
+  - tools/memory_local_evidence.py
+  - tools/memory_evidence.py
+  - services/curriculum/repository_loading.py
+  - tests/curriculum_fixture.py
+  - tests/test_curriculum_domain.py
+  - tests/test_curriculum_vocab.py
+  - tests/test_ci_checkout.py
+  - docs/decisions/DEV-023-ci-local-evidence.md
+  - docs/decisions/README.md
   implementation_paths:
   - tools/bug_memory.py
   - progress/bugs/README.md
@@ -727,8 +737,9 @@ features:
   - memory-tests
   - memory-check
   - project-overview-tests
-  last_evidence: acceptance-runs/devtools/bug-memory-20260924-001/offline-final/report.json
+  last_evidence: acceptance-runs/devtools/ci-clean-checkout-20260929-001/closeout/report.json
   limitations:
   - finish按任务核对变更、最新交接指纹、任务/功能/证据和摘要；它不自动编写事实、不代替人工或独立应用验收，也尚未启用远程分支保护。
   - 看板只在本地开发服务开放；历史检查点不等于正式功能发布版本，目录未登记项仍标为推断。
   - Bug门禁检查已声明的修复任务，不能识别全部自然语言意图或认证操作者；Notion回读映射是流程回执，不是后台同步服务。
+  - 2026-09-29：普通结构检查对明确留本地的历史证据给出不可核验警告；strict_evidence/finish仍要求证据。干净检出Linux3.12全部离线通过，远端CI重跑待确认。

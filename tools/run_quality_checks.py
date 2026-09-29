@@ -33,7 +33,7 @@ def result_status(exit_code: int | None, summary: dict | None = None, timed_out:
     return 'PASS'
 
 
-def run(root: Path, out: str, selections: list[str], features: list[str]) -> tuple[dict, int]:
+def _run(root: Path, out: str, selections: list[str], features: list[str]) -> tuple[dict, int]:
     validate_memory(root)
     if not out.startswith('acceptance-runs/'):
         raise RecordError('Reports must stay in acceptance-runs/')
@@ -81,9 +81,11 @@ def run(root: Path, out: str, selections: list[str], features: list[str]) -> tup
         timed_out = False
         env = dict(os.environ)
         env['PYTHONDONTWRITEBYTECODE'] = '1'
+        env['ZHIJUAN_SKIP_DOTENV'] = '1'
+        env['ZHIJUAN_RAW_API_DIR'] = ''
         # No credentials are needed by these tools. This is a reduction in exposure, not a sandbox.
         for k in list(env):
-            if any(x in k.upper() for x in ['API_KEY', 'API_SERVER_KEY', 'PASSWORD', 'SECRET', 'TOKEN']):
+            if any(x in k.upper() for x in ['API_KEY', 'API_SERVER_KEY', 'PASSWORD', 'SECRET', 'TOKEN', 'DATABASE_URL', 'BROKER_URL', 'TEST_DSN']):
                 env.pop(k, None)
         try:
             p = subprocess.run(argv, cwd=root, env=env, shell=False, capture_output=True, text=True,
@@ -118,6 +120,28 @@ def run(root: Path, out: str, selections: list[str], features: list[str]) -> tup
                          and not report['scope_changed_during_run'] else 'FAIL')
     save()
     return report, 0 if report['overall'] == 'PASS' else 1
+
+
+def run(root: Path, out: str, selections: list[str], features: list[str]) -> tuple[dict, int]:
+    if not out.startswith('acceptance-runs/'):
+        raise RecordError('Reports must stay in acceptance-runs/')
+    target = safe_path(root, out)
+    if target.exists():
+        raise RecordError('Run directory already exists; use a new name to preserve evidence')
+    try:
+        return _run(root, out, selections, features)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        # Admission/setup failures also need an artifact. Never overwrite an earlier run.
+        target.mkdir(parents=True, exist_ok=True)
+        saved = target / 'report.json'
+        report = json.loads(saved.read_text()) if saved.is_file() else {
+            'report_kind': 'offline-quality-v1', 'started_at': now(),
+            'requested_features': features, 'results': [], 'application_executed': False,
+            'live_model_called': False, 'remote_ci_executed': False,
+        }
+        report.update(overall='FAIL', ended_at=now(), execution_error=redact(str(exc)))
+        atomic_replace(root, out + '/report.json', json.dumps(report, ensure_ascii=False, indent=2) + '\n')
+        raise
 
 
 def main() -> int:

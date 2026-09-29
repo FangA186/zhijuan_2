@@ -1,6 +1,9 @@
 """Unit tests for Curriculum domain models, repository, and service."""
 from __future__ import annotations
 import unittest
+import tempfile
+from pathlib import Path
+from tests.curriculum_fixture import curriculum_fixture, EDITIONS
 from services.curriculum import (
     CurriculumService,
     CurriculumRepository,
@@ -12,7 +15,9 @@ from services.curriculum import (
 
 class TestCurriculumDomain(unittest.TestCase):
     def setUp(self):
-        self.service = CurriculumService()
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.service = CurriculumService(curriculum_fixture(Path(directory.name)))
 
     def test_get_tags(self):
         tags = self.service.get_tags()
@@ -38,7 +43,8 @@ class TestCurriculumDomain(unittest.TestCase):
         vis_res = self.service.search_materials(CurriculumFilter(mode="visible"))
         all_res = self.service.search_materials(CurriculumFilter(mode="all"))
         self.assertGreaterEqual(all_res.total, vis_res.total)
-        self.assertEqual(all_res.total, 3209)
+        self.assertEqual(all_res.total, len(EDITIONS) + 1)
+        self.assertEqual(vis_res.total, len(EDITIONS))
 
     def test_chapter_tree_and_topic_extraction(self):
         """Test getting chapter tree and extracting candidate topic strings."""
@@ -53,6 +59,7 @@ class TestCurriculumDomain(unittest.TestCase):
         mat_id = res.items[0]["id"]
         
         tree = self.service.get_chapter_tree(mat_id)
+        self.assertTrue(tree, "Fixture chapter tree must be loaded")
         if tree:
             self.assertIsInstance(tree, list)
             topics = self.service.extract_key_topics(mat_id)
